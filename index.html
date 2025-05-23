@@ -11,27 +11,29 @@
 	</head>
 
 	<body>
-		<header class="header">
-			<div class="header_bg">
+		<div class="first">
+			<div class="first_bg">
 				<!-- <video autoplay loop preload class="header_bg_video">
 					<source src="./img/header/video.mp4" type="video/mp4">
 				</video> -->
 			</div>
 
-			<div class="header_bg_lamps">
-				<div class="header_bg_lamp1"></div>
-				<div class="header_bg_lamp2"></div>
-				<div class="header_bg_lamp3"></div>
-				<div class="header_bg_lamp4"></div>
-				<div class="header_bg_lamp5"></div>
-				<div class="header_bg_lamp6"></div>
+			<div class="first_bg_lamps">
+				<div class="first_bg_lamp1"></div>
+				<div class="first_bg_lamp2"></div>
+				<div class="first_bg_lamp3"></div>
+				<div class="first_bg_lamp4"></div>
+				<div class="first_bg_lamp5"></div>
+				<div class="first_bg_lamp6"></div>
 			</div>
 
-			<section class="header_top">
+			<header class="header">
 				<div class="header_container container">
 					<div class="brand">
-						<div class="brand_logo"></div>
-						<div class="brand_slogan">открой для себя свет онлайн</div>
+						<a href="#" class="brand_url">
+							<div class="brand_logo"></div>
+							<div class="brand_slogan">открой для себя свет онлайн</div>
+						</a>
 					</div>
 					<div class="phone">
 						<a class="tel" href="tel:(800)7772700">
@@ -40,7 +42,7 @@
 						<a class="tel_subtitle open_modal" href="#">Заказать обратный звонок</a>
 					</div>
 				</div>
-			</section>
+			</header>
 
 			<nav class="nav">
 				<div class="container">
@@ -52,12 +54,33 @@
 					<div class="nav_item_container">
 						<div class="nav_item_position">
 							<a class="nav_item" href="#">Хиты продаж</a>
+							<div class="decor">
+								<span class="decor_line"></span>
+							</div>
 							<a class="nav_item" href="#">Экономия</a>
+							<div class="decor">
+								<span class="decor_line"></span>
+							</div>
 							<a class="nav_item" href="#">Преимущества</a>
+							<div class="decor">
+								<span class="decor_line"></span>
+							</div>
 							<a class="nav_item" href="#">Порядок работы</a>
+							<div class="decor">
+								<span class="decor_line"></span>
+							</div>
 							<a class="nav_item" href="#">Оплата и доставка</a>
+							<div class="decor">
+								<span class="decor_line"></span>
+							</div>
 							<a class="nav_item" href="#">О компании</a>
+							<div class="decor">
+								<span class="decor_line"></span>
+							</div>
 							<a class="nav_item" href="#">Отзывы</a>
+							<div class="decor">
+								<span class="decor_line"></span>
+							</div>
 							<a class="nav_item" href="#">Контакты</a>
 						</div>
 					</div>
@@ -162,34 +185,34 @@
 					</div>
 				</div>
 			</section>
-		</header>
+		</div>
 
 		<dialog class="dialog">
 			<div class="modal_content">
 				<button class="modal_close">
-						<svg viewBox="0 0 32 32">
-							<path d="M10,10 L22,22 M22,10 L10,22"></path>
-						</svg>
-					</button>
+					<svg viewBox="0 0 32 32">
+						<path d="M10,10 L22,22 M22,10 L10,22"></path>
+					</svg>
+				</button>
 				<h4 class="modal_header">Заказать обратный звонок</h4>
 				<form class="form_modal" action>
-						<label class="form_item">
-							<input class="form_item_input" type="text" placeholder="Введите Ваше имя" name="name" required>
-							<span class="form_item_icon material-icons">person</span>
-						</label>
-						<label class="form_item">
-							<input class="form_item_input" type="tel" placeholder="Введите Ваш номер телефона" name="phone" required>
-							<span class="form_item_icon material-icons">phone</span>
-						</label>
-						<label class="form_agree">
-							<input class="form_agree_checkbox" type="checkbox" name="iagree" required checked>
-							Я прочитал и согласен с <span class="form_agree_underline">обработкой данных</span>
-							<span class="form_agree_tooltip">Настоящим вы выражаете свое согласие для использования продавцом или уполномоченным лицом продавца ваших персональных данных, в том числе путем осуществления автоматизированного анализа персональных данных, а также на их передачу различными способами, без ограничения срока действия. В соответствии с п. 5 ст. 21 ФЗ «О персональных данных» настоящее согласие может быть отозвано только при условии письменного уведомления на почту не менее чем за 5 календарных дней до предполагаемой даты прекращения использования персональных данных.</span>
-						</label>
-						<button class="btn" type="submit">
-							<span class="btn_span">Подобрать идеальную лампу!</span>
-						</button>
-					</form>
+					<label class="form_item">
+						<input class="form_item_input" type="text" placeholder="Введите Ваше имя" name="name" required>
+						<span class="form_item_icon material-icons">person</span>
+					</label>
+					<label class="form_item">
+						<input class="form_item_input" type="tel" placeholder="Введите Ваш номер телефона" name="phone" required>
+						<span class="form_item_icon material-icons">phone</span>
+					</label>
+					<label class="form_agree">
+						<input class="form_agree_checkbox" type="checkbox" name="iagree" required checked>
+						Я прочитал и согласен с <span class="form_agree_underline">обработкой данных</span>
+						<span class="form_agree_tooltip">Настоящим вы выражаете свое согласие для использования продавцом или уполномоченным лицом продавца ваших персональных данных, в том числе путем осуществления автоматизированного анализа персональных данных, а также на их передачу различными способами, без ограничения срока действия. В соответствии с п. 5 ст. 21 ФЗ «О персональных данных» настоящее согласие может быть отозвано только при условии письменного уведомления на почту не менее чем за 5 календарных дней до предполагаемой даты прекращения использования персональных данных.</span>
+					</label>
+					<button class="btn" type="submit">
+						<span class="btn_span">Подобрать идеальную лампу!</span>
+					</button>
+				</form>
 			</div>
 		</dialog>
 
@@ -201,15 +224,20 @@
 	</body>
 
 	<script>
-		document.addEventListener('DOMContentLoaded', function() {
-			const burger = document.querySelector('.nav_burger');
-			const navContainer = document.querySelector('.nav_item_container');
+			const burgerEl = document.querySelector('.nav_burger');
+			const navContainerEl = document.querySelector('.nav_item_container');
+			const transitionDuration = 250;
+			burgerEl.addEventListener('click', () => {
+			burgerEl.classList.toggle('opened');
 
-			burger.addEventListener('click', function() {
-				this.classList.toggle('opened');
-				navContainer.classList.toggle('opened');
-			});
+			const state = navContainerEl.classList.toggle('opened');
+			if (state) return;
+			navContainerEl.style.transitionDuration = `${transitionDuration}ms`;
+			window.setTimeout(() => {
+			navContainerEl.style.removeProperty('transition-duration');
+		}, transitionDuration);
 		});
+
 	</script>
 	<script src="modal-dialog.js"></script>
 </html>
