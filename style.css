@@ -243,6 +243,8 @@ p {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
+	align-items: center;
+	height: clamp(43px, 5vw, 58px);
 }
 
 .nav_item {
@@ -252,16 +254,13 @@ p {
 	text-transform: uppercase;
 	color: #000;
 	font-size: clamp(13px, 1.4vw, 16px);
-	height: clamp(43px, 5vw, 58px);
-}
-
-.decor {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	height: 100%;
 }
 
 .decor_line {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	position: relative;
 	width: 1px;
 	height: 16px;
@@ -275,8 +274,8 @@ p {
 	opacity: 0;
 }
 
-.nav_item:hover + .decor .decor_line::after,
-.nav_item:focus + .decor .decor_line::after {
+.nav_item:hover + .decor_line::after,
+.nav_item:focus + .decor_line::after {
 	position: absolute;
 	content: '';
 	top: 5px;
@@ -287,8 +286,8 @@ p {
 	opacity: 1;
 }
 
-.nav_item:hover + .decor .decor_line,
-.nav_item:focus + .decor .decor_line {
+.nav_item:hover + .decor_line,
+.nav_item:focus + .decor_line {
 	background: transparent;
 }
 
@@ -497,11 +496,9 @@ p {
 }
 
 .dialog {
-	position: relative;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
-	margin: 0;
+	position: fixed;
+	top: 20%;
+	margin: 0 auto;
 	border: 0;
 	color: #fff;
 	padding: 0 0 0 100px;
@@ -528,9 +525,12 @@ p {
 
 .modal_content {
 	position: relative;
-	min-width: 310px;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	height: 460px;
 	border: 10px solid #5e5c5a;
-	padding: 45px 20px;
+	padding: 0 20px;
 	background-color: #171717;
 }
 
@@ -556,7 +556,7 @@ p {
 
 .modal_header {
 	margin: 0 0 1.9rem 0;
-	font-size: clamp(16px, 3vw, 28px);
+	font-size: 28px;
 	font-family: 'Proxima Nova Bold', sans-serif;
 	text-transform: uppercase;
 	text-align: center;
@@ -588,7 +588,7 @@ p {
 	height: 50px;
 	padding: 0 40px 0 10px;
 	border: 1px solid #fff;
-	font-size: 1rem;
+	font-size: 16px;
 	background-color: #292929;
 	transition: all 0.5s ease;
 	cursor: pointer;
@@ -618,8 +618,15 @@ p {
 .form_agree {
 	position: relative;
 	margin: 0 0 1.9rem 0;
-	font-size: 1rem;
-	text-align: center;
+	font-size: 16px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 2px;
+}
+
+.form_agree_checkbox {
+	margin: 0 0 2px 0;
 }
 
 .form_agree_underline {
@@ -634,7 +641,7 @@ p {
 	bottom: 25px;
 	color: #000;
 	background: #fff;
-	font-size: clamp(9px, 1vw, 12px);
+	font-size: 12px;
 	border-radius: 6px;
 	padding: 10px;
 	text-align: justify;
@@ -666,6 +673,18 @@ p {
 	.header_bg_lamp6 {
 		display: none;
 	}
+
+	.dialog {
+		padding: 0;
+	}
+
+	.dialog::before {
+		display: none;
+	}
+
+	.modal_content {
+		height: clamp(390px, 57vw, 440px);
+	}
 }
 
 @media (width <= 1080px) {
@@ -673,7 +692,7 @@ p {
 		background-color: #ffdc67;
 	}
 
-	.decor {
+	.decor_line {
 		display: none;
 	}
 }
@@ -779,13 +798,30 @@ p {
 
 	.nav_item_position {
 		flex-direction: column;
-		align-items: center;
+		height: 100%;
 	}
 
 	.nav_item {
 		font-size: 15px;
 		height: 35px;
 	}
+
+	.modal_header {
+		font-size: clamp(16px, 6vw, 28px);
+	}
+
+	.form_item_input {
+		font-size: 1.5rem;
+	}
+
+	.form_agree {
+		font-size: 1.2rem;
+	}
+
+	.form_agree_tooltip {
+		font-size: clamp(9px, 1vw, 12px);
+	}
+
 }
 
 @media (width<= 799px) {
@@ -801,6 +837,12 @@ p {
 
 	.header_container.container {
 		justify-content: center;
+	}
+
+	.modal_content {
+		position: fixed;
+		width: 100%;
+		left: 0;
 	}
 }
 
