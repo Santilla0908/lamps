@@ -19,6 +19,13 @@
 	src: url('./fonts/ProximaNovaBold.woff') format('woff');
 }
 
+:root {
+	--color-primary: #ffc501;
+	--second-primary-color: #fff;
+	--third-primary-color: #000;
+
+}
+
 html {
 	font-size: clamp(6px, calc(8px + 0.5vw), 16px);
 	line-height: 1.15;
@@ -172,7 +179,7 @@ p {
 .brand_slogan {
 	font-size: 14.9px;
 	line-height: 1.5;
-	color: #fff;
+	color: var(--second-primary-color);
 }
 
 .phone {
@@ -184,7 +191,7 @@ p {
 .tel {
 	font-size: 24px;
 	font-family: 'Proxima Nova Bold', sans-serif;
-	color: #fff;
+	color: var(--second-primary-color);
 }
 
 .tel:hover .tel_icon {
@@ -195,7 +202,7 @@ p {
 	position: relative;
 	top: 5px;
 	right: 4px;
-	color: #ffc501;
+	color: var(--color-primary);
 	transition: all 0.3s ease;
 }
 
@@ -205,7 +212,7 @@ p {
 	height: 25px;
 	font-size: 16px;
 	line-height: 1.2;
-	color: #ffc501;
+	color: var(--color-primary);
 	transition: all 0.3s ease;
 }
 
@@ -216,7 +223,7 @@ p {
 	height: 1px;
 	left: 1px;
 	bottom: 2px;
-	background-color: #ffc501;
+	background-color: var(--color-primary);
 	transition: all 0.3s ease;
 }
 
@@ -227,7 +234,7 @@ p {
 .nav {
 	position: relative;
 	z-index: 10;
-	background-color: #ffc501;
+	background-color: var(--color-primary);
 }
 
 .burger_container {
@@ -235,7 +242,7 @@ p {
 }
 
 .nav_item_container {
-	background-color: #ffc501;
+	background-color: var(--color-primary);
 	z-index: 10;
 }
 
@@ -252,7 +259,7 @@ p {
 	display: flex;
 	align-items: center;
 	text-transform: uppercase;
-	color: #000;
+	color: var(--third-primary-color);
 	font-size: clamp(13px, 1.4vw, 16px);
 	height: 100%;
 }
@@ -264,7 +271,7 @@ p {
 	position: relative;
 	width: 1px;
 	height: 16px;
-	background-color: #fff;
+	background-color: var(--second-primary-color);
 	transition: all 0.3s ease;
 }
 
@@ -282,7 +289,7 @@ p {
 	left: -2px;
 	height: 7px;
 	width: 7px;
-	background-color: #000;
+	background-color: var(--third-primary-color);
 	opacity: 1;
 }
 
@@ -294,14 +301,14 @@ p {
 .product_info {
 	position: relative;
 	z-index: 2;
-	color: #fff;
+	color: var(--second-primary-color);
 	font-family: 'Proxima Nova Bold', serif;
 }
 
 .product {
 	margin: 6.5rem 0 0;
 	font-size: clamp(18px, 5vw, 56px);
-	color: #ffc501;
+	color: var(--color-primary);
 	text-transform: uppercase;
 }
 
@@ -320,7 +327,7 @@ p {
 	display: block;
 	width: 66px;
 	height: 3px;
-	background-color: #ffc501;
+	background-color: var(--color-primary);
 }
 
 .product_text {
@@ -330,7 +337,7 @@ p {
 }
 
 .emphasis {
-	color: #ffc501;
+	color: var(--color-primary);
 }
 
 .btn {
@@ -338,17 +345,18 @@ p {
 	margin: 0 auto 10px;
 	display: flex;
 	height: clamp(43px, 5vw, 58px);
-	background-color: #000;
+	background-color: var(--third-primary-color);
 	text-transform: uppercase;
-	color: #ffffff;
+	color: var(--second-primary-color);
 	font-family: 'Proxima Nova Bold', sans-serif;
+	cursor: pointer;
 }
 
 .btn::before{
 	position: absolute;
 	content: '';
 	left: 4px;
-	border: 2px solid #ffc501;
+	border: 2px solid var(--color-primary);
 	transform: rotate(-2deg);
 	transition: all 0.3s ease;
 	width: 98%;
@@ -362,13 +370,13 @@ p {
 	padding: 0 20px;
 	font-size: clamp(12px, 1.2rem, 16px);
 	letter-spacing: 2px;
-	background-color: #ffc501;
+	background-color: var(--color-primary);
 	transition: all 0.3s ease;
 }
 
 .btn:hover .btn_span {
-	color: #ffc501;
-	background-color: #000000;
+	color: var(--color-primary);
+	background-color: var(--third-primary-color);
 }
 
 .btn:hover::before {
@@ -390,9 +398,9 @@ p {
 	height: 35px;
 	z-index: 1;
 	cursor: pointer;
-	border: 1px solid #fff;
+	border: 1px solid var(--second-primary-color);
 	transition: all 0.3s ease;
-	background: #000 no-repeat center;
+	background: var(--third-primary-color) no-repeat center;
 	background-size: 13px 23px;
 	margin: 5px;
 }
@@ -416,7 +424,7 @@ p {
 	scroll-behavior: smooth;
 	width: 95%;
 	margin: 0 auto;
-	color: #fff;
+	color: var(--second-primary-color);
 }
 
 .advantage {
@@ -427,9 +435,8 @@ p {
 .items {
 	display: flex;
 	justify-content: center;
-	height: 100%;
 	padding: 10px 0;
-	text-align: left;
+	height: 100%;
 }
 
 .advantage_icon {
@@ -478,6 +485,10 @@ p {
 	background-image: url('./img/icons/8.png');
 }
 
+.advantage_text {
+	text-align: left;
+}
+
 .advantage_header {
 	margin: 0 0 12px;
 	font-size: 16px;
@@ -487,7 +498,7 @@ p {
 }
 
 .advantage:hover .advantage_header {
-	color: #ffc501;
+	color: var(--color-primary);
 }
 
 .advantage_desc {
@@ -500,7 +511,7 @@ p {
 	top: 20%;
 	margin: 0 auto;
 	border: 0;
-	color: #fff;
+	color: var(--second-primary-color);
 	padding: 0 0 0 100px;
 	background: transparent;
 	cursor: grab;
@@ -543,7 +554,7 @@ p {
 	background: transparent;
 	cursor: pointer;
 	opacity: 0.8;
-	color: #fff;
+	color: var(--second-primary-color);
 	padding: 6px;
 }
 
@@ -568,7 +579,7 @@ p {
 	width: 40px;
 	height: 3px;
 	margin: 10px auto 0;
-	background-color: #ffc501;
+	background-color: var(--color-primary);
 }
 
 .form_modal {
@@ -587,7 +598,7 @@ p {
 	width: 100%;
 	height: 50px;
 	padding: 0 40px 0 10px;
-	border: 1px solid #fff;
+	border: 1px solid var(--second-primary-color);
 	font-size: 16px;
 	background-color: #292929;
 	transition: all 0.5s ease;
@@ -595,13 +606,13 @@ p {
 }
 
 .form_item_input::placeholder {
-	color: #fff;
+	color: var(--second-primary-color);
 	opacity: 0.9;
 }
 
 .form_item_input:focus,
 .form_item_input:active {
-	border-color: #ffc501;
+	border-color: var(--color-primary);
 }
 
 .form_item_icon {
@@ -612,7 +623,7 @@ p {
 
 .form_item_input:focus +.form_item_icon,
 .form_item_input:active +.form_item_icon {
-	color: #ffc501;
+	color: var(--color-primary);
 }
 
 .form_agree {
@@ -639,8 +650,8 @@ p {
 	left: 0;
 	right: 0;
 	bottom: 25px;
-	color: #000;
-	background: #fff;
+	color: var(--third-primary-color);
+	background: var(--second-primary-color);
 	font-size: 12px;
 	border-radius: 6px;
 	padding: 10px;
@@ -656,7 +667,7 @@ p {
 	display: block;
 	position: absolute;
 	border: 6px solid transparent;
-	border-top-color: #fff;
+	border-top-color: var(--second-primary-color);
 	bottom: -12px;
 	right: 50px;
 }
@@ -701,6 +712,30 @@ p {
 	.header_bg_lamps {
 		display: none;
 	}
+
+	.advantage {
+		width: 260px;
+	}
+
+	.items {
+		flex-wrap: wrap;
+		height: auto;
+	}
+
+	.advantage_icon {
+		width: 100%;
+		height: 70px;
+		margin: 0 0 5px 0;
+	}
+
+	.advantage_text {
+		text-align: center;
+		width: 75%;
+	}
+
+	.advantage_desc {
+		padding: 0;
+	}
 }
 
 @media (width<= 900px) {
@@ -713,12 +748,12 @@ p {
 		position: relative;
 		display: flex;
 		justify-content: center;
-		border: 1px solid #000;
+		border: 1px solid var(--third-primary-color);
 		border-radius: 4px;
 		margin: 5px 10px;
 		height: 35px;
 		width: 43px;
-		background-color: #ffc501;
+		background-color: var(--color-primary);
 		cursor: pointer;
 		transition: all 0.15s linear;
 	}
@@ -734,7 +769,7 @@ p {
 		height: 3px;
 		top: calc(50% - 2px);
 		border-radius: 4px;
-		background-color: #000;
+		background-color: var(--third-primary-color);
 		transition: transform 0.075s cubic-bezier(0.55, 0.055, 0.675, 0.19);
 	}
 
@@ -746,7 +781,7 @@ p {
 		width: 25px;
 		height: 3px;
 		border-radius: 4px;
-		background-color: #000;
+		background-color: var(--third-primary-color);
 	}
 
 	.nav_burger_inner::before{
@@ -782,7 +817,7 @@ p {
 		top: 100%;
 		left: 0;
 		right: 0;
-		border-top: 1px solid #000;
+		border-top: 1px solid var(--third-primary-color);
 		height: 0;
 		min-height: 0;
 		overflow: hidden;
@@ -824,9 +859,13 @@ p {
 
 }
 
-@media (width<= 799px) {
+@media (width <= 800px) {
 	.btn_span {
 		padding: 15px;
+	}
+
+	.first_bg_video {
+		display: none;
 	}
 }
 
