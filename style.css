@@ -601,6 +601,7 @@ p {
 	border: 1px solid var(--second-primary-color);
 	font-size: 16px;
 	background-color: #292929;
+	color: var(--second-primary-color);
 	transition: all 0.5s ease;
 	cursor: pointer;
 }
@@ -628,7 +629,7 @@ p {
 
 .form_agree {
 	position: relative;
-	margin: 0 0 1.9rem 0;
+	margin: 0 auto 1.9rem;
 	font-size: 16px;
 	display: flex;
 	flex-wrap: wrap;
@@ -704,7 +705,7 @@ p {
 .offer_left_header {
 	position: relative;
 	margin: 0 0 1.875rem 0;
-	font-size: 28px;
+	font-size: clamp(26px, 1.6rem, 28px);
 	font-family: 'Proxima Nova Bold', sans-serif;
 	letter-spacing: 2px;
 	text-transform: uppercase;
@@ -723,6 +724,7 @@ p {
 .offer_left_text {
 	position: relative;
 	padding: 0 0 0 4.5rem;
+	font-size: clamp(14px, 1rem, 16px);
 }
 
 .offer_left_text::before {
@@ -741,7 +743,7 @@ p {
 	align-items: center;
 	padding: 0 70px;
 	height: 455px;
-	background-color: var(--third-primary-color);
+	background-color: #171717;
 }
 
 .offer_right_lamp {
@@ -765,16 +767,20 @@ p {
 	display: flex;
 	flex-direction: column;
 	max-width: 500px;
+	width: 100%;
+	margin: 0 auto;
 	color: var(--second-primary-color);
 }
 
 .form_text {
 	margin: 0 0 20px 0;
 	text-align: center;
+	font-size: 16px;
 }
 
 .appointed_time {
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: space-between;
 	width: 100%;
 }
@@ -819,12 +825,40 @@ p {
 	}
 }
 
+@media (width <= 1120px) {
+
+	.offer_left {
+		flex-basis: 750px;
+		height: clamp(169px, 21vw, 200px);
+		padding: 0 84px;
+	}
+
+	.offer_left_header {
+		font-size: clamp(25px, 2rem, 26px);
+	}
+
+	.offer_right {
+		flex-basis: 750px;
+		padding: 0 15px;
+		height: clamp(430px, 35rem, 455px);
+	}
+
+	.form_item_select {
+		width: 45%;
+		min-width: 170px;
+	}
+}
+
 @media (width <= 1080px) {
 	.nav_item:hover {
 		background-color: #ffdc67;
 	}
 
 	.decor_line {
+		display: none;
+	}
+
+	.offer_right_lamp {
 		display: none;
 	}
 }
@@ -856,6 +890,10 @@ p {
 
 	.advantage_desc {
 		padding: 0;
+	}
+
+	.offer_left_header::before {
+		display: none;
 	}
 }
 
@@ -970,14 +1008,6 @@ p {
 		font-size: 1.5rem;
 	}
 
-	.form_agree {
-		font-size: 1.2rem;
-	}
-
-	.form_agree_tooltip {
-		font-size: clamp(9px, 1vw, 12px);
-	}
-
 }
 
 @media (width <= 800px) {
@@ -986,6 +1016,25 @@ p {
 	}
 
 	.first_bg_video {
+		display: none;
+	}
+
+}
+
+@media (width <= 770px) {
+
+	.offer_left {
+		height: 65px;
+		padding: 0 20px;
+	}
+
+	.offer_left_header {
+		margin: 0;
+		text-align: center;
+		font-size: 16px;
+	}
+
+	.offer_left_text {
 		display: none;
 	}
 }
@@ -1003,6 +1052,10 @@ p {
 		position: fixed;
 		width: 100%;
 		left: 0;
+	}
+
+	.form_item_select {
+		width: 100%;
 	}
 }
 
