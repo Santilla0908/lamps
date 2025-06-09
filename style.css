@@ -93,7 +93,7 @@ p {
 	width: 109px;
 	height: 603px;
 	left: 195px;
-	background-image: url("./img/header/lamp1.png");
+	background-image: url('./img/header/lamp1.png');
 }
 
 .first_bg_lamp2 {
@@ -102,7 +102,7 @@ p {
 	width: 327px;
 	height: 866px;
 	left: 230px;
-	background-image: url("./img/header/lamp2.png");
+	background-image: url('./img/header/lamp2.png');
 }
 
 .first_bg_lamp3 {
@@ -110,7 +110,7 @@ p {
 	width: 278px;
 	height: 476px;
 	left: 355px;
-	background-image: url("./img/header/lamp3.png");
+	background-image: url('./img/header/lamp3.png');
 }
 
 .first_bg_lamp4 {
@@ -118,7 +118,7 @@ p {
 	width: 93px;
 	height: 403px;
 	right: 475px;
-	background-image: url("./img/header/lamp4.png");
+	background-image: url('./img/header/lamp4.png');
 }
 
 .first_bg_lamp5 {
@@ -126,7 +126,7 @@ p {
 	width: 286px;
 	height: 798px;
 	right: 335px;
-	background-image: url("./img/header/lamp5.png");
+	background-image: url('./img/header/lamp5.png');
 }
 
 .first_bg_lamp6 {
@@ -134,7 +134,7 @@ p {
 	width: 317px;
 	height: 692px;
 	right: 138px;
-	background-image: url("./img/header/lamp6.png");
+	background-image: url('./img/header/lamp6.png');
 	animation: lamp6pendulum 14s ease infinite;
 }
 
@@ -407,12 +407,12 @@ p {
 
 .prev {
 	left: 0;
-	background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%23ffffff'%2F%3E%3C%2Fsvg%3E");
+	background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\'%20viewBox%3D\'0%200%2027%2044\'%3E%3Cpath%20d%3D\'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z\'%20fill%3D\'%23ffffff\'%2F%3E%3C%2Fsvg%3E');
 }
 
 .next {
 	right: -2px;
-	background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M27%2C22L27%2C22L5%2C44l-2.1-2.1L22.8%2C22L2.9%2C2.1L5%2C0L27%2C22L27%2C22z'%20fill%3D'%23ffffff'%2F%3E%3C%2Fsvg%3E");
+	background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\'%20viewBox%3D\'0%200%2027%2044\'%3E%3Cpath%20d%3D\'M27%2C22L27%2C22L5%2C44l-2.1-2.1L22.8%2C22L2.9%2C2.1L5%2C0L27%2C22L27%2C22z\'%20fill%3D\'%23ffffff\'%2F%3E%3C%2Fsvg%3E');
 }
 
 .advantages_slider {
@@ -688,6 +688,7 @@ p {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
+	z-index: 1;
 }
 
 .offer_left {
@@ -697,6 +698,7 @@ p {
 	padding: 0 5rem;
 	border: 4px solid var(--color-primary);
 	z-index: -1;
+	align-self: center;
 }
 
 .offer_left_header {
@@ -732,6 +734,72 @@ p {
 	left: 0;
 	background-color: var(--color-primary);
 }
+
+.offer_right {
+	position: relative;
+	display: flex;
+	align-items: center;
+	padding: 0 70px;
+	height: 455px;
+	background-color: var(--third-primary-color);
+}
+
+.offer_right_lamp {
+	position: absolute;
+	content: '';
+	width: 225px;
+	height: 410px;
+	top: 21px;
+	left: -100px;
+	z-index: -1;
+	background: url(./img/header/offer-lamp.png) center no-repeat;
+	background-size: contain;
+	transition: all 0.225s ease;
+}
+
+.offer_right_lamp:hover {
+	transform: rotate(-8deg) translateX(-50px);
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	max-width: 500px;
+	color: var(--second-primary-color);
+}
+
+.form_text {
+	margin: 0 0 20px 0;
+	text-align: center;
+}
+
+.appointed_time {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.form_item_select {
+	position: relative;
+	width: 170px;
+}
+
+.form_item_input_select {
+	-webkit-appearance: none;
+	color: rgba(0, 0, 0, 0);
+	text-shadow: 0 0 0 #fff;
+}
+
+.form_item_select::after {
+	position: absolute;
+	content: '';
+	border-width: 5px 4px 0 4px;
+	border-style: solid;
+	border-color: rgba(217,217,217,0.9) transparent transparent transparent;
+	top: 47%;
+	right: 16px;
+}
+
 
 @media (width <= 1535px) {
 	.header_bg_lamp6 {
@@ -791,7 +859,7 @@ p {
 	}
 }
 
-@media (width<= 900px) {
+@media (width <= 900px) {
 	.burger_container {
 		display: flex;
 		justify-content: end;
@@ -922,7 +990,7 @@ p {
 	}
 }
 
-@media (width<= 480px) {
+@media (width <= 480px) {
 	.header {
 		min-height: 120px;
 	}
