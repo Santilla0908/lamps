@@ -349,6 +349,7 @@ p {
 	height: clamp(43px, 5vw, 58px);
 	background-color: var(--third-primary-color);
 	text-transform: uppercase;
+	text-align: center;
 	color: var(--second-primary-color);
 	font-family: 'Proxima Nova Bold', sans-serif;
 	cursor: pointer;
@@ -889,8 +890,8 @@ p {
 	justify-content: space-between;
 	gap: 20px;
 	text-align: center;
+	margin: 0 0 3.2rem 0;
 }
-
 
 .hits_item {
 	position: relative;
@@ -982,24 +983,24 @@ p {
 	margin: 20px 0 30px;
 }
 
-.btn_hits:before {
-	border-color: #000;
+.btn_hits::before {
+	border-color: var(--third-primary-color);
 }
 
-.btn_hits:active:before {
-	background-color: #000;
+.btn_hits:active::before {
+	background-color: var(--third-primary-color);
 }
 
 .btn_span_hits {
 	letter-spacing: 1px;
-	background-color: #000;
+	background-color: var(--third-primary-color);
 	padding: 0 30px;
 }
 
 .btn_hits:hover .btn_span_hits,
 .btn_hits:focus .btn_span_hits {
-	color: #fff;
-	background-color: #ffc501;
+	color: var(--second-primary-color);
+	background-color: var(--color-primary);
 }
 
 
@@ -1209,7 +1210,7 @@ p {
 
 @media (width <= 800px) {
 	.btn_span {
-		padding: 15px;
+		padding: 0 15px;
 	}
 
 	.first_bg_video {
