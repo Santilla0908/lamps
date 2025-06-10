@@ -882,13 +882,15 @@ p {
 	border: 2px solid var(--color-primary);
 }
 
-.hits_incandescent {
+.hits_incandescent,
+.hits_halogen {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 	justify-content: space-between;
 	gap: 20px;
 	text-align: center;
 }
+
 
 .hits_item {
 	position: relative;
@@ -941,6 +943,26 @@ p {
 
 .hits_item_img_5 {
 	background-image: url('./img/hits/lamp5.png')
+}
+
+.hits_item_img_6 {
+	background-image: url('./img/hits/lamp6.png')
+}
+
+.hits_item_img_7 {
+	background-image: url('./img/hits/lamp7.png')
+}
+
+.hits_item_img_8 {
+	background-image: url('./img/hits/lamp8.png')
+}
+
+.hits_item_img_9 {
+	background-image: url('./img/hits/lamp9.png')
+}
+
+.hits_item_img_10 {
+	background-image: url('./img/hits/lamp10.png')
 }
 
 
