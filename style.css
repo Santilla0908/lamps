@@ -822,6 +822,12 @@ p {
 }
 
 .hits_bg_lamp {
+	position: absolute;
+	background-image: url('./img/hits/lamp.png');
+	width: 537px;
+	height: 692px;
+	bottom: -60px;
+	right: -480px;
 }
 
 .hits_header {
@@ -1004,7 +1010,6 @@ p {
 }
 
 
-
 @media (width <= 1535px) {
 	.header_bg_lamp6 {
 		display: none;
@@ -1020,6 +1025,10 @@ p {
 
 	.modal_content {
 		height: clamp(390px, 57vw, 440px);
+	}
+
+	.hits_bg_lamp {
+		display: none;
 	}
 }
 
@@ -1041,7 +1050,6 @@ p {
 		grid-template-columns: repeat(4, minmax(200px, 300px));
 	}
 }
-
 
 @media (width <= 1120px) {
 
@@ -1066,7 +1074,6 @@ p {
 		min-width: 170px;
 	}
 }
-
 
 @media (width <= 1080px) {
 	.nav_item:hover {
