@@ -1009,68 +1009,11 @@ p {
 }
 
 
+/* Медиазапросы к первому блоку */
+
 @media (width <= 1535px) {
 	.header_bg_lamp6 {
 		display: none;
-	}
-
-	.dialog {
-		padding: 0;
-	}
-
-	.dialog::before {
-		display: none;
-	}
-
-	.modal_content {
-		height: clamp(390px, 57vw, 440px);
-	}
-
-	.hits_bg_lamp {
-		display: none;
-	}
-}
-
-@media (width <= 1200px) {
-	.hits_item:first-child {
-		display: none;
-	}
-}
-
-@media (width <= 1190px) {
-	.filter {
-		text-align: center;
-	}
-}
-
-@media (width <= 1130px) {
-
-	.hits_incandescent, .hits_halogen {
-		grid-template-columns: repeat(4, minmax(200px, 300px));
-	}
-}
-
-@media (width <= 1120px) {
-
-	.offer_left {
-		flex-basis: 750px;
-		height: clamp(169px, 21vw, 200px);
-		padding: 0 84px;
-	}
-
-	.offer_left_header {
-		font-size: clamp(25px, 2rem, 26px);
-	}
-
-	.offer_right {
-		flex-basis: 750px;
-		padding: 0 15px;
-		height: clamp(430px, 35rem, 455px);
-	}
-
-	.form_item_select {
-		width: 45%;
-		min-width: 170px;
 	}
 }
 
@@ -1082,11 +1025,6 @@ p {
 	.decor_line {
 		display: none;
 	}
-
-	.offer_right_lamp {
-		display: none;
-	}
-
 }
 
 @media (width <= 961px) {
@@ -1116,21 +1054,6 @@ p {
 
 	.advantage_desc {
 		padding: 0;
-	}
-
-	.offer_left_header::before {
-		display: none;
-	}
-}
-
-@media (width <= 910px) {
-
-	.hits_incandescent, .hits_halogen {
-		grid-template-columns: repeat(2, minmax(200px, 300px));
-	}
-
-	.hits_item:nth-child(4) {
-		overflow: hidden;
 	}
 
 }
@@ -1238,14 +1161,6 @@ p {
 		height: 31px;
 	}
 
-	.modal_header {
-		font-size: clamp(16px, 6vw, 28px);
-	}
-
-	.form_item_input {
-		font-size: 1.5rem;
-	}
-
 }
 
 @media (width <= 800px) {
@@ -1259,8 +1174,94 @@ p {
 
 }
 
-@media (width <= 770px) {
+@media (width <= 480px) {
+	.header {
+		min-height: 120px;
+	}
 
+	.header_container.container {
+		justify-content: center;
+	}
+
+}
+
+
+/* Медиазапросы к модальному окну */
+
+@media (width <= 1535px) {
+
+	.dialog {
+		padding: 0;
+	}
+
+	.dialog::before {
+		display: none;
+	}
+
+	.modal_content {
+		height: clamp(390px, 57vw, 440px);
+	}
+}
+
+@media (width <= 900px) {
+
+	.modal_header {
+		font-size: clamp(16px, 6vw, 28px);
+	}
+
+	.form_item_input {
+		font-size: 1.5rem;
+	}
+}
+
+@media (width <= 480px) {
+	.modal_content {
+		position: fixed;
+		width: 100%;
+		left: 0;
+	}
+}
+
+
+/* Медиазапросы к второму блоку*/
+
+@media (width <= 1120px) {
+
+	.offer_left {
+		flex-basis: 750px;
+		height: clamp(169px, 21vw, 200px);
+		padding: 0 84px;
+	}
+
+	.offer_left_header {
+		font-size: clamp(25px, 2rem, 26px);
+	}
+
+	.offer_right {
+		flex-basis: 750px;
+		padding: 0 15px;
+		height: clamp(430px, 35rem, 455px);
+	}
+
+	.form_item_select {
+		width: 45%;
+		min-width: 170px;
+	}
+}
+
+@media (width <= 1080px) {
+	.offer_right_lamp {
+		display: none;
+	}
+}
+
+@media (width <= 961px) {
+	.offer_left_header::before {
+		display: none;
+	}
+}
+
+@media (width <= 770px) {
 	.offer_left {
 		height: 65px;
 		padding: 0 20px;
@@ -1275,31 +1276,62 @@ p {
 	.offer_left_text {
 		display: none;
 	}
+}
 
+@media (width <= 480px) {
+	.form_item_select {
+		width: 100%;
+	}
+}
+
+
+/* Медиазапросы к третьему блоку */
+
+@media (width <= 1535px) {
+
+	.hits_bg_lamp {
+		display: none;
+	}
+}
+
+@media (width <= 1200px) {
+
+	.hits_item:first-child {
+		display: none;
+	}
+}
+
+@media (width <= 1190px) {
+
+	.filter {
+		text-align: center;
+	}
+}
+
+@media (width <= 1130px) {
+	.hits_incandescent, .hits_halogen {
+		grid-template-columns: repeat(4, minmax(200px, 300px));
+	}
+}
+
+@media (width <= 910px) {
+	.hits_incandescent, .hits_halogen {
+		grid-template-columns: repeat(2, minmax(200px, 300px));
+	}
+
+	.hits_item:nth-child(4) {
+		overflow: hidden;
+	}
+
+}
+
+@media (width <= 770px) {
 	.hits_header::before {
 		display: none;
 	}
 }
 
 @media (width <= 480px) {
-	.header {
-		min-height: 120px;
-	}
-
-	.header_container.container {
-		justify-content: center;
-	}
-
-	.modal_content {
-		position: fixed;
-		width: 100%;
-		left: 0;
-	}
-
-	.form_item_select {
-		width: 100%;
-	}
-
 	.hits_incandescent, .hits_halogen {
 		grid-template-columns: repeat(1, minmax(200px, 300px));
 	}
