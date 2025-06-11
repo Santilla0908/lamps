@@ -11,12 +11,12 @@
 
 @font-face {
 	font-family: 'Proxima Nova';
-	src: url('./fonts/ProximaNovaRegular.woff') format('woff');
+	src: url('../fonts/ProximaNovaRegular.woff') format('woff');
 }
 
 @font-face {
 	font-family: 'Proxima Nova Bold';
-	src: url('./fonts/ProximaNovaBold.woff') format('woff');
+	src: url('../fonts/ProximaNovaBold.woff') format('woff');
 }
 
 :root {
@@ -63,7 +63,7 @@ p {
 	position: absolute;
 	inset: 0;
 	z-index: -1;
-	background: url('./img/header/bg.jpg') center;
+	background: url('../img/header/bg.jpg') center;
 	background-size: cover;
 }
 
@@ -95,7 +95,7 @@ p {
 	width: 109px;
 	height: 603px;
 	left: 195px;
-	background-image: url('./img/header/lamp1.png');
+	background-image: url('../img/header/lamp1.png');
 }
 
 .first_bg_lamp2 {
@@ -104,7 +104,7 @@ p {
 	width: 327px;
 	height: 866px;
 	left: 230px;
-	background-image: url('./img/header/lamp2.png');
+	background-image: url('../img/header/lamp2.png');
 }
 
 .first_bg_lamp3 {
@@ -112,7 +112,7 @@ p {
 	width: 278px;
 	height: 476px;
 	left: 355px;
-	background-image: url('./img/header/lamp3.png');
+	background-image: url('../img/header/lamp3.png');
 }
 
 .first_bg_lamp4 {
@@ -120,7 +120,7 @@ p {
 	width: 93px;
 	height: 403px;
 	right: 475px;
-	background-image: url('./img/header/lamp4.png');
+	background-image: url('../img/header/lamp4.png');
 }
 
 .first_bg_lamp5 {
@@ -128,7 +128,7 @@ p {
 	width: 286px;
 	height: 798px;
 	right: 335px;
-	background-image: url('./img/header/lamp5.png');
+	background-image: url('../img/header/lamp5.png');
 }
 
 .first_bg_lamp6 {
@@ -136,7 +136,7 @@ p {
 	width: 317px;
 	height: 692px;
 	right: 138px;
-	background-image: url('./img/header/lamp6.png');
+	background-image: url('../img/header/lamp6.png');
 	animation: lamp6pendulum 14s ease infinite;
 }
 
@@ -175,7 +175,7 @@ p {
 
 .brand_logo {
 	height: 25px;
-	background: url('./img/header/logo.png') no-repeat;
+	background: url('../img/header/logo.png') no-repeat;
 }
 
 .brand_slogan {
@@ -457,35 +457,35 @@ p {
 }
 
 .advantage_icon_1 {
-	background-image: url('./img/icons/1.png');
+	background-image: url('../img/icons/1.png');
 }
 
 .advantage_icon_2 {
-	background-image: url('./img/icons/2.png');
+	background-image: url('../img/icons/2.png');
 }
 
 .advantage_icon_3 {
-	background-image: url('./img/icons/3.png');
+	background-image: url('../img/icons/3.png');
 }
 
 .advantage_icon_4 {
-	background-image: url('./img/icons/4.png');
+	background-image: url('../img/icons/4.png');
 }
 
 .advantage_icon_5 {
-	background-image: url('./img/icons/5.png');
+	background-image: url('../img/icons/5.png');
 }
 
 .advantage_icon_6 {
-	background-image: url('./img/icons/6.png');
+	background-image: url('../img/icons/6.png');
 }
 
 .advantage_icon_7 {
-	background-image: url('./img/icons/7.png');
+	background-image: url('../img/icons/7.png');
 }
 
 .advantage_icon_8 {
-	background-image: url('./img/icons/8.png');
+	background-image: url('../img/icons/8.png');
 }
 
 .advantage_text {
@@ -532,7 +532,7 @@ p {
 	bottom: 0;
 	top: 20px;
 	z-index: -1;
-	background: url('./img/header/offer-lamp.png') no-repeat;
+	background: url('../img/header/offer-lamp.png') no-repeat;
 }
 
 .dialog::backdrop {
@@ -761,7 +761,7 @@ p {
 	top: 21px;
 	left: -100px;
 	z-index: -1;
-	background: url(./img/header/offer-lamp.png) center no-repeat;
+	background: url(../img/header/offer-lamp.png) center no-repeat;
 	background-size: contain;
 	transition: all 0.225s ease;
 }
@@ -817,13 +817,13 @@ p {
 
 .hits {
 	padding: 3.125rem 0;
-	background: url('./img/hits/bg.jpg') top center no-repeat;
+	background: url('../img/hits/bg.jpg') top center no-repeat;
 	background-size: cover;
 }
 
 .hits_bg_lamp {
 	position: absolute;
-	background-image: url('./img/hits/lamp.png');
+	background-image: url('../img/hits/lamp.png');
 	width: 537px;
 	height: 692px;
 	bottom: -60px;
@@ -933,45 +933,44 @@ p {
 }
 
 .hits_item_img_1 {
-	background-image: url(./img/hits/lamp1.png);
+	background-image: url(../img/hits/lamp1.png);
 }
 
 .hits_item_img_2 {
-	background-image: url('./img/hits/lamp2.png');
+	background-image: url('../img/hits/lamp2.png');
 }
 
 .hits_item_img_3 {
-	background-image: url('./img/hits/lamp3.png')
+	background-image: url('../img/hits/lamp3.png')
 }
 
 .hits_item_img_4 {
-	background-image: url('./img/hits/lamp4.png')
+	background-image: url('../img/hits/lamp4.png')
 }
 
 .hits_item_img_5 {
-	background-image: url('./img/hits/lamp5.png')
+	background-image: url('../img/hits/lamp5.png')
 }
 
 .hits_item_img_6 {
-	background-image: url('./img/hits/lamp6.png')
+	background-image: url('../img/hits/lamp6.png')
 }
 
 .hits_item_img_7 {
-	background-image: url('./img/hits/lamp7.png')
+	background-image: url('../img/hits/lamp7.png')
 }
 
 .hits_item_img_8 {
-	background-image: url('./img/hits/lamp8.png')
+	background-image: url('../img/hits/lamp8.png')
 }
 
 .hits_item_img_9 {
-	background-image: url('./img/hits/lamp9.png')
+	background-image: url('../img/hits/lamp9.png')
 }
 
 .hits_item_img_10 {
-	background-image: url('./img/hits/lamp10.png')
+	background-image: url('../img/hits/lamp10.png')
 }
-
 
 .hits_item_price::before,
 .hits_item_price::after {
@@ -1032,15 +1031,15 @@ p {
 	}
 }
 
-@media (width <= 1190px) {
-	.filter {
-		text-align: center;
-	}
-}
-
 @media (width <= 1200px) {
 	.hits_item:first-child {
 		display: none;
+	}
+}
+
+@media (width <= 1190px) {
+	.filter {
+		text-align: center;
 	}
 }
 
@@ -1122,6 +1121,18 @@ p {
 	.offer_left_header::before {
 		display: none;
 	}
+}
+
+@media (width <= 910px) {
+
+	.hits_incandescent, .hits_halogen {
+		grid-template-columns: repeat(2, minmax(200px, 300px));
+	}
+
+	.hits_item:nth-child(4) {
+		overflow: hidden;
+	}
+
 }
 
 @media (width <= 900px) {
@@ -1233,18 +1244,6 @@ p {
 
 	.form_item_input {
 		font-size: 1.5rem;
-	}
-
-}
-
-@media (width <= 910px) {
-
-	.hits_incandescent, .hits_halogen {
-		grid-template-columns: repeat(2, minmax(200px, 300px));
-	}
-
-	.hits_item:nth-child(4) {
-		overflow: hidden;
 	}
 
 }
