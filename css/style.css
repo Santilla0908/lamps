@@ -830,7 +830,7 @@ p {
 	right: -480px;
 }
 
-.hits_header {
+.section_header {
 	position: relative;
 	font-size: clamp(22px, 4vw, 48px);
 	text-transform: uppercase;
@@ -839,7 +839,7 @@ p {
 	text-align: center;
 }
 
-.hits_header::before {
+.section_header::before {
 	content: '';
 	position: absolute;
 	display: block;
@@ -895,6 +895,7 @@ p {
 	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 	gap: clamp(1rem, 2vw, 2rem);
 	text-align: center;
+	font-size: 16px;
 	margin: 0 3rem 3.2rem 3rem;
 	justify-content: center;
 }
@@ -1007,6 +1008,91 @@ p {
 	color: var(--second-primary-color);
 	background-color: var(--color-primary);
 }
+
+
+/* Четвертый блок */
+
+.calculator {
+	padding: 3.125rem 0;
+	background: url('../img/calculator/bg-calculator.jpg') top center;
+	background-size: cover;
+	color: var(--second-primary-color);
+}
+
+.calculator_items {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+
+.calculator_item_header {
+	position: relative;
+	font-family: 'Proxima Nova Bold', sans-serif;
+	font-size: 32px;
+	text-transform: uppercase;
+	z-index: 1;
+	height: 115px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.calculator_item_header::before {
+	position: absolute;
+	top: calc(50% - 50px);
+	left: calc(50% - 30px);
+	content: '';
+	width: 60px;
+	height: 100px;
+	border: 4px solid var(--color-primary);
+	z-index: -1;
+	transition: all 0.3s ease;
+}
+
+.calculator_item_header:hover::before {
+	transform: rotate(45deg);
+	width: 100px;
+	left: calc(50% - 50px);
+}
+
+.calculator_lamp_wrap {
+	display: flex;
+	align-items: center;
+	width: 336px;
+	height: 360px;
+	border: 4px solid #aaa;
+	background-color: #000;
+	overflow: hidden;
+}
+
+.calculator_lamp {
+	position: relative;
+	width: 100%;
+	height: calc(100% - 100px);
+	transition: all 0.225s ease;
+}
+
+.calculator_lamp::after {
+	position: absolute;
+	content: '';
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+}
+
+.calculator_lamp:hover::after {
+	opacity: 1;
+}
+
+.calculator_lamp_ordinary {
+	background: url('../img/calculator/lamp1.png') no-repeat center;
+	background-size: contain;
+}
+
+.calculator_lamp_ordinary::after {
+	background: url(../img/calculator/lamp1-on.png) no-repeat center;
+}
+
 
 
 /* Медиазапросы к первому блоку */
@@ -1321,6 +1407,10 @@ p {
 
 	.hits_item:nth-child(4) {
 		overflow: hidden;
+	}
+
+	.btn_span_hits {
+		padding: 0 30px;
 	}
 
 }
