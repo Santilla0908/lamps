@@ -300,11 +300,15 @@ p {
 	font-family: 'Proxima Nova Bold', serif;
 }
 
+.product_container {
+	aspect-ratio: 14/7;
+}
+
 .product {
-	margin: 6.5rem 0 0;
 	font-size: clamp(18px, 5vw, 56px);
 	color: var(--color-primary);
 	text-transform: uppercase;
+	margin: 0 0 1rem 0;
 }
 
 .product_subtitle {
@@ -326,7 +330,7 @@ p {
 }
 
 .product_text {
-	margin: 0 0 3.5rem 0;
+	margin: 0 0 2rem 0;
 	font-size: clamp(15px, 4vw, 40px);
 	font-family: 'Proxima Nova', sans-serif;
 }
@@ -382,7 +386,6 @@ p {
 .advantages {
 	position: relative;
 	z-index: 2;
-	margin: 6rem 0 0 0;
 	background-color: rgba(0, 0, 0, 0.5);
 }
 
@@ -1419,20 +1422,32 @@ p {
 		justify-content: center;
 		font-size: 15px;
 		height: 31px;
-		width: 20%;
+	}
+
+	.nav_item:hover {
+		width: clamp(72px, 70%, 200px);
 	}
 
 }
 
 @media (width <= 800px) {
-	.btn_span {
-		padding: 0 15px;
-	}
-
 	.first_bg_video {
 		display: none;
 	}
 
+	.btn_span {
+		padding: 0 15px;
+	}
+
+	.product_container {
+		aspect-ratio: 12/6;
+	}
+}
+
+@media (width <= 650px) {
+	.product_container {
+		aspect-ratio: 10/5;
+	}
 }
 
 @media (width <= 480px) {
@@ -1442,6 +1457,10 @@ p {
 
 	.header_container.container {
 		justify-content: center;
+	}
+
+	.product_container {
+		aspect-ratio: 10/7;
 	}
 
 }
