@@ -391,7 +391,7 @@ p {
 
 .slider_nav {
 	position: absolute;
-	top: 50%;
+	top: calc(50% - 2px);
 	transform: translateY(-50%);
 	width: 30px;
 	height: 35px;
@@ -401,16 +401,14 @@ p {
 	transition: all 0.3s ease;
 	background: var(--third-primary-color) no-repeat center;
 	background-size: 13px 23px;
-	margin: 5px;
 }
 
 .prev {
-	left: 0;
 	background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\'%20viewBox%3D\'0%200%2027%2044\'%3E%3Cpath%20d%3D\'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z\'%20fill%3D\'%23ffffff\'%2F%3E%3C%2Fsvg%3E');
 }
 
 .next {
-	right: -2px;
+	right: 15px;
 	background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\'%20viewBox%3D\'0%200%2027%2044\'%3E%3Cpath%20d%3D\'M27%2C22L27%2C22L5%2C44l-2.1-2.1L22.8%2C22L2.9%2C2.1L5%2C0L27%2C22L27%2C22z\'%20fill%3D\'%23ffffff\'%2F%3E%3C%2Fsvg%3E');
 }
 
@@ -419,27 +417,31 @@ p {
 	overflow-x: auto;
 	scroll-snap-type: x mandatory;
 	scroll-behavior: smooth;
-	width: 95%;
-	margin: 0 auto;
-	gap: 5px;
+	width: 100%;
+	margin: 0 35px;
 	color: var(--second-primary-color);
 	text-align: left;
 	cursor: default;
 	user-select: none;
+	max-width: 1190px;
+	padding: 15px 0;
 }
 
 .advantage_item {
 	display: grid;
 	grid-template-columns: 60px 1fr;
-	grid-template-rows: 30px;
-	grid-template-areas:
-        "icon header"
-        "icon desc";
-	padding: 20px 0;
+	grid-template-rows: auto;
+	grid-template-areas: "icon text";
 	scroll-snap-align: start;
 	min-width: 300px;
-	gap: 0 15px;
-	flex: 0 0 calc(25% - 15px);
+	flex-basis: 25%;
+	flex-grow: 0;
+	flex-shrink: 0;
+}
+
+.advantage_item_guarantee {
+	grid-template-columns: 50px;
+	justify-content: end;
 }
 
 .advantage_icon {
@@ -449,7 +451,16 @@ p {
 	filter: grayscale(100%) brightness(130%);
 }
 
-.advantage:hover .advantage_icon {
+.advantage_text {
+	grid-area: text;
+	display: flex;
+	grid-template-rows: auto auto;
+	flex-wrap: wrap;
+	align-content: flex-start;
+	margin: 0 0 0 10px;
+}
+
+.advantage_item:hover .advantage_icon {
 	filter: grayscale(0%) brightness(100%);
 }
 
@@ -492,9 +503,10 @@ p {
 	font-family: 'Proxima Nova Bold', sans-serif;
 	text-transform: uppercase;
 	transition: all 0.3s ease;
+	width: 100%;
 }
 
-.advantage:hover .advantage_header {
+.advantage_item:hover .advantage_header {
 	color: var(--color-primary);
 }
 
