@@ -1092,16 +1092,18 @@ p {
 	content: '';
 	left: 64.5px;
 	height: 263px;
-	width: 200px;
+	width: 201px;
 	top: -18px;
 	opacity: 0;
-	transition: all 0.3s ease;
+	transition: opacity 0.3s ease;
 	pointer-events: none;
 }
 
 .calculator_lamp:hover::after {
 	opacity: 1;
 	animation: flicker 0.5s infinite alternate;
+	animation-delay: 3s;
+	animation-fill-mode: backwards;
 }
 
 .calculator_lamp_ordinary {
