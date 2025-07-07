@@ -1284,6 +1284,65 @@ p {
 	font-size: 18px;
 }
 
+.calculator_total {
+	text-align: center;
+	font-family: 'Proxima Nova Bold', sans-serif;
+}
+
+.calculator_total_text {
+	text-transform: uppercase;
+	font-size: 24px;
+	color: var(--color-primary);
+	margin: 0 0 10px 0;
+}
+
+.calculator_total_text_white {
+	color: var(--second-primary-color);
+}
+
+.calculator_total_text_value {
+	font-size: 32px;
+}
+
+.calculator_total_link {
+	font-size: 18px;
+	color: var(--second-primary-color);
+	transition: color 0.3s ease;
+}
+
+.calculator_total_details {
+	position: relative;
+	display: inline-block;
+	height: 25px;
+}
+
+.calculator_total_details::after {
+	content: '';
+	position: absolute;
+	width: 100%;
+	height: 1px;
+	left: 1px;
+	bottom: 0;
+	background: var(--second-primary-color);
+}
+
+.calculator_total_link::before {
+	content: '»';
+	margin: 0 5px 0 0;
+}
+
+.calculator_total_link::after {
+	content: '«';
+	margin: 0 0 0 5px;
+}
+
+.calculator_total_link::before,
+.calculator_total_link::after {
+	font-family: 'Proxima Nova', sans-serif;
+	font-size: 24px;
+	color: var(--color-primary);
+}
+
 
 /* Медиазапросы к первому блоку */
 
