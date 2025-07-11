@@ -1253,7 +1253,8 @@ p {
 }
 
 .calculator_switch_checkbox:checked + .calculator_switch_slider::after {
-	transform: translateX(clamp(calc(26px * (10 / 16)), calc(30px * (10 / 16) + 0.020 * (100vw - 30px)), calc(40px * (10 / 16))));
+	transform: translateX(clamp(16.25px, calc(18.75px + 0.02 * (100vw - 30px)), 26px));
+	transition: transform 0.3s ease;
 }
 
 .calculator_timeline {
