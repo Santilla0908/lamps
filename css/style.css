@@ -421,7 +421,7 @@ p {
 	color: var(--second-primary-color);
 	text-align: left;
 	cursor: default;
-	user-select: none;
+	-webkit-user-select: none;
 	padding: 15px 0;
 	scrollbar-width: none;
 }
@@ -1074,8 +1074,8 @@ p {
 .calculator_lamp_wrap {
 	display: flex;
 	align-items: center;
-	width: 21rem;
-	height: 22.5rem;
+	width: clamp(126px, 26vw, 336px);
+	height: clamp(135px, 28vw, 360px);
 	border: 4px solid #aaa;
 	background-color: #000;
 	overflow: hidden;
@@ -1166,6 +1166,8 @@ p {
 
 .calculator_visual {
 	position: relative;
+	display: flex;
+	align-items: center;
 	height: 2px;
 	margin: 0 auto;
 	width: 0;
@@ -1250,6 +1252,10 @@ p {
 	transition: 0.3s;
 }
 
+.calculator_switch_checkbox:checked + .calculator_switch_slider::after {
+	transform: translateX(clamp(calc(26px * (10 / 16)), calc(30px * (10 / 16) + 0.020 * (100vw - 30px)), calc(40px * (10 / 16))));
+}
+
 .calculator_timeline {
 	display: flex;
 	position: relative;
@@ -1284,6 +1290,10 @@ p {
 	background: var(--second-primary-color);
 }
 
+.part_active .calculator_timeline_number {
+	color: var(--second-primary-color);
+}
+
 .calculator_timeline_number {
 	position: absolute;
 	bottom: -35px;
@@ -1312,6 +1322,7 @@ p {
 .calculator_total_text_value {
 	font-size: clamp(16px, 4vw, 32px);
 	margin: 0;
+	text-transform: none;
 }
 
 .calculator_total_link {
@@ -1761,6 +1772,36 @@ p {
 
 
 /* Медиазапросы к calculator */
+
+/*@media (width <= 1360px) {
+	.calculator_switch_checkbox:checked + .calculator_switch_slider::after {
+		transform: translateX(1.9rem);
+	}
+}
+
+@media (width <= 1030px) {
+	.calculator_switch_checkbox:checked + .calculator_switch_slider::after {
+		transform: translateX(2rem);
+	}
+}
+
+@media (width <= 900px) {
+	.calculator_switch_checkbox:checked + .calculator_switch_slider::after {
+		transform: translateX(2.2rem);
+	}
+}
+
+@media (width <= 665px) {
+	.calculator_switch_checkbox:checked + .calculator_switch_slider::after {
+		transform: translateX(2.4rem);
+	}
+}
+
+@media (width <= 420px) {
+	.calculator_switch_checkbox:checked + .calculator_switch_slider::after {
+		transform: translateX(2.5rem);
+	}
+}*/
 
 @media (width <= 700px) {
 	.calculator_start_item {
