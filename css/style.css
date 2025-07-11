@@ -1306,6 +1306,7 @@ p {
 .calculator_total {
 	text-align: center;
 	font-family: 'Proxima Nova Bold', sans-serif;
+	display: none;
 }
 
 .calculator_total_text {
@@ -1773,36 +1774,6 @@ p {
 
 /* Медиазапросы к calculator */
 
-/*@media (width <= 1360px) {
-	.calculator_switch_checkbox:checked + .calculator_switch_slider::after {
-		transform: translateX(1.9rem);
-	}
-}
-
-@media (width <= 1030px) {
-	.calculator_switch_checkbox:checked + .calculator_switch_slider::after {
-		transform: translateX(2rem);
-	}
-}
-
-@media (width <= 900px) {
-	.calculator_switch_checkbox:checked + .calculator_switch_slider::after {
-		transform: translateX(2.2rem);
-	}
-}
-
-@media (width <= 665px) {
-	.calculator_switch_checkbox:checked + .calculator_switch_slider::after {
-		transform: translateX(2.4rem);
-	}
-}
-
-@media (width <= 420px) {
-	.calculator_switch_checkbox:checked + .calculator_switch_slider::after {
-		transform: translateX(2.5rem);
-	}
-}*/
-
 @media (width <= 700px) {
 	.calculator_start_item {
 		width: 100%;
@@ -1824,8 +1795,6 @@ p {
 		display: none;
 	}
 }
-
-
 
 /* Анимации */
 
