@@ -1403,6 +1403,73 @@ p {
 	margin: 0 0 10px 0;
 }
 
+/* Блок arguments */
+
+.arguments {
+	display: flex;
+	padding: 3.125rem 0;
+}
+
+.arguments_header {
+	margin: 3rem 0 5rem 0;
+}
+
+.arguments_items {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 2rem;
+	color: var(--third-primary-color);
+}
+
+.argument_item {
+	position: relative;
+	display: grid;
+	grid-template-columns: auto 1fr;
+	grid-template-rows: max-content;
+	grid-template-areas:
+    "number header"
+    "number desc";
+	gap: 0 1.5rem;
+	background: white;
+	border-radius: 10px;
+	padding: 1.5rem;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.argument_item:nth-child(3n+1) {
+	transform: translateY(-30px);
+}
+
+.argument_item:nth-child(3n+3) {
+	transform: translateY(30px);
+}
+
+.argument_item_number {
+	grid-area: number;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	background: var(--color-primary);
+	border-radius: 50%;
+}
+
+.argument_item_header {
+	grid-area: header;
+	display: flex;
+	align-items: flex-start;
+	margin: 0;
+	font-size: 16px;
+}
+
+.argument_item_desc {
+	grid-area: desc;
+	font-size: 16px;
+	color: #808080;
+}
+
+
 /* Медиазапросы к first */
 
 @media (width <= 1535px) {
