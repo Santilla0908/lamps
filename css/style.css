@@ -1470,7 +1470,6 @@ p {
 	content: '';
 	width: 40px;
 	height: 1px;
-	margin: 0 0 16px 0;
 	background-color: var(--third-primary-color);
 }
 
