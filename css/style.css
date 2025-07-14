@@ -430,7 +430,7 @@ p {
 	display: grid;
 	grid-template-columns: 60px 1fr;
 	grid-template-rows: auto;
-	grid-template-areas: "icon text";
+	grid-template-areas: 'icon text';
 	scroll-snap-align: start;
 	flex-basis: 25%;
 	flex-grow: 0;
@@ -1112,11 +1112,11 @@ p {
 
 .calculator_lamp_ordinary::after {
 	background: url(../img/calculator/lamp1-on.png) no-repeat center;
-	top: -1rem;
-	left: -1.875rem;
-	right: -1.875rem;
-	bottom: -1rem;
-	background-position: 5.45rem -1rem;
+	top: -7%;
+	left: -15%;
+	right: -15%;
+	bottom: -4%;
+	background-position: 50% calc(50% - 0.6vw);
 	background-size: contain;
 }
 
@@ -1128,11 +1128,11 @@ p {
 .calculator_lamp_osram::after {
 	background: url('../img/calculator/lamp2-on.png') no-repeat center;
 	opacity: 0;
-	top: -2.9rem;
-	left: -5.6rem;
-	right: -5.6rem;
-	bottom: -2.9rem;
-	background-position: 5.45rem -2.89rem;
+	top: -38%;
+	left: -16%;
+	right: -22%;
+	bottom: 0%;
+	background-position: 44% -50%;
 	background-size: contain;
 }
 
@@ -1445,8 +1445,8 @@ p {
 		grid-template-columns: 1fr;
 		grid-template-rows: auto;
 		grid-template-areas:
-		"icon"
-		"text";
+		'icon'
+		'text';
 	}
 
 	.advantage_icon {
