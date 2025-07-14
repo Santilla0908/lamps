@@ -1411,7 +1411,7 @@ p {
 }
 
 .arguments_header {
-	margin: 3rem 0 5rem 0;
+	margin: 3rem 0 9rem 0;
 }
 
 .arguments_items {
@@ -1419,6 +1419,7 @@ p {
 	grid-template-columns: repeat(3, 1fr);
 	gap: 2rem;
 	color: var(--third-primary-color);
+	width: 1260px;
 }
 
 .argument_item {
@@ -1430,18 +1431,16 @@ p {
     "number header"
     "number desc";
 	gap: 0 1.5rem;
-	background: white;
-	border-radius: 10px;
-	padding: 1.5rem;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	height: 283px;
+	width: 345px;
 }
 
 .argument_item:nth-child(3n+1) {
-	transform: translateY(-30px);
+	transform: translateY(-50px);
 }
 
 .argument_item:nth-child(3n+3) {
-	transform: translateY(30px);
+	transform: translateY(50px);
 }
 
 .argument_item_number {
@@ -1457,10 +1456,22 @@ p {
 
 .argument_item_header {
 	grid-area: header;
+	position: relative;
 	display: flex;
 	align-items: flex-start;
-	margin: 0;
+	margin: 0 0 24px 0;
 	font-size: 16px;
+}
+
+.argument_item_header::after {
+	position: absolute;
+	top: calc(100% + 8px);
+	left: 0;
+	content: '';
+	width: 40px;
+	height: 1px;
+	margin: 0 0 16px 0;
+	background-color: var(--third-primary-color);
 }
 
 .argument_item_desc {
