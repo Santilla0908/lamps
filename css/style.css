@@ -1430,8 +1430,8 @@ p {
 	grid-template-columns: auto 1fr;
 	grid-template-rows: max-content;
 	grid-template-areas:
-    "number header"
-    "number desc";
+    'number header'
+    'number desc';
 	gap: 0 1.5rem;
 	height: 283px;
 	width: 345px;
@@ -1513,7 +1513,7 @@ p {
 	margin: 0 0 1.2rem 0;
 	font-size: 16px;
 	text-align: left;
-	color: #fff;
+	color: var(--second-primary-color);
 }
 
 .initial_data {
@@ -1988,14 +1988,15 @@ p {
 	}
 }
 
-
 @media (width <= 490px) {
 	.initial_data {
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-between;
 		width: 75%;
+	}
 }
+
 
 /* Анимации */
 
@@ -2019,7 +2020,6 @@ p {
 }
 
 @keyframes pulse {
-
 	0% {
 		box-shadow: 0 0 0 0 rgba(255, 197, 1, 0.4);
 	}
@@ -2031,5 +2031,4 @@ p {
 	100% {
 		box-shadow: 0 0 0 0 rgba(255, 197, 1, 0);
 	}
-
 }
