@@ -648,6 +648,7 @@ p {
 	flex-wrap: wrap;
 	justify-content: center;
 	gap: 2px;
+	padding: 0 1rem;
 }
 
 .form_agree_checkbox {
@@ -720,10 +721,11 @@ p {
 .offer_left_header {
 	position: relative;
 	margin: 0 0 1.875rem 0;
-	font-size: clamp(26px, 1.6rem, 28px);
+	font-size: clamp(26px, 1.8rem, 28px);
 	font-family: 'Proxima Nova Bold', sans-serif;
 	letter-spacing: 2px;
 	text-transform: uppercase;
+	font-weight: normal;
 }
 
 .offer_left_header::before {
@@ -1407,7 +1409,7 @@ p {
 
 .arguments {
 	display: flex;
-	padding: 3.125rem 0;
+	padding: 3.125rem 0 0 0;
 }
 
 .arguments_header {
@@ -1484,6 +1486,44 @@ p {
 	color: #808080;
 }
 
+/* Блок offer_second */
+
+.offer_second {
+	padding: 0 0 3.125rem 0;
+}
+
+.offer_left_header_accent {
+	color: var(--color-primary);
+}
+
+.offer_second_right_lamp {
+	background-image: url('../img/offer/offer2-lamp.png');
+}
+
+.offer_second_left {
+	height: 378px;
+}
+
+.offer_second_right {
+	height: 545px;
+}
+
+.form_text_offer_second {
+	display: block;
+	margin: 0 0 1.2rem 0;
+	font-size: 16px;
+	text-align: left;
+	color: #fff;
+}
+
+.initial_data {
+	position: relative;
+	width: 75%;
+}
+
+.offer_second .form_item_select::after {
+	top: calc(50% + 15px);
+}
 
 /* Медиазапросы к first */
 
@@ -1927,7 +1967,35 @@ p {
 	}
 }
 
+/* Медиазапросы к offer_second */
 
+@media (width <= 1200px) {
+	.offer_second {
+		padding: 3.125rem 0;
+	}
+}
+
+@media (width <= 1120px) {
+	.initial_data {
+		display: flex;
+		justify-content: space-between;
+	}
+}
+
+@media (width <= 770px) {
+	.offer_second_left {
+		height: 84px;
+	}
+}
+
+
+@media (width <= 490px) {
+	.initial_data {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		width: 75%;
+}
 
 /* Анимации */
 
