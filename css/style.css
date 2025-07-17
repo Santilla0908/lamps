@@ -1547,18 +1547,38 @@ p {
 	align-items: start;
 	text-align: center;
 	justify-items: center;
+	margin: 0 auto;
 }
 
 .step_item {
 	position: relative;
 	display: grid;
-	grid-template-columns: 280px;
 	grid-template-rows: auto 70px auto;
 	grid-template-areas:
         'icon'
         'header'
 		'desc';
 	justify-items: center;
+	width: 100%;
+}
+
+.step_item::after {
+	position: absolute;
+	content: '';
+	width: 32px;
+	height: 21px;
+	top: 20%;
+	right: -15%;
+	background-image: url('../img/steps/arrow-right.png');
+	transition: all 0.225s ease;
+}
+
+.step_item:last-child::after {
+	display: none;
+}
+
+.step_item:hover::after {
+	transform: translateX(-5px);
 }
 
 .steps_item_icon {
@@ -1620,6 +1640,7 @@ p {
 
 .steps_item_desc {
 	grid-area: desc;
+	font-size: 16px;
 }
 
 
@@ -2092,6 +2113,56 @@ p {
 		flex-wrap: wrap;
 		justify-content: space-between;
 		width: 75%;
+	}
+}
+
+/* Медиазапросы к steps */
+
+@media (width <= 1280px) {
+	.steps_items {
+		gap: 0;
+	}
+
+	.step_item::after {
+		right: -5%;
+	}
+}
+
+@media (width <= 1140px) {
+	.steps_items {
+		grid-template-columns: repeat(2, clamp(250px, 4vw, 260px));
+		grid-template-rows: repeat(2, 275px);
+		gap: 0 100px;
+	}
+
+	.step_item::after {
+		right: -27%;
+	}
+
+	.step_item:nth-child(2)::after {
+		display: none;
+	}
+}
+
+@media (width <= 670px) {
+	.steps_items {
+		gap: 0;
+	}
+
+	.step_item::after {
+		right: -5%;
+	}
+}
+
+@media (width <= 520px) {
+	.steps_items {
+		grid-template-columns: repeat(1, 300px);
+		grid-template-rows: repeat(4, 227px);
+		gap: 20px 0;
+	}
+
+	.step_item::after {
+		display: none;
 	}
 }
 
