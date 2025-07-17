@@ -849,6 +849,8 @@ p {
 	letter-spacing: 2px;
 	font-family: 'Proxima Nova Bold', sans-serif;
 	text-align: center;
+	font-weight: normal;
+	margin: 3.5rem 0;
 }
 
 .section_header::before {
@@ -863,8 +865,8 @@ p {
 }
 
 .filter {
-	padding: 0 17px;
-	margin: 3.2rem 0 2rem 0;
+	padding: 0 46px;
+	margin: 0 0 2rem 0;
 	text-align: left;
 }
 
@@ -1525,6 +1527,102 @@ p {
 	top: calc(50% + 15px);
 }
 
+/* Блок steps */
+
+.steps {
+	padding: 3.125rem 0;
+	color: var(--second-primary-color);
+	background: url('../img/steps/bg.jpg') top center;
+	background-size: cover;
+}
+
+.steps_header_accent {
+	color: var(--color-primary);
+}
+
+.steps_items {
+	display: grid;
+	grid-template-columns: repeat(4, 280px);
+	gap: 50px;
+	align-items: start;
+	text-align: center;
+	justify-items: center;
+}
+
+.step_item {
+	position: relative;
+	display: grid;
+	grid-template-columns: 280px;
+	grid-template-rows: auto 70px auto;
+	grid-template-areas:
+        'icon'
+        'header'
+		'desc';
+	justify-items: center;
+}
+
+.steps_item_icon {
+	grid-area: icon;
+	position: relative;
+	display: block;
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 80px;
+	height: 80px;
+	border-radius: 50%;
+	background-color: var(--color-primary);
+}
+
+.steps_item_icon::before{
+	position: absolute;
+	content: '';
+	top: calc(50% - 55px);
+	right: calc(50% - 55px);
+	width: 110px;
+	height: 110px;
+	border: 1px solid var(--color-primary);
+	border-radius: 50%;
+	transition: all 0.225s ease;
+}
+
+.step_item:hover .steps_item_icon:before {
+	transform: scale(1.06);
+}
+
+.steps_item_icon_1 {
+	background-image: url('../img/steps/1.png');
+}
+
+.steps_item_icon_2 {
+	background-image: url('../img/steps/2.png');
+}
+
+.steps_item_icon_3 {
+	background-image: url('../img/steps/3.png');
+}
+
+.steps_item_icon_4 {
+	background-image: url('../img/steps/4.png');
+}
+
+.steps_item_header {
+	grid-area: header;
+	display: flex;
+	align-items: flex-end;
+	padding: 0 0 15px 0;
+	margin: 0;
+	font-size: 18px;
+	text-transform: uppercase;
+	color: var(--color-primary);
+	font-family: 'Proxima Nova Bold',sans-serif;
+	font-weight: normal;
+}
+
+.steps_item_desc {
+	grid-area: desc;
+}
+
+
 /* Медиазапросы к first */
 
 @media (width <= 1535px) {
@@ -1842,7 +1940,7 @@ p {
 	}
 }
 
-@media (width <= 1200px) {
+@media (width <= 1199px) {
 
 	.hits_item:first-child {
 		display: none;
@@ -1888,7 +1986,7 @@ p {
 }
 
 @media (width <= 480px) {
-	
+
 	.hits_incandescent, .hits_halogen {
 		grid-template-columns: repeat(1, minmax(200px, 300px));
 	}
