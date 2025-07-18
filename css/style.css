@@ -827,7 +827,8 @@ p {
 
 /* Третий блок */
 
-.hits {
+.hits,
+.delivery_payment {
 	padding: 3.125rem 0;
 	background: url('../img/hits/bg.jpg') top center no-repeat;
 	background-size: cover;
@@ -1045,19 +1046,20 @@ p {
 	text-align: center;
 }
 
-.calculator_item_header {
+.items_header {
 	position: relative;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	font-family: 'Proxima Nova Bold', sans-serif;
+	font-weight: normal;
 	font-size: clamp(14px, 4vw, 32px);
 	text-transform: uppercase;
 	z-index: 1;
 	height: 115px;
 }
 
-.calculator_item_header::before {
+.items_header::before {
 	position: absolute;
 	top: calc(50% - 50px);
 	left: calc(50% - 30px);
@@ -1069,7 +1071,7 @@ p {
 	transition: all 0.3s ease;
 }
 
-.calculator_item_header:hover::before {
+.items_header:hover::before {
 	transform: rotate(45deg);
 	width: 100px;
 	left: calc(50% - 50px);
@@ -1643,6 +1645,82 @@ p {
 	font-size: 16px;
 }
 
+/* Блок delivery_payment */
+
+.delivery_payment_container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+}
+
+.delivery_payment_items_header {
+	font-size: clamp(18px, 4vw, 48px);
+}
+
+.delivery_payment_items {
+	display: flex;
+	flex-direction: column;
+	gap: 25px 0;
+}
+
+.delivery_payment_item {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: nowrap;
+	flex-direction: column;
+	width: 440px;
+	height: 220px;
+	box-shadow: 1px 2px 10px 0 rgba(0, 0, 0, 0.1);
+	background-color: var(--second-primary-color);
+	cursor: pointer;
+}
+
+.delivery_payment_item_icon {
+	position: relative;
+	width: 85px;
+	height: 85px;
+	border-radius: 50%;
+	background-color: #f3f3f3;
+	background-repeat: no-repeat;
+	background-position: center;
+	transition: all 0.225s ease;
+}
+
+.delivery_item_icon_1 {
+	background-image: url('../img/delivery_payment/icon1.png');
+}
+
+.delivery_item_icon_2 {
+	background-image: url('../img/delivery_payment/icon2.png');
+}
+
+.delivery_item_icon_3 {
+	background-image: url('../img/delivery_payment/icon3.png');
+}
+
+.payment_item_icon_4 {
+	background-image: url('../img/delivery_payment/icon4.png');
+}
+
+.payment_item_icon_5{
+	background-image: url('../img/delivery_payment/icon5.png');
+}
+
+.payment_item_icon_6 {
+	background-image: url('../img/delivery_payment/icon6.png');
+}
+
+.delivery_payment_item_header {
+	font-size: 18px;
+	text-transform: uppercase;
+	font-family: 'Proxima Nova Bold',sans-serif;
+	font-weight: normal;
+}
+
+
+
 
 /* Медиазапросы к first */
 
@@ -2028,12 +2106,12 @@ p {
 		font-size: clamp(13px, 4vw, 23px);
 	}
 
-	.calculator_item_header {
+	.items_header {
 		margin: 0;
 		height: 66px;
 	}
 
-	.calculator_item_header::before {
+	.items_header::before {
 		display: none;
 	}
 }
