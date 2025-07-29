@@ -343,6 +343,7 @@ p {
 	position: relative;
 	margin: 0 auto 10px;
 	display: flex;
+	width: max-content;
 	height: clamp(43px, 5vw, 58px);
 	background-color: var(--third-primary-color);
 	text-transform: uppercase;
@@ -1834,6 +1835,85 @@ p {
 	padding: clamp(5px, 1vw, 25px);
 }
 
+/* Блок about_company*/
+
+.about_company {
+	position: relative;
+	padding: 3.125rem 0;
+	text-align: center;
+}
+
+.about_company_bg {
+	position: absolute;
+	width: 1920px;
+	left: calc(50% - 960px);
+}
+
+.about_company_bg_lamp1 {
+	position: absolute;
+	right: 200px;
+	top: -50px;
+	width: 273px;
+	height: 280px;
+	background-image: url('../img/about_company/lamp1.png');
+}
+
+.about_company_bg_lamp2 {
+	position: absolute;
+	top: 370px;
+	left: 30px;
+	width: 271px;
+	height: 331px;
+	background-image: url('../img/about_company/lamp2.png');
+}
+
+.about_company_bg_lamp3 {
+	position: absolute;
+	width: 254px;
+	height: 287px;
+	right: 30px;
+	top: 330px;
+	background-image: url('../img/about_company/lamp3.png');
+}
+
+.about_company_container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	margin: 0 0 2.5rem 0;
+}
+
+.about_company_img {
+	width: 460px;
+	height: 445px;
+	background: url('../img/about_company/img.jpg') center;
+	border: 10px solid #f4f4f4;
+	background-size: cover;
+	margin: 0 0 20px 0;
+	transition: border 0.3s ease;
+}
+
+.about_company_img:hover {
+	border: 10px solid var(--color-primary);
+}
+
+.about_company_desc {
+	width: 550px;
+	text-align: justify;
+	margin: -5px 10px 0 20px;
+	font-size: clamp(16px, 1.5vw, 17px);
+}
+
+.about_company_text {
+	margin: 0 0 20px 0;
+}
+
+.about_company_subtitle {
+	margin: 0 0 2.5rem 0;
+	font-size: clamp(16px, 2vw, 24px);
+	text-transform: uppercase;
+	font-family: 'Proxima Nova Bold',sans-serif;
+}
 
 /* Медиазапросы к first */
 
@@ -2379,6 +2459,37 @@ p {
 @media (width <= 600px) {
 	.delivery_payment_items_header {
 		margin: 0;
+	}
+}
+
+/* Медиазапросы к about_company */
+
+@media (width <= 1080px) {
+
+	.about_company_header {
+		margin: 0 0 20px 0;
+	}
+
+	.about_company_header:before {
+		display: none;
+	}
+
+	.about_company_img {
+		height: 400px;
+		background-position: center 63%;
+	}
+
+	.about_company_desc {
+		width: 700px;
+		margin: 0;
+	}
+}
+
+@media (width <= 760px) {
+
+	.about_company_desc {
+		width: 100%;
+		padding: 0 10px;
 	}
 }
 
