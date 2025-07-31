@@ -1915,6 +1915,78 @@ p {
 	font-family: 'Proxima Nova Bold',sans-serif;
 }
 
+/* Блок statistics*/
+
+.statistics {
+	padding: 3.125rem 0;
+	background: url('../img/statistics/bg.jpg') top center;
+	background-size: cover;
+	color: var(--second-primary-color);
+}
+
+.statistics_items {
+	display: grid;
+	grid-template-columns: repeat(4, 250px);
+	justify-content: space-around;
+}
+
+.statistics_item {
+	display: grid;
+	grid-template-rows: auto;
+	grid-template-areas:
+        'icon'
+        'pretitle'
+		'number'
+		'subtitle';
+	justify-items: center;
+	width: 100%;
+	text-transform: uppercase;
+	text-align: center;
+	font-family: 'Proxima Nova Bold',sans-serif;
+}
+
+.statistics_item_icon {
+	grid-area: icon;
+	width: 65px;
+	height: 65px;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.statistics_item_icon_1 {
+	background-image: url('../img/statistics/icon1.png');
+}
+
+.statistics_item_icon_2 {
+	background-image: url('../img/statistics/icon2.png');
+}
+
+.statistics_item_icon_3 {
+	background-image: url('../img/statistics/icon3.png');
+}
+
+.statistics_item_icon_4 {
+	background-image: url('../img/statistics/icon4.png');
+}
+
+.statistics_item_pretitle {
+	grid-area: pretitle;
+	font-size: clamp(14px, 1.5vw, 16px);
+	margin: 0 0 10px 0;
+	font-family: 'Proxima Nova',sans-serif;
+}
+
+.statistics_item_number {
+	grid-area: number;
+	font-size: clamp(36px, 4vw, 46px);
+}
+
+.statistics_item_subtitle {
+	grid-area: subtitle;
+	font-size: clamp(16px, 2vw, 22px);
+	line-height: 1em;
+}
+
 /* Медиазапросы к first */
 
 @media (width <= 1535px) {
@@ -2493,6 +2565,31 @@ p {
 	}
 }
 
+@media (width <= 500px) {
+
+	.about_company_img {
+		display: none;
+	}
+}
+
+/* Медиазапросы к statistics */
+
+@media (width <= 1060px) {
+	.statistics_items {
+		grid-template-columns: repeat(2, 250px);
+		grid-template-rows: repeat(2, auto);
+		justify-content: center;
+		gap: 25px;
+	}
+}
+
+@media (width <= 540px) {
+	.statistics_items {
+		grid-template-columns: repeat(1, 250px);
+		grid-template-rows: repeat(4, auto);
+		justify-content: center;
+	}
+}
 
 /* Анимации */
 
