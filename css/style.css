@@ -1810,6 +1810,12 @@ p {
 	background: url('../img/delivery_payment/bg.jpg') top center;
 	transition: opacity 0.3s ease;
 	opacity: 0;
+	pointer-events: none;
+}
+
+.delivery_payment_item_desc.active {
+	opacity: 1;
+	pointer-events: auto;
 }
 
 .delivery_payment_item_desc::before {
