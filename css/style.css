@@ -1116,13 +1116,15 @@ p {
 }
 
 .calculator_lamp_ordinary {
-	background: var(--third-primary-color) url('../img/calculator/lamp1.png') no-repeat center -2vw;
+	background: var(--third-primary-color) url('../img/calculator/lamp1.png') no-repeat center;
 	background-size: contain;
+	background-position-y: -1.8vw;
 }
 
 .calculator_lamp_ordinary::after {
-	background: var(--third-primary-color) url(../img/calculator/lamp1-on.png) no-repeat center -2vw;
+	background: var(--third-primary-color) url(../img/calculator/lamp1-on.png) no-repeat center;
 	background-size: contain;
+	background-position-y: -1.8vw;
 }
 
 .calculator_lamp_osram {
@@ -2351,6 +2353,34 @@ p {
 
 /* Медиазапросы к calculator */
 
+@media (width <= 1660px) {
+	.calculator_lamp_ordinary,
+	.calculator_lamp_ordinary::after {
+		background-position-y: -2vw;
+	}
+}
+
+@media (width <= 1300px) {
+	.calculator_lamp_ordinary,
+	.calculator_lamp_ordinary::after {
+		background-position-y: -2.6vw;
+	}
+}
+
+@media (width <= 1040px) {
+	.calculator_lamp_ordinary,
+	.calculator_lamp_ordinary::after {
+		background-position-y: -3.5vw;
+	}
+}
+
+@media (width <= 799px) {
+	.calculator_lamp_ordinary,
+	.calculator_lamp_ordinary::after {
+		background-position-y: -4vw;
+	}
+}
+
 @media (width <= 700px) {
 	.calculator_start_item {
 		width: 100%;
@@ -2371,6 +2401,7 @@ p {
 	.items_header::before {
 		display: none;
 	}
+
 }
 
 
