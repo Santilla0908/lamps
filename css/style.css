@@ -2359,7 +2359,7 @@ p {
 
 /* Медиазапросы к calculator */
 
-@media (width <= 1660px) {
+/*@media (width <= 1660px) {
 	.calculator_lamp_ordinary,
 	.calculator_lamp_ordinary::after {
 		background-position-y: -2vw;
@@ -2385,7 +2385,7 @@ p {
 	.calculator_lamp_ordinary::after {
 		background-position-y: -4vw;
 	}
-}
+}*/
 
 @media (width <= 700px) {
 	.calculator_start_item {
