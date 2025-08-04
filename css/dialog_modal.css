@@ -1,0 +1,150 @@
+.dialog,
+.dialog_calculator {
+	position: fixed;
+	top: 20%;
+	margin: 0 auto;
+	border: 0;
+	color: var(--second-primary-color);
+	padding: 0 0 0 100px;
+	background: transparent;
+	cursor: grab;
+}
+
+.dialog::before {
+	position: absolute;
+	display: block;
+	content: '';
+	width: 224px;
+	height: 409px;
+	left: 0;
+	bottom: 0;
+	top: 20px;
+	z-index: -1;
+	background: url('../img/header/offer-lamp.png') no-repeat;
+}
+
+.dialog::backdrop,
+.dialog_calculator::backdrop {
+	background-color: rgba(0, 0, 0, 0.86)
+}
+
+.modal_content {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	height: 460px;
+	width: 480px;
+	border: 10px solid #5e5c5a;
+	background-color: var(--background-color-form);
+}
+
+.modal_close {
+	position: absolute;
+	width: 45px;
+	height: 45px;
+	top: 0;
+	right: 0;
+	background: transparent;
+	cursor: pointer;
+	opacity: 0.8;
+	color: var(--second-primary-color);
+	padding: 6px;
+}
+
+.modal_close svg {
+	opacity: 0.8;
+	stroke: currentColor;
+	stroke-width: 1.5;
+	transition: stroke 0.1s;
+}
+
+.modal_header {
+	margin: 0 0 1.9rem 0;
+	font-size: 28px;
+	font-family: 'Proxima Nova Bold', sans-serif;
+	text-transform: uppercase;
+	text-align: center;
+}
+
+.modal_header::after {
+	display: block;
+	content:'';
+	width: 40px;
+	height: 3px;
+	margin: 10px auto 0;
+	background-color: var(--color-primary);
+}
+
+.form_modal {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+/* Второе модальное окно */
+
+.dialog_calculator {
+	padding: 0;
+}
+
+.modal_content_calculator {
+	max-height: 500px;
+	overflow-y: auto;
+	max-width: 1237px;
+	width: fit-content;
+	padding: 20px;
+	justify-content: flex-start;
+	font-size: clamp(10px, 3.2vw, 16px);
+}
+
+.modal_list {
+	padding: 0 0 0 15px;
+}
+
+.modal_h5 {
+	font-size: 24px;
+	margin: 0 0 10px 0;
+	font-family: 'Proxima Nova', sans-serif;
+	font-weight: 500;
+}
+
+.modal_content_text {
+	margin: 0 0 30px 0;
+}
+
+.modal_h6 {
+	font-size: 18px;
+	font-weight: 500;
+	margin: 0 0 10px 0;
+}
+
+@media (width <= 1535px) {
+
+	.dialog {
+		padding: 0;
+	}
+
+	.dialog::before {
+		display: none;
+	}
+
+	.modal_content {
+		height: clamp(390px, 57vw, 440px);
+	}
+}
+
+@media (width <= 900px) {
+
+	.modal_header {
+		font-size: clamp(16px, 6vw, 28px);
+	}
+}
+
+@media (width <= 480px) {
+	.modal_content {
+		position: fixed;
+		width: 100%;
+		left: 0;
+	}
+}

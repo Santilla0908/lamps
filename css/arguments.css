@@ -1,0 +1,137 @@
+.arguments {
+	display: flex;
+	padding: 3.125rem 0 0 0;
+}
+
+.arguments_header {
+	margin: 3rem 0 9rem 0;
+}
+
+.arguments_items {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 0 5rem;
+	color: var(--third-primary-color);
+	max-width: 1260px;
+}
+
+.argument_item {
+	position: relative;
+	display: grid;
+	grid-template-columns: auto 1fr;
+	grid-template-rows: max-content;
+	grid-template-areas:
+    'number header'
+    'number desc';
+	gap: 0 1.5rem;
+	height: 283px;
+	width: 345px;
+	font-family: 'Proxima Nova Bold', sans-serif;
+	font-size: 16px;
+}
+
+.argument_item:nth-child(3n+1) {
+	transform: translateY(-50px);
+}
+
+.argument_item:nth-child(3n+3) {
+	transform: translateY(50px);
+}
+
+.argument_item_number {
+	grid-area: number;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	background: var(--color-primary);
+	border-radius: 50%;
+	font-size: 18px;
+	animation: pulse 2s infinite;
+}
+
+.argument_item_header {
+	grid-area: header;
+	position: relative;
+	display: flex;
+	align-items: flex-start;
+	margin: 0 0 24px 0;
+	font-weight: normal;
+	font-size: 16px;
+}
+
+.argument_item_header::after {
+	position: absolute;
+	top: calc(100% + 8px);
+	left: 0;
+	content: '';
+	width: 40px;
+	height: 1px;
+	background-color: var(--third-primary-color);
+}
+
+.argument_item_desc {
+	grid-area: desc;
+	font-family: 'Proxima Nova', sans-serif;
+	color: #808080;
+}
+
+@media (width <= 1200px) {
+
+	.arguments_header {
+		margin: 2.5rem 0;
+	}
+
+	.arguments_items {
+		gap: 3rem 1rem;
+	}
+
+	.argument_item {
+		height: auto;
+	}
+
+	.argument_item:nth-child(3n+1) {
+		transform: translateY(0);
+	}
+
+	.argument_item:nth-child(3n+3) {
+		transform: translateY(0);
+	}
+}
+
+@media (width <= 1100px) {
+
+	.arguments_items {
+		grid-template-columns: repeat(2, 1fr);
+		justify-items: center;
+	}
+}
+
+@media (width <= 730px) {
+	.arguments_items {
+		grid-template-columns: repeat(1, 1fr);
+		justify-items: center;
+	}
+
+}
+
+@media (width <= 400px) {
+	.argument_item {
+		width: 300px;
+	}
+}
+
+@keyframes pulse {
+	0% {
+		box-shadow: 0 0 0 0 rgba(255, 197, 1, 0.4);
+	}
+
+	70% {
+		box-shadow: 0 0 0 15px rgba(255, 197, 1, 0);
+	}
+
+	100% {
+		box-shadow: 0 0 0 0 rgba(255, 197, 1, 0);
+	}
+}
