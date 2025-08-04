@@ -29,6 +29,7 @@
 html {
 	font-size: clamp(6px, calc(8px + 0.5vw), 16px);
 	line-height: 1.15;
+	scrollbar-width: none;
 }
 
 body {
@@ -2359,34 +2360,6 @@ p {
 
 /* Медиазапросы к calculator */
 
-/*@media (width <= 1660px) {
-	.calculator_lamp_ordinary,
-	.calculator_lamp_ordinary::after {
-		background-position-y: -2vw;
-	}
-}
-
-@media (width <= 1300px) {
-	.calculator_lamp_ordinary,
-	.calculator_lamp_ordinary::after {
-		background-position-y: -2.6vw;
-	}
-}
-
-@media (width <= 1040px) {
-	.calculator_lamp_ordinary,
-	.calculator_lamp_ordinary::after {
-		background-position-y: -3.5vw;
-	}
-}
-
-@media (width <= 799px) {
-	.calculator_lamp_ordinary,
-	.calculator_lamp_ordinary::after {
-		background-position-y: -4vw;
-	}
-}*/
-
 @media (width <= 700px) {
 	.calculator_start_item {
 		width: 100%;
@@ -2407,7 +2380,6 @@ p {
 	.items_header::before {
 		display: none;
 	}
-
 }
 
 
