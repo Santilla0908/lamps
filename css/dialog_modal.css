@@ -119,6 +119,10 @@
 	margin: 0 0 10px 0;
 }
 
+.scroll-block {
+	overflow: hidden;
+}
+
 @media (width <= 1535px) {
 
 	.dialog {
