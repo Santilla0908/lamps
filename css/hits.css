@@ -8,9 +8,13 @@
 }
 
 .filter {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	gap: 5px;
 	padding: 0 46px;
 	margin: 0 0 2rem 0;
-	text-align: left;
 }
 
 .filter_label {
@@ -44,6 +48,10 @@
 	cursor: pointer;
 	padding: 0 25px 0 5px;
 	border: 2px solid var(--color-primary);
+}
+
+option {
+	color: #444444;
 }
 
 .hits_incandescent,
@@ -183,7 +191,7 @@
 @media (width <= 1190px) {
 
 	.filter {
-		text-align: center;
+		justify-content: center;
 	}
 }
 

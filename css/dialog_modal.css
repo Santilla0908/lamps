@@ -28,17 +28,6 @@
 	background-color: rgba(0, 0, 0, 0.86)
 }
 
-.modal_content {
-	position: relative;
-	display: flex;
-	justify-content: center;
-	flex-direction: column;
-	height: 460px;
-	width: 480px;
-	border: 10px solid #5e5c5a;
-	background-color: var(--background-color-form);
-}
-
 .modal_close {
 	position: absolute;
 	width: 45px;
@@ -77,9 +66,15 @@
 }
 
 .form_modal {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	justify-content: center;
+	height: 460px;
+	width: 480px;
+	border: 10px solid #5e5c5a;
+	background-color: var(--background-color-form);
 }
 
 /* Второе модальное окно */
@@ -95,6 +90,7 @@
 	width: fit-content;
 	padding: 20px;
 	justify-content: flex-start;
+	align-items: stretch;
 	font-size: clamp(10px, 3.2vw, 16px);
 }
 
@@ -133,7 +129,7 @@
 		display: none;
 	}
 
-	.modal_content {
+	.form_modal {
 		height: clamp(390px, 57vw, 440px);
 	}
 }
@@ -146,7 +142,7 @@
 }
 
 @media (width <= 480px) {
-	.modal_content {
+	.form_modal {
 		position: fixed;
 		width: 100%;
 		left: 0;

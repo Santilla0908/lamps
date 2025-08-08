@@ -124,7 +124,7 @@ p {
 	height: 50px;
 	padding: 0 40px 0 10px;
 	border: 1px solid var(--second-primary-color);
-	font-size: 16px;
+	font-size: clamp(12px, 3.8vw, 16px);
 	background-color: #292929;
 	color: var(--second-primary-color);
 	transition: all 0.5s ease;
@@ -264,13 +264,6 @@ p {
 	transform: rotate(45deg);
 	width: 100px;
 	left: calc(50% - 50px);
-}
-
-
-@media (width <= 900px) {
-	.form_item_input {
-		font-size: 1.5rem;
-	}
 }
 
 @media (width <= 800px) {
