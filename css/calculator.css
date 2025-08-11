@@ -57,13 +57,13 @@
 .calculator_lamp_ordinary {
 	background: var(--third-primary-color) url('../img/calculator/lamp1.png') no-repeat center;
 	background-size: contain;
-	background-position-y: -1.8vw;
+	background-position-y: clamp(-35px, -4vw, -10px);
 }
 
 .calculator_lamp_ordinary::after {
 	background: var(--third-primary-color) url(../img/calculator/lamp1-on.png) no-repeat center;
 	background-size: contain;
-	background-position-y: -1.8vw;
+	background-position-y: clamp(-35px, -4vw, -10px);
 }
 
 .calculator_lamp_osram {

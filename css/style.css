@@ -53,6 +53,10 @@ p {
 	margin: 0;
 }
 
+h1, h2, h3, h4, h5, h6 {
+	margin: 0;
+}
+
 .container {
 	position: relative;
 	display: flex;
@@ -245,7 +249,7 @@ p {
 	font-size: clamp(14px, 4vw, 32px);
 	text-transform: uppercase;
 	z-index: 1;
-	height: 115px;
+	height: 150px;
 }
 
 .items_header::before {
@@ -273,6 +277,10 @@ p {
 }
 
 @media (width <= 770px) {
+
+	.section_header {
+		margin: 0 0 2.5rem 0;
+	}
 	.section_header::before {
 		display: none;
 	}
