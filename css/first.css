@@ -305,17 +305,9 @@
 }
 
 .advantages_slider {
-	display: flex;
-	overflow-x: auto;
-	scroll-snap-type: x mandatory;
-	scroll-behavior: smooth;
-	margin: 0 35px;
 	color: var(--second-primary-color);
 	text-align: left;
-	cursor: default;
-	-webkit-user-select: none;
 	padding: 15px 0;
-	scrollbar-width: none;
 }
 
 .advantage_item {
