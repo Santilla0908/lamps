@@ -1,0 +1,65 @@
+.dialog_certificates {
+	position: relative;
+	padding: 40px; /* отступы для кнопок */
+	border: none;
+	background: transparent;
+}
+
+.dialog_certificates::backdrop {
+	background-color: rgba(0, 0, 0, 0.86)
+}
+
+.modal_header_certificates {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	right: 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	color: white;
+	font-size: 18px;
+	z-index: 10;
+}
+
+.zoom_btn,
+.close_btn {
+	background: transparent;
+	border: none;
+	color: var(--second-primary-color);
+	font-size: 20px;
+	cursor: pointer;
+	margin-left: 10px;
+}
+
+.arrow {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	background: rgba(0,0,0,0.5);
+	border: none;
+	color: white;
+	font-size: 24px;
+	padding: 10px;
+	cursor: pointer;
+	z-index: 10;
+}
+
+.arrow.left {
+	left: 10px;
+}
+
+.arrow.right {
+	right: 10px;
+}
+
+
+.modal_img {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 413px;
+	height: 585px;
+	object-fit: cover;
+	cursor: zoom-in;
+}

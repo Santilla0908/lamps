@@ -17,6 +17,7 @@
 		<link href="./css/statistics.css" rel="stylesheet"  type="text/css">
 		<link href="./css/certificates.css" rel="stylesheet"  type="text/css">
 		<link href="./css/dialog_modal.css" rel="stylesheet"  type="text/css">
+		<link href="./css/certificates_dialog_modal.css" rel="stylesheet"  type="text/css">
 		<link rel="icon" type="image/vnd.microsoft.icon" href="favicon.ico">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	</head>
@@ -954,6 +955,34 @@
 			</div>
 		</dialog>
 
+		<dialog class="dialog_certificates">
+
+			<button class="zoom_btn">
+				<svg viewBox="0 0 40 40">
+					<path d="M18,17 m-8,0 a8,8 0 1,0 16,0 a8,8 0 1,0 -16,0 M24,22 L31,29"></path>
+				</svg>
+			</button>
+			<button class="close_btn">
+				<svg viewBox="0 0 40 40">
+					<path d="M10,10 L30,30 M30,10 L10,30"></path>
+				</svg>
+			</button>
+
+			<button class="arrow left">
+				<svg viewBox="0 0 40 40">
+					<path d="M18,12 L10,20 L18,28 M10,20 L30,20"></path>
+				</svg>
+			</button>
+
+			<img class="modal_img" src="" alt="certificate">
+
+			<button class="arrow right">
+				<svg viewBox="0 0 40 40">
+					<path d="M10,20 L30,20 M22,12 L30,20 L22,28"></path>
+				</svg>
+			</button>
+		</dialog>
+
 		<footer>
 		</footer>
 	</body>
@@ -979,5 +1008,6 @@
 	<script src="calculator_start.js"></script>
 	<script src="delivery_payment.js"></script>
 	<script src="statistics.js"></script>
+	<script src="modal_dialog_certificates.js"></script>
 
 </html>
