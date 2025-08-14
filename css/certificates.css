@@ -3,13 +3,17 @@
 }
 
 .slider_certificates {
-	top: calc(50% + 80px);
+	top: calc(100% - 176px);
 	background-color: #505050;
+}
+
+.next_slider {
+	right: 10px;
 }
 
 .certificates_slider {
 	position: relative;
-	width: 1197px;
+	max-width: 1197px;
 }
 
 .certificates_item {
@@ -23,11 +27,12 @@
 .certificates_item_img {
 	position: relative;
 	width: 277px;
-	height: 400px;
 	border: 10px solid #f4f4f4;
 	background-position: center;
 	background-size: cover;
 	transition: border-color 0.3s ease;
+	aspect-ratio: 277/400;
+	height: auto;
 }
 
 .certificates_item_img:hover {
@@ -115,4 +120,16 @@
 
 .certificates_item_img_13 {
 	background-image: url('../img/certificates/13.jpg');
+}
+
+@media (width <= 985px) {
+	.certificates_item {
+		width: 50%;
+	}
+}
+
+@media (width <= 700px) {
+	.certificates_item {
+		width: 100%;
+	}
 }
