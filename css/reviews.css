@@ -98,6 +98,7 @@
 	font-family: 'Proxima Nova Bold', sans-serif;
 	text-transform: uppercase;
 	color: #343434;
+	margin: 0 0 0 20px;
 }
 
 @media (width <= 1160px) {
@@ -149,10 +150,13 @@
 		margin: 0 0 20px 0;
 	}
 
-	.reviews_photo:nth-child(1),
-	.reviews_photo:nth-child(3) {
-		background-position-y: 250px;
+	.reviews_photo_1,
+	.reviews_photo_3 {
+		background-position-y: 240px;
 	}
 
+	.reviews_name {
+		margin: 0;
+	}
 
 }
