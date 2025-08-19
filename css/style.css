@@ -210,6 +210,25 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Общие стили */
 
+.brand {
+	display: flex;
+	align-items: center;
+	width: 200px;
+	height: 55px;
+	margin: 0 10px;
+}
+
+.brand_logo {
+	height: 25px;
+	background: url('../img/header/logo.png') no-repeat;
+}
+
+.brand_slogan {
+	font-size: 14.9px;
+	line-height: 1.5;
+	color: var(--second-primary-color);
+}
+
 .hits,
 .delivery_payment {
 	padding: 3.125rem 0;

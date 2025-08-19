@@ -1,0 +1,60 @@
+.contacts-bar {
+	background: var(--color-primary);
+	padding: 1.25rem 0;
+	text-transform: uppercase;
+}
+
+.contacts_items {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.contacts_item {
+	display: flex;
+	align-items: center;
+	position: relative;
+	height: 65px;
+	padding: 0 15px;
+}
+
+.contacts_item_icon {
+	position: absolute;
+	width: 24.5px;
+	height: 24.5px;
+}
+
+.contacts_item_icon::after {
+	content: '';
+	position: absolute;
+	top: -50%;
+	left: -50%;
+	width: 49px;
+	height: 49px;
+	background: url('../img/contacts/braces.png');
+	transition: rotate 0.3s ease;
+}
+
+.contacts_item:hover .contacts_item_icon::after {
+	rotate: 90deg;
+}
+
+
+.contacts_item_text {
+	margin: 0 0 0 50px;
+	font-size: clamp(12px, 1vw, 16px);
+	color: #343434;
+	white-space: nowrap;
+	line-height: 24px;
+	font-family: 'Proxima Nova Bold',sans-serif;
+}
+
+@media (width <= 800px) {
+	.contacts_container {
+		align-items: center;
+	}
+
+	.contacts_items {
+		flex-direction: column;
+	}
+}
