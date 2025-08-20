@@ -229,11 +229,8 @@ h1, h2, h3, h4, h5, h6 {
 	color: var(--second-primary-color);
 }
 
-.hits,
-.delivery_payment {
+.section {
 	padding: 3.125rem 0;
-	background: url('../img/hits/bg.jpg') top center no-repeat;
-	background-size: cover;
 }
 
 .section_header {
@@ -268,7 +265,7 @@ h1, h2, h3, h4, h5, h6 {
 	font-size: clamp(14px, 4vw, 32px);
 	text-transform: uppercase;
 	z-index: 1;
-	height: 150px;
+	height: 200px;
 }
 
 .items_header::before {

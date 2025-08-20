@@ -1,9 +1,6 @@
-.certificates {
-	padding: 3.125rem 0;
-}
 
 .slider_certificates {
-	top: calc(100% - 230px);
+	top: calc(50% + clamp(10px, 3vw, 40px));
 }
 
 .slick-arrow.next {

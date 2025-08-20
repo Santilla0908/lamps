@@ -1,6 +1,5 @@
 .about_company {
 	position: relative;
-	padding: 3.125rem 0;
 	text-align: center;
 }
 
@@ -35,6 +34,20 @@
 	right: 30px;
 	top: 330px;
 	background-image: url('../img/about_company/lamp3.png');
+}
+
+.about_company_bg_lamp4 {
+	position: absolute;
+	width: 369px;
+	height: 340px;
+	background-image: url('../img/about_company/lamp4.png');
+}
+
+.about_company_bg_lamp5 {
+	position: absolute;
+	width: 316px;
+	height: 397px;
+	background-image: url('../img/about_company/lamp5.png');
 }
 
 .about_company_container {

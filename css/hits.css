@@ -1,3 +1,8 @@
+.hits {
+	background: url('../img/hits/bg.jpg') top center no-repeat;
+	background-size: cover;
+}
+
 .hits_bg_lamp {
 	position: absolute;
 	background-image: url('../img/hits/lamp.png');

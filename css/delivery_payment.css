@@ -1,3 +1,8 @@
+.delivery_payment {
+	background: url('../img/delivery_payment/bg-hits.jpg') top center no-repeat;
+	background-size: cover;
+}
+
 .delivery_payment_container {
 	display: flex;
 	flex-wrap: wrap;
@@ -10,7 +15,7 @@
 
 .delivery_payment_items_header {
 	font-size:clamp(18px, 5vw, 48px);
-	height: clamp(50px, 22.5vw, 150px);
+	height: clamp(50px, 22.5vw, 200px);
 }
 
 .delivery_payment_items {
