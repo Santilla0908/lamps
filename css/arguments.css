@@ -109,12 +109,14 @@
 }
 
 @media (width <= 770px) {
+
 	.arguments_header {
 		margin: 0 0 2.5rem 0;
 	}
 }
 
 @media (width <= 730px) {
+
 	.arguments_items {
 		grid-template-columns: repeat(1, 1fr);
 		justify-items: center;
@@ -123,6 +125,7 @@
 }
 
 @media (width <= 400px) {
+
 	.argument_item {
 		width: 300px;
 	}

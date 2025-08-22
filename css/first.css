@@ -99,8 +99,6 @@
 	height: 100%;
 }
 
-
-
 .phone {
 	width: 200px;
 	height: 55px;
@@ -220,6 +218,7 @@
 .product_container {
 	aspect-ratio: 16/9;
 	padding: 10px 0;
+	align-items: center;
 }
 
 .product {
@@ -268,6 +267,10 @@
 	top: calc(50% - 20px);
 	z-index: 1;
 	background-color: transparent;
+}
+
+.slider_nav:hover {
+	border-color: var(--color-primary);
 }
 
 .slider_nav.next {

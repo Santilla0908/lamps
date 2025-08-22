@@ -24,6 +24,7 @@
 	--second-primary-color: #fff;
 	--third-primary-color: #000;
 	--background-color-form: #171717;
+	--background-color-footer: #343434;
 }
 
 html {
@@ -49,10 +50,7 @@ button {
 	border: none;
 }
 
-p {
-	margin: 0;
-}
-
+p,
 h1, h2, h3, h4, h5, h6 {
 	margin: 0;
 }
@@ -71,7 +69,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .btn {
 	position: relative;
-	margin: 0 auto 10px;
 	display: flex;
 	width: max-content;
 	height: clamp(43px, 5vw, 58px);
@@ -89,7 +86,7 @@ h1, h2, h3, h4, h5, h6 {
 	left: 4px;
 	border: 2px solid var(--color-primary);
 	transform: rotate(-2deg);
-	transition: all 0.3s ease;
+	transition: transform 0.3s ease;
 	width: 98%;
 	height: 102%;
 }
@@ -191,7 +188,7 @@ h1, h2, h3, h4, h5, h6 {
 	line-height: 1.2;
 	opacity: 0;
 	pointer-events: none;
-	transition: all 0.5s ease;
+	transition: opacity 0.5s ease;
 }
 
 .form_agree_tooltip::before {
@@ -305,11 +302,16 @@ h1, h2, h3, h4, h5, h6 {
 	height: 35px;
 	cursor: pointer;
 	border: 1px solid var(--second-primary-color);
-	transition: all 0.3s ease;
+	transition: color, background-color 0.3s ease;
 	background-color: #505050;
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 13px 23px;
+}
+
+.slider_certificates:hover,
+.reviews_slick:hover {
+	background-color: var(--color-primary)
 }
 
 .prev {
@@ -327,10 +329,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (width <= 770px) {
-
 	.section_header {
 		margin: 0 0 2.5rem 0;
 	}
+
 	.section_header::before {
 		display: none;
 	}

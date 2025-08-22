@@ -1,6 +1,6 @@
 .footer {
 	padding: 2.5rem 0;
-	background-color: #343434;
+	background-color: var(--background-color-footer);
 }
 
 .footer_items {

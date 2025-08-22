@@ -51,6 +51,10 @@
 }
 
 .about_company_container {
+	align-items: center;
+}
+
+.about_company_items {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
