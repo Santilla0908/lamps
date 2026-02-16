@@ -114,13 +114,13 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Форма к модальному окну, к блоку offer offer_second*/
 
-.form_item {
+.modal_item {
 	position: relative;
 	margin: 0 0 1.2rem 0;
 	width: 85%;
 }
 
-.form_item_input {
+.modal_item_input {
 	width: 100%;
 	height: 50px;
 	padding: 0 40px 0 10px;
@@ -132,28 +132,28 @@ h1, h2, h3, h4, h5, h6 {
 	cursor: pointer;
 }
 
-.form_item_input::placeholder {
+.modal_item_input::placeholder {
 	color: var(--second-primary-color);
 	opacity: 0.9;
 }
 
-.form_item_input:focus,
-.form_item_input:active {
+.modal_item_input:focus,
+.modal_item_input:active {
 	border-color: var(--color-primary);
 }
 
-.form_item_icon {
+.modal_item_icon {
 	position: absolute;
 	top: 12px;
 	right: 8px;
 }
 
-.form_item_input:focus +.form_item_icon,
-.form_item_input:active +.form_item_icon {
+.modal_item_input:focus +.modal_item_icon,
+.modal_item_input:active +.modal_item_icon {
 	color: var(--color-primary);
 }
 
-.form_agree {
+.modal_agree {
 	position: relative;
 	margin: 0 auto 1.9rem;
 	font-size: 16px;
@@ -164,16 +164,16 @@ h1, h2, h3, h4, h5, h6 {
 	padding: 0 1rem;
 }
 
-.form_agree_checkbox {
+.modal_agree_checkbox {
 	margin: 0 0 2px 0;
 }
 
-.form_agree_underline {
+.modal_agree_underline {
 	text-decoration: underline;
 	cursor: help;
 }
 
-.form_agree_tooltip {
+.modal_agree_tooltip {
 	position: absolute;
 	left: 0;
 	right: 0;
@@ -191,7 +191,7 @@ h1, h2, h3, h4, h5, h6 {
 	transition: opacity 0.5s ease;
 }
 
-.form_agree_tooltip::before {
+.modal_agree_tooltip::before {
 	content:'';
 	display: block;
 	position: absolute;
@@ -201,7 +201,7 @@ h1, h2, h3, h4, h5, h6 {
 	right: 50px;
 }
 
-.form_agree_underline:hover+.form_agree_tooltip {
+.modal_agree_underline:hover+.modal_agree_tooltip {
 	opacity: 1;
 }
 

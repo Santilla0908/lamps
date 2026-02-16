@@ -2,23 +2,23 @@ const dialog = document.querySelector('.dialog');
 const openModalButtons = document.querySelectorAll('.open_modal');
 const modalClose = document.querySelector('.modal_close');
 
-function closeOnOverlayClick({ currentTarget, target }) {
+const closeOnOverlayClick = ({ currentTarget, target }) => {
 	const isOnOverlayClick = target === currentTarget;
 	if (isOnOverlayClick) {
 		close();
 	}
 }
 
-function openModalAndBlockScroll() {
+const openModalAndBlockScroll = () => {
 	dialog.showModal();
 	document.body.classList.add('scroll-block');
 }
 
-function returnScroll() {
+const returnScroll = () => {
 	document.body.classList.remove('scroll-block');
 }
 
-function close() {
+const close = () => {
 	dialog.close();
 	returnScroll();
 }

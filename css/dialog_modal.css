@@ -65,7 +65,7 @@
 	background-color: var(--color-primary);
 }
 
-.form_modal {
+.modal_content {
 	position: relative;
 	display: flex;
 	flex-direction: column;
@@ -129,7 +129,7 @@
 		display: none;
 	}
 
-	.form_modal {
+	.modal_content {
 		height: clamp(390px, 57vw, 440px);
 	}
 }
@@ -142,7 +142,7 @@
 }
 
 @media (width <= 480px) {
-	.form_modal {
+	.modal_content {
 		position: fixed;
 		width: 100%;
 		left: 0;
