@@ -5,14 +5,22 @@
 
 .reviews_slick {
 	top: calc(100% - 200px);
+	position: absolute;
+	z-index: 10;
 }
 
 .reviews_slick.prev {
-	left: 15px;
+	left: 10px;
 }
 
 .reviews_slick.next {
-	right: 15px;
+	right: 10px;
+}
+
+.reviews_viewport {
+	overflow: hidden;
+	width: 95%;
+	margin: 0 auto;
 }
 
 .reviews_slider {
@@ -21,7 +29,7 @@
 
 .reviews_item {
 	display: flex;
-	justify-content: space-between;
+	justify-content: space-around;
 	scroll-snap-align: start;
 	flex-basis: 50%;
 	flex-grow: 0;
@@ -74,7 +82,6 @@
 .reviews_item:hover .reviews_photo {
 	border-color: var(--color-primary);
 }
-
 
 .reviews_photo_1 {
 	background-image: url('../img/reviews/photo1.png');
