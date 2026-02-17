@@ -1,33 +1,28 @@
-const dialog = document.querySelector('.dialog');
-const openModalButtons = document.querySelectorAll('.open_modal');
-const modalClose = document.querySelector('.modal_close');
+const modalDialogEl = document.querySelector('.dialog');
+const openModalButtonEls = document.querySelectorAll('.open_modal');
+const modalCloseButtonEl = document.querySelector('.modal_close');
 
-const closeOnOverlayClick = ({ currentTarget, target }) => {
-	const isOnOverlayClick = target === currentTarget;
-	if (isOnOverlayClick) {
-		close();
-	}
-}
-
-const openModalAndBlockScroll = () => {
-	dialog.showModal();
+const openModal = () => {
+	modalDialogEl.showModal();
 	document.body.classList.add('scroll-block');
 }
 
-const returnScroll = () => {
+const enableScroll = () => {
 	document.body.classList.remove('scroll-block');
 }
 
-const close = () => {
-	dialog.close();
-	returnScroll();
+const closeModal = () => {
+	modalDialogEl.close();
 }
 
-openModalButtons.forEach(button => {
-	button.addEventListener('click', openModalAndBlockScroll);
+const handleOverlayClick = e => {
+	const isOverlayClick = e.target === e.currentTarget;
+	if (isOverlayClick) return closeModal();
+}
+
+openModalButtonEls.forEach(button => {
+	button.addEventListener('click', openModal);
 });
-modalClose.addEventListener('click', close);
-dialog.addEventListener('click', closeOnOverlayClick);
-dialog.addEventListener('cancel', () => {
-	returnScroll();
-});
+modalCloseButtonEl.addEventListener('click', closeModal);
+modalDialogEl.addEventListener('click', handleOverlayClick);
+modalDialogEl.addEventListener('close', enableScroll);

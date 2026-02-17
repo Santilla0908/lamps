@@ -1,33 +1,27 @@
-const openBtn = document.querySelector('.calculator_total_link');
-const modal = document.querySelector('.dialog_calculator');
-const closeBtn = document.querySelector('.modal_close_calculator');
+const openButtonModalCalculatorEl = document.querySelector('.calculator_total_link');
+const modalCalculatorEl = document.querySelector('.dialog_calculator');
+const closeButtonModalCalculatorEl = document.querySelector('.modal_close_calculator');
 
-function blockScroll() {
+const openCalculatorModal = e => {
+	e.preventDefault();
+	modalCalculatorEl.showModal();
 	document.body.classList.add('scroll-block');
 }
 
-function unblockScroll() {
+const enablePageScroll = () => {
 	document.body.classList.remove('scroll-block');
 }
 
-openBtn.addEventListener('click', (e) => {
-	e.preventDefault();
-	modal.showModal();
-	blockScroll(); // Блокируем скролл
-});
-
-function closeModal() {
-	modal.close();
-	unblockScroll();
+const closeCalculatorModal = () => {
+	modalCalculatorEl.close();
 }
 
-closeBtn.addEventListener('click', closeModal);
+const closeOnOverlayClick = e => {
+	const isOverlayClick = e.target === e.currentTarget;
+	if (isOverlayClick) return closeCalculatorModal();
+}
 
-
-modal.addEventListener('click', (e) => {
-	if (e.target === modal) {
-		closeModal();
-	}
-});
-
-modal.addEventListener('close', unblockScroll);
+openButtonModalCalculatorEl.addEventListener('click', openCalculatorModal);
+closeButtonModalCalculatorEl.addEventListener('click', closeCalculatorModal);
+modalCalculatorEl.addEventListener('click', closeOnOverlayClick);
+modalCalculatorEl.addEventListener('click', enablePageScroll);
