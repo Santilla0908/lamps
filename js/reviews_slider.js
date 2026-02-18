@@ -6,28 +6,32 @@ const reviewsItemEls = [...document.querySelectorAll('.reviews_item')];
 
 let currentIndex = 0;
 
-const widthOfItem = reviewsItemEls[0].offsetWidth;
+const getSliderData = () => {
+	const widthOfItem = reviewsItemEls[0].getBoundingClientRect().width;
+	const visibleItems = Math.round(viewportEl.offsetWidth / widthOfItem );
+	const maxIndex = reviewsItemEls.length - visibleItems;
 
-const visibleItems = Math.floor(viewportEl.offsetWidth / widthOfItem );
+	return { widthOfItem, maxIndex };
+}
 
-const maxIndex = reviewsItemEls.length - visibleItems;
+const updateButtons = () => {
+	const { maxIndex } = getSliderData();
+	reviewsButtonPrevEl.classList.toggle('inactive', currentIndex === 0);
+	reviewsButtonNextEl.classList.toggle('inactive', currentIndex === maxIndex);
+}
 
-console.log("item width:", widthOfItem);
-console.log("viewport width:", viewportEl.offsetWidth);
-console.log("visibleItems:", visibleItems);
-console.log("maxIndex:", maxIndex);
+updateButtons();
 
 const updateSliderPosition = () => {
-	const offset = currentIndex * widthOfItem;
-
-	console.log("offset:", offset);
-
-	containerReviewsSliderEl.style.transform = `translateX(-${offset}px)`;
+	const { widthOfItem } = getSliderData();
+	containerReviewsSliderEl.style.transform = `translateX(-${currentIndex * widthOfItem}px)`;
 }
 
 reviewsButtonNextEl.addEventListener('click', () => {
+	const { maxIndex } = getSliderData();
 	if (currentIndex < maxIndex) {
 		currentIndex += 1;
+		updateButtons();
 		updateSliderPosition();
 	}
 });
@@ -35,6 +39,16 @@ reviewsButtonNextEl.addEventListener('click', () => {
 reviewsButtonPrevEl.addEventListener('click', () => {
 	if (currentIndex > 0) {
 		currentIndex -= 1;
+		updateButtons();
 		updateSliderPosition();
 	}
+});
+
+window.addEventListener('resize', () => {
+	const { maxIndex } = getSliderData();
+	if (currentIndex > maxIndex) {
+		currentIndex = maxIndex;
+	}
+	updateButtons();
+	updateSliderPosition();
 });
