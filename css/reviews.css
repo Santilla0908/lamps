@@ -23,15 +23,8 @@
 	cursor: default;
 }
 
-.reviews_viewport {
-	overflow: hidden;
-	width: 95%;
-	margin: 0 auto;
-}
-
 .reviews_slider {
 	position: relative;
-	transition: transform 0.3s ease;
 }
 
 .reviews_item {
