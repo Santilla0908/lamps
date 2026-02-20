@@ -1,38 +1,54 @@
-const reviewsButtonPrevEl = document.querySelector('.reviews_slick_prev');
-const reviewsButtonNextEl = document.querySelector('.reviews_slick_next');
-const sliderViewportEl = document.querySelector('.reviews_slider');
-const reviewsItemEls = [...document.querySelectorAll('.reviews_item')];
+{
+	const prevEl = document.querySelector('.reviews_slick_prev');
+	const nextEl = document.querySelector('.reviews_slick_next');
+	const sliderEl = document.querySelector('.reviews_slider');
+	const itemSliderEls = [ ...document.querySelectorAll('.reviews_item') ];
 
-const getMaxScroll = () => {
-	return sliderViewportEl.scrollWidth - sliderViewportEl.clientWidth;
-};
+	let currentIndex = 0;
 
-const getItemWidth = () => {
-	return reviewsItemEls[0].offsetWidth;
-};
+	const getSliderData = () => {
+		const widthOfItem = itemSliderEls[0].offsetWidth;
+		const visibleItems = Math.round(sliderEl.offsetWidth / widthOfItem);
+		const maxIndex = itemSliderEls.length - visibleItems;
 
-const updateButtons = () => {
-	const maxScroll = getMaxScroll();
-	reviewsButtonPrevEl.classList.toggle('inactive', sliderViewportEl.scrollLeft <= 0);
-	reviewsButtonNextEl.classList.toggle('inactive', sliderViewportEl.scrollLeft >= maxScroll);
-}
+		return maxIndex;
+	}
 
-updateButtons();
-
-reviewsButtonNextEl.addEventListener('click', () => {
-	sliderViewportEl.scrollLeft += getItemWidth();
-});
-
-reviewsButtonPrevEl.addEventListener('click', () => {
-	sliderViewportEl.scrollLeft -= getItemWidth();
-});
-
-sliderViewportEl.addEventListener('scroll', updateButtons);
-window.addEventListener('resize', () => {
-	const maxScroll = getMaxScroll();
-	if (sliderViewportEl.scrollLeft > maxScroll) {
-		sliderViewportEl.scrollLeft = maxScroll;
+	const updateButtons = () => {
+		prevEl.classList.toggle('disabled', currentIndex === 0);
+		nextEl.classList.toggle('disabled', currentIndex === getSliderData());
 	}
 
 	updateButtons();
-});
+
+	prevEl.addEventListener('click', () => {
+		currentIndex -= 1;
+		itemSliderEls[currentIndex].scrollIntoView({
+			behavior: "smooth",
+			inline: "start",
+			container: "nearest"
+		});
+		updateButtons();
+	});
+
+	nextEl.addEventListener('click', () => {
+		currentIndex += 1;
+		itemSliderEls[currentIndex].scrollIntoView({
+			behavior: "smooth",
+			inline: "start",
+			container: "nearest"
+		});
+		updateButtons();
+	});
+
+	const observer = new ResizeObserver(() => {
+		itemSliderEls[currentIndex].scrollIntoView({
+			behavior: "auto",
+			inline: "start",
+			container: "nearest"
+		});
+		updateButtons();
+	});
+
+	observer.observe(sliderEl);
+}

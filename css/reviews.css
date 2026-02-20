@@ -17,7 +17,7 @@
 	right: 10px;
 }
 
-.reviews_slick.inactive {
+.reviews_slick.disabled {
 	opacity: 0.3;
 	pointer-events: none;
 	cursor: default;
