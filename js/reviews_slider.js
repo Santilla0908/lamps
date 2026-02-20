@@ -6,7 +6,7 @@
 
 	let currentIndex = 0;
 
-	const getSliderData = () => {
+	const maxIndex = () => {
 		const widthOfItem = itemSliderEls[0].offsetWidth;
 		const visibleItems = Math.round(sliderEl.offsetWidth / widthOfItem);
 		const maxIndex = itemSliderEls.length - visibleItems;
@@ -16,7 +16,7 @@
 
 	const updateButtons = () => {
 		prevEl.classList.toggle('disabled', currentIndex === 0);
-		nextEl.classList.toggle('disabled', currentIndex === getSliderData());
+		nextEl.classList.toggle('disabled', currentIndex === maxIndex());
 	}
 
 	updateButtons();
@@ -44,10 +44,9 @@
 	const observer = new ResizeObserver(() => {
 		itemSliderEls[currentIndex].scrollIntoView({
 			behavior: "auto",
-			inline: "start",
+			inline: "nearest",
 			container: "nearest"
 		});
-		updateButtons();
 	});
 
 	observer.observe(sliderEl);

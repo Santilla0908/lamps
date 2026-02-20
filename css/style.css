@@ -31,7 +31,6 @@ html {
 	font-size: clamp(6px, calc(8px + 0.5vw), 16px);
 	line-height: 1.15;
 	font-family: 'Proxima Nova', sans-serif;
-	min-width: 320px;
 	interpolate-size: allow-keywords;
 	scrollbar-width: none;
 }

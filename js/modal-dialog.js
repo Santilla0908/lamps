@@ -1,25 +1,25 @@
 {
-	const modalDialogEl = document.querySelector('.dialog');
-	const openModalButtonEls = document.querySelectorAll('.open_modal');
-	const modalCloseButtonEl = document.querySelector('.modal_close');
+	const modalEl = document.querySelector('.dialog');
+	const openModalEls = document.querySelectorAll('.open_modal');
+	const closeModalEl = document.querySelector('.modal_close');
 
-	openModalButtonEls.forEach(button => {
+	openModalEls.forEach(button => {
 		button.addEventListener('click', () => {
-			modalDialogEl.showModal();
+			modalEl.showModal();
 			document.body.classList.add('scroll-block');
 		});
 	});
 
-	modalCloseButtonEl.addEventListener('click', () => {
-		modalDialogEl.close();
+	closeModalEl.addEventListener('click', () => {
+		modalEl.close();
 	});
 
-	modalDialogEl.addEventListener('click', e => {
+	modalEl.addEventListener('click', e => {
 		const isOverlayClick = e.target === e.currentTarget;
-		if (isOverlayClick) modalDialogEl.close();
+		if (isOverlayClick) modalEl.close();
 	});
 
-	modalDialogEl.addEventListener('close', () => {
+	modalEl.addEventListener('close', () => {
 		document.body.classList.remove('scroll-block');
 	});
 }
