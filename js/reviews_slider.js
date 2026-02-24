@@ -6,46 +6,47 @@
 
 	let currentIndex = 0;
 
-	const maxIndex = () => {
+	const getSliderState = () => {
 		const widthOfItem = itemSliderEls[0].offsetWidth;
 		const visibleItems = Math.round(sliderEl.offsetWidth / widthOfItem);
 		const maxIndex = itemSliderEls.length - visibleItems;
 
-		return maxIndex;
+		return { widthOfItem, maxIndex };
 	}
 
 	const updateButtons = () => {
+		const { maxIndex } = getSliderState();
 		prevEl.classList.toggle('disabled', currentIndex === 0);
-		nextEl.classList.toggle('disabled', currentIndex === maxIndex());
+		nextEl.classList.toggle('disabled', currentIndex === maxIndex);
 	}
 
 	updateButtons();
 
 	prevEl.addEventListener('click', () => {
+		const { widthOfItem } = getSliderState();
 		currentIndex -= 1;
-		itemSliderEls[currentIndex].scrollIntoView({
+		sliderEl.scrollTo({
+			left: currentIndex * widthOfItem,
 			behavior: "smooth",
-			inline: "start",
-			container: "nearest"
 		});
 		updateButtons();
 	});
 
 	nextEl.addEventListener('click', () => {
+		const { widthOfItem } = getSliderState();
 		currentIndex += 1;
-		itemSliderEls[currentIndex].scrollIntoView({
+		sliderEl.scrollTo({
+			left: currentIndex * widthOfItem,
 			behavior: "smooth",
-			inline: "start",
-			container: "nearest"
 		});
 		updateButtons();
 	});
 
 	const observer = new ResizeObserver(() => {
-		itemSliderEls[currentIndex].scrollIntoView({
-			behavior: "auto",
-			inline: "nearest",
-			container: "nearest"
+		const { widthOfItem } = getSliderState();
+		sliderEl.scrollTo({
+			left: currentIndex * widthOfItem,
+			behavior: 'auto'
 		});
 	});
 
