@@ -42,6 +42,45 @@
 		updateButtons();
 	});
 
+	let isDragging = false;
+	let startX = 0;
+	let startScrollLeft = 0;
+
+	sliderEl.addEventListener('mousedown', e => {
+		isDragging = true;
+		startX = e.clientX;
+		startScrollLeft = sliderEl.scrollLeft;
+		sliderEl.classList.add('dragging');
+	});
+
+	sliderEl.addEventListener('mousemove', e => {
+		if (!isDragging) return;
+		const moveX = e.clientX - startX;
+		sliderEl.scrollLeft = startScrollLeft - moveX;
+		e.preventDefault()
+	});
+
+	sliderEl.addEventListener('mouseup', () => {
+		if (!isDragging) return;
+		isDragging = false;
+		sliderEl.classList.remove('dragging');
+
+		const { widthOfItem, maxIndex } = getSliderState();
+		let newIndex = Math.round(sliderEl.scrollLeft / widthOfItem);
+		newIndex = Math.min(Math.max(newIndex, 0), maxIndex);
+
+		currentIndex = newIndex;
+		sliderEl.scrollTo({
+			left: currentIndex * widthOfItem,
+			behavior: "auto"
+		});
+		updateButtons();
+	});
+
+	sliderEl.addEventListener('mouseleave', () => {
+		isDragging = false;
+	});
+
 	const observer = new ResizeObserver(() => {
 		const { widthOfItem } = getSliderState();
 		sliderEl.scrollTo({

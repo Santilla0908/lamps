@@ -27,10 +27,13 @@
 	position: relative;
 }
 
+.reviews_slider.dragging {
+	cursor: grab;
+}
+
 .reviews_item {
 	display: flex;
 	justify-content: space-around;
-	scroll-snap-align: start;
 	flex-basis: 50%;
 	flex-grow: 0;
 	flex-shrink: 0;
