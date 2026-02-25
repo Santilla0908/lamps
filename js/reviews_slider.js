@@ -47,6 +47,7 @@
 	let startScrollLeft = 0;
 
 	sliderEl.addEventListener('mousedown', e => {
+		e.preventDefault();
 		isDragging = true;
 		startX = e.clientX;
 		startScrollLeft = sliderEl.scrollLeft;
@@ -57,7 +58,6 @@
 		if (!isDragging) return;
 		const moveX = e.clientX - startX;
 		sliderEl.scrollLeft = startScrollLeft - moveX;
-		e.preventDefault()
 	});
 
 	sliderEl.addEventListener('mouseup', () => {
@@ -72,7 +72,7 @@
 		currentIndex = newIndex;
 		sliderEl.scrollTo({
 			left: currentIndex * widthOfItem,
-			behavior: "auto"
+			behavior: "smooth"
 		});
 		updateButtons();
 	});

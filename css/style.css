@@ -39,6 +39,7 @@ html {
 body {
 	margin: 0;
 	overflow-x: hidden;
+	overflow-anchor: none;
 }
 
 a {
@@ -289,7 +290,6 @@ h1, h2, h3, h4, h5, h6 {
 	max-width: 1197px;
 	overflow-x: auto;
 	overflow-y: hidden;
-	scroll-behavior: smooth;
 	-ms-overflow-style: none;
 	scrollbar-width: none;
 	scroll-snap-type: x mandatory;
