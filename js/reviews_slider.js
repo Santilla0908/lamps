@@ -67,8 +67,12 @@
 
 		const { widthOfItem, maxIndex } = getSliderState();
 		let newIndex = Math.round(sliderEl.scrollLeft / widthOfItem);
-		newIndex = Math.min(Math.max(newIndex, 0), maxIndex);
-
+		if (newIndex < 0) {
+			newIndex = 0;
+		}
+		if (newIndex > maxIndex) {
+			newIndex = maxIndex;
+		}
 		currentIndex = newIndex;
 		sliderEl.scrollTo({
 			left: currentIndex * widthOfItem,
