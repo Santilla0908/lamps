@@ -22,7 +22,7 @@
 
 	updateButtons();
 
-	prevEl.addEventListener('click', () => {
+	const prevSlide = () => {
 		const { widthOfItem } = getSliderState();
 		currentIndex -= 1;
 		sliderEl.scrollTo({
@@ -30,9 +30,9 @@
 			behavior: "smooth",
 		});
 		updateButtons();
-	});
+	}
 
-	nextEl.addEventListener('click', () => {
+	const nextSlide = () => {
 		const { widthOfItem } = getSliderState();
 		currentIndex += 1;
 		sliderEl.scrollTo({
@@ -40,6 +40,13 @@
 			behavior: "smooth",
 		});
 		updateButtons();
+	}
+
+	prevEl.addEventListener('click', prevSlide);
+	nextEl.addEventListener('click', nextSlide);
+
+	sliderEl.addEventListener('click', () => {
+		sliderEl.focus();
 	});
 
 	let isDragging = false;
@@ -83,6 +90,21 @@
 
 	sliderEl.addEventListener('mouseleave', () => {
 		isDragging = false;
+	});
+
+	sliderEl.addEventListener('keydown', e => {
+		const { maxIndex } = getSliderState();
+
+		switch (e.key) {
+			case 'ArrowRight':
+				e.preventDefault();
+				if (currentIndex < maxIndex) nextSlide();
+				break;
+			case 'ArrowLeft':
+				e.preventDefault();
+				if (currentIndex > 0) prevSlide();
+				break;
+		}
 	});
 
 	const observer = new ResizeObserver(() => {
