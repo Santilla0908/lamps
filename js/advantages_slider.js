@@ -2,26 +2,93 @@
 	const prevEl = document.querySelector('.advantages_slick_prev');
 	const nextEl = document.querySelector('.advantages_slick_next');
 	const sliderEl = document.querySelector('.advantages_slider');
-	const itemSliderEls = [ ...document.querySelectorAll('.advantage_item')];
+	const originalItemEls = [ ...document.querySelectorAll('.advantage_item')];
 
-	const cloneCount = 4;
+	let currentIndex = 0;
+	const getSliderState = () => {
+		const itemWidth = sliderEl.children[0].offsetWidth;
+		const visibleItems = Math.round(sliderEl.offsetWidth / itemWidth);
+		return {
+			itemWidth,
+			visibleItems,
+			cloneCount: visibleItems
+		};
+	}
+
 	const createClones = () => {
-		const originalItems = [...sliderEl.children];
-		const originalLength = originalItems.length;
+		const { cloneCount } = getSliderState();
+		const originalLength = originalItemEls.length;
 
-		for (let i = originalLength - cloneCount; i < originalLength; i++) {
-			const clone = originalItems[i].cloneNode(true);
+		for (let i = originalLength - 1; i >= originalLength - cloneCount; i--) {
+			const clone = originalItemEls[i].cloneNode(true);
 			sliderEl.prepend(clone);
 		}
 		for (let i = 0; i < cloneCount; i++) {
-			const clone = originalItems[i].cloneNode(true);
+			const clone = originalItemEls[i].cloneNode(true);
 			sliderEl.append(clone);
 		}
 	}
 
-	createClones(); 
+	const setStartPosition = () => {
+		const { itemWidth, cloneCount } = getSliderState();
+		currentIndex = cloneCount;
+		sliderEl.scrollLeft = itemWidth * currentIndex;
+	}
+
+	const checkClones = () => {
+		const { itemWidth, cloneCount } = getSliderState();
+		const originalLength = originalItemEls.length;
+
+		if (currentIndex >= originalLength + cloneCount) {
+			currentIndex = cloneCount;
+			sliderEl.scrollTo({
+				left: currentIndex * itemWidth,
+				behavior: "auto"
+			});
+		}
+
+		if (currentIndex < cloneCount) {
+			currentIndex = originalLength + cloneCount - 1;
+			sliderEl.scrollTo({
+				left: currentIndex * itemWidth,
+				behavior: "auto"
+			});
+		}
+	}
+
+	const prevSlide = () => {
+		const { itemWidth } = getSliderState();
+		currentIndex -= 1;
+		sliderEl.scrollTo({
+			left: currentIndex * itemWidth,
+			behavior: "smooth",
+		});
+	}
+
+	const nextSlide = () => {
+		const { itemWidth } = getSliderState();
+		currentIndex += 1;
+		sliderEl.scrollTo({
+			left: currentIndex * itemWidth,
+			behavior: "smooth",
+		});
+	}
+
+	prevEl.addEventListener('click', prevSlide);
+	nextEl.addEventListener('click', nextSlide);
+
+	createClones();
+	setStartPosition();
+
+	const observer = new ResizeObserver(() => {
+		const { itemWidth } = getSliderState();
+		sliderEl.scrollTo({
+			left: currentIndex * itemWidth,
+			behavior: 'auto'
+		});
+	});
 
 
-
-
+	sliderEl.addEventListener('scrollend', checkClones);
+	observer.observe(sliderEl);
 }
