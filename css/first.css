@@ -281,6 +281,12 @@
 	color: var(--second-primary-color);
 	text-align: left;
 	padding: 15px 0;
+	width: 95%;
+	margin: 0 auto;
+}
+
+.advantages_slider.drag {
+	cursor: grab;
 }
 
 .advantage_item {
@@ -288,7 +294,6 @@
 	grid-template-columns: 60px 1fr;
 	grid-template-rows: auto;
 	grid-template-areas: 'icon text';
-	scroll-snap-align: start;
 	flex-basis: 25%;
 	flex-grow: 0;
 	flex-shrink: 0;

@@ -80,6 +80,42 @@
 	createClones();
 	setStartPosition();
 
+	let isDragging = false;
+	let startX = 0;
+	let startScrollLeft = 0;
+
+	sliderEl.addEventListener('mousedown', e => {
+		e.preventDefault();
+		isDragging = true;
+		startX = e.clientX;
+		startScrollLeft = sliderEl.scrollLeft;
+		sliderEl.classList.add('drag');
+	});
+
+	sliderEl.addEventListener('mousemove', e => {
+		if (!isDragging) return;
+		const moveX = e.clientX - startX;
+		sliderEl.scrollLeft = startScrollLeft - moveX;
+	});
+
+	sliderEl.addEventListener('mouseup', () => {
+		if (!isDragging) return;
+		isDragging = false;
+		sliderEl.classList.remove('drag');
+
+		const { itemWidth } = getSliderState();
+		currentIndex = Math.round(sliderEl.scrollLeft / itemWidth);
+		checkClones();
+		sliderEl.scrollTo({
+			left: currentIndex * itemWidth,
+			behavior: "smooth"
+		});
+	});
+
+	sliderEl.addEventListener('mouseleave', () => {
+		isDragging = false;
+	});
+
 	const observer = new ResizeObserver(() => {
 		const { itemWidth } = getSliderState();
 		sliderEl.scrollTo({
@@ -87,8 +123,6 @@
 			behavior: 'auto'
 		});
 	});
-
-
 	sliderEl.addEventListener('scrollend', checkClones);
 	observer.observe(sliderEl);
 }
