@@ -2,9 +2,10 @@
 	const prevEl = document.querySelector('.advantages_slick_prev');
 	const nextEl = document.querySelector('.advantages_slick_next');
 	const sliderEl = document.querySelector('.advantages_slider');
-	const originalItemEls = [ ...document.querySelectorAll('.advantage_item')];
+	const originalItemEls = [ ...document.querySelectorAll('.advantage_item') ];
 
 	let currentIndex = 0;
+
 	const getSliderState = () => {
 		const itemWidth = sliderEl.children[0].offsetWidth;
 		const visibleItems = Math.round(sliderEl.offsetWidth / itemWidth);
@@ -40,19 +41,13 @@
 		const originalLength = originalItemEls.length;
 
 		if (currentIndex >= originalLength + cloneCount) {
-			currentIndex = cloneCount;
-			sliderEl.scrollTo({
-				left: currentIndex * itemWidth,
-				behavior: "auto"
-			});
+			currentIndex -= originalLength;
+			sliderEl.scrollLeft = currentIndex * itemWidth;
 		}
 
 		if (currentIndex < cloneCount) {
-			currentIndex = originalLength + cloneCount - 1;
-			sliderEl.scrollTo({
-				left: currentIndex * itemWidth,
-				behavior: "auto"
-			});
+			currentIndex += originalLength;
+			sliderEl.scrollLeft = currentIndex * itemWidth;
 		}
 	}
 
@@ -84,6 +79,10 @@
 	let startX = 0;
 	let startScrollLeft = 0;
 
+	sliderEl.addEventListener('click', () => {
+		sliderEl.focus();
+	});
+
 	sliderEl.addEventListener('mousedown', e => {
 		e.preventDefault();
 		isDragging = true;
@@ -96,6 +95,8 @@
 		if (!isDragging) return;
 		const moveX = e.clientX - startX;
 		sliderEl.scrollLeft = startScrollLeft - moveX;
+		const { itemWidth } = getSliderState();
+		currentIndex = sliderEl.scrollLeft / itemWidth;
 	});
 
 	sliderEl.addEventListener('mouseup', () => {
@@ -106,6 +107,7 @@
 		const { itemWidth } = getSliderState();
 		currentIndex = Math.round(sliderEl.scrollLeft / itemWidth);
 		checkClones();
+
 		sliderEl.scrollTo({
 			left: currentIndex * itemWidth,
 			behavior: "smooth"
@@ -114,6 +116,28 @@
 
 	sliderEl.addEventListener('mouseleave', () => {
 		isDragging = false;
+		sliderEl.classList.remove('drag');
+
+		const { itemWidth } = getSliderState();
+		currentIndex = Math.round(sliderEl.scrollLeft / itemWidth);
+
+		sliderEl.scrollTo({
+			left: currentIndex * itemWidth,
+			behavior: "smooth"
+		});
+	});
+
+	sliderEl.addEventListener('keydown', e => {
+		switch (e.key) {
+			case 'ArrowRight':
+				e.preventDefault();
+				nextSlide();
+				break;
+			case 'ArrowLeft':
+				e.preventDefault();
+				prevSlide();
+				break;
+		}
 	});
 
 	const observer = new ResizeObserver(() => {
@@ -123,6 +147,10 @@
 			behavior: 'auto'
 		});
 	});
-	sliderEl.addEventListener('scrollend', checkClones);
+	sliderEl.addEventListener('scrollend', () => {
+		const { itemWidth } = getSliderState();
+		currentIndex = Math.round(sliderEl.scrollLeft / itemWidth);
+		checkClones();
+	});
 	observer.observe(sliderEl);
 }
