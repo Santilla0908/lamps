@@ -6,8 +6,15 @@
 	right: 10px;
 }
 
+.viewport_slider_certificates {
+	overflow: hidden;
+	margin: 0 auto;
+}
+
 .certificates_slider {
 	position: relative;
+	transition: transform 0.4s ease;
+	width: 100%;
 }
 
 .certificates_item {
