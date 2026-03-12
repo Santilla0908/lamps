@@ -5,49 +5,101 @@
 	const sliderEl = document.querySelector('.certificates_slider');
 	const originalItemEls = [ ...document.querySelectorAll('.certificates_item') ];
 
-	let currentIndex = 0;
+	const sliderState = {
+		currentIndex: 0,
+		itemWidth: 0,
+		cloneCount: 0,
+		isAnimating: false
+	}
 
 	const getSliderState = () => {
-		const itemWidth = originalItemEls[0].getBoundingClientRect().width;
-		const viewportWidth = viewportEl.getBoundingClientRect().width;
-		const visibleItems = viewportWidth / itemWidth;
+		const width = originalItemEls[0].offsetWidth;
+		const viewportWidth = viewportEl.offsetWidth;
+		const visibleItems = Math.ceil(viewportWidth / width);
+		const cloneCount = visibleItems;
 
 		return {
-			itemWidth,
+			itemWidth: width,
 			visibleItems,
-			cloneCount: visibleItems,
+			cloneCount,
 			originalLength: originalItemEls.length,
 		}
 	}
 
 	const createClones = () => {
-		const { cloneCount, originalLength } = getSliderState();
+		const { visibleItems, originalLength, itemWidth } = getSliderState();
+		sliderState.cloneCount = visibleItems;
+		sliderState.itemWidth = itemWidth;
 
-		for (let i = originalLength - 1; i >= originalLength - cloneCount; i--) {
+		for (let i = originalLength - 1; i >= originalLength - sliderState.cloneCount; i--) {
 			const clone = originalItemEls[i].cloneNode(true);
+			clone.dataset.clone = "true";
 			sliderEl.prepend(clone);
 		}
 
-		for (let i = 0; i < cloneCount; i++) {
+		for (let i = 0; i < sliderState.cloneCount; i++) {
 			const clone = originalItemEls[i].cloneNode(true);
+			clone.dataset.clone = "true";
 			sliderEl.append(clone);
 		}
 	}
 
 	const updatePosition = () => {
-		const { cloneCount } = getSliderState();
-		const offset = originalItemEls[cloneCount].offsetLeft;
-		sliderEl.style.transform = `translateX(-${offset}px)`;
+		sliderEl.style.transform = `translateX(-${sliderState.currentIndex * sliderState.itemWidth}px)`;
 	}
 
 	const setStartPosition = () => {
-		const { cloneCount } = getSliderState();
-		currentIndex = cloneCount;
+		sliderState.currentIndex = sliderState.cloneCount;
 		updatePosition();
 	}
 
+	const checkClones = () => {
+		const { originalLength } = getSliderState();
+
+		if (sliderState.currentIndex >= originalLength + sliderState.cloneCount) {
+			sliderEl.classList.add('slider_no_transition');
+			sliderState.currentIndex -= originalLength;
+			updatePosition();
+			requestAnimationFrame(() => {
+				requestAnimationFrame(() => {
+					sliderEl.classList.remove('slider_no_transition');
+				});
+			});
+		}
+
+		if (sliderState.currentIndex < sliderState.cloneCount) {
+			sliderEl.classList.add('slider_no_transition');
+			sliderState.currentIndex += originalLength;
+			updatePosition();
+			requestAnimationFrame(() => {
+				requestAnimationFrame(() => {
+					sliderEl.classList.remove('slider_no_transition');
+				});
+			});
+		}
+	}
+
+	const prevSlide = () => {
+		if (sliderState.isAnimating) return;
+		sliderState.isAnimating = true;
+		sliderState.currentIndex -= 1;
+		updatePosition();
+	}
+	const nextSlide = () => {
+		if (sliderState.isAnimating) return;
+		sliderState.isAnimating = true;
+		sliderState.currentIndex += 1;
+		updatePosition();
+	}
 
 	createClones();
 	setStartPosition();
 
+	prevEl.addEventListener('click', prevSlide);
+	nextEl.addEventListener('click', nextSlide);
+
+	sliderEl.addEventListener('transitionend', () => {
+		checkClones();
+		sliderState.isAnimating = false;
+	});
 }

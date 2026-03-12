@@ -9,12 +9,23 @@
 .viewport_slider_certificates {
 	overflow: hidden;
 	margin: 0 auto;
+	max-width: 1197px;
 }
 
 .certificates_slider {
+	display: flex;
+	cursor: default;
+	pointer-events: auto;
 	position: relative;
 	transition: transform 0.4s ease;
-	width: 100%;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.slider_no_transition {
+	transition: none !important;
 }
 
 .certificates_item {
