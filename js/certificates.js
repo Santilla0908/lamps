@@ -14,8 +14,7 @@
 
 	const getSliderState = () => {
 		const width = originalItemEls[0].offsetWidth;
-		const viewportWidth = viewportEl.offsetWidth;
-		const visibleItems = Math.ceil(viewportWidth / width);
+		const visibleItems = Math.round(viewportEl.offsetWidth / width);
 		const cloneCount = visibleItems;
 
 		return {
@@ -92,14 +91,84 @@
 		updatePosition();
 	}
 
+	prevEl.addEventListener('click', prevSlide);
+	nextEl.addEventListener('click', nextSlide);
+
 	createClones();
 	setStartPosition();
 
-	prevEl.addEventListener('click', prevSlide);
-	nextEl.addEventListener('click', nextSlide);
+	const dragState = {
+		isDragging: false,
+		startMouseX: 0,
+		startTranslateX: 0
+	}
+
+	sliderEl.addEventListener('click', () => {
+		sliderEl.focus();
+	});
+
+	sliderEl.addEventListener('mousedown', e => {
+		if (sliderState.isAnimating) return;
+
+		dragState.isDragging = true;
+		dragState.startMouseX = e.clientX;
+		dragState.startTranslateX = -(sliderState.currentIndex * sliderState.itemWidth);
+		sliderEl.classList.add('slider_no_transition');
+	});
+
+	sliderEl.addEventListener('mousemove', e => {
+		if (!dragState.isDragging) return;
+		const mouseMoveDistance = e.clientX - dragState.startMouseX;
+		sliderEl.style.transform = `translateX(${dragState.startTranslateX + mouseMoveDistance}px)`;
+	});
+
+	sliderEl.addEventListener('mouseup', e => {
+		if (!dragState.isDragging) return;
+		dragState.isDragging = false;
+		sliderEl.classList.remove('slider_no_transition');
+		const mouseMoveDistance = e.clientX - dragState.startMouseX;
+		const currentTranslate = dragState.startTranslateX + mouseMoveDistance;
+		sliderState.currentIndex = Math.round(-currentTranslate / sliderState.itemWidth);
+		updatePosition();
+	});
+
+	sliderEl.addEventListener('mouseleave', e => {
+		if (!dragState.isDragging) return;
+		dragState.isDragging = false;
+		sliderEl.classList.remove('slider_no_transition');
+		const mouseMoveDistance = e.clientX - dragState.startMouseX;
+		const currentTranslate = dragState.startTranslateX + mouseMoveDistance;
+		sliderState.currentIndex = Math.round(-currentTranslate / sliderState.itemWidth);
+		updatePosition();
+	});
+
+	sliderEl.addEventListener('keydown', e => {
+		switch (e.key) {
+			case 'ArrowRight':
+				e.preventDefault();
+				nextSlide();
+				break;
+			case 'ArrowLeft':
+				e.preventDefault();
+				prevSlide();
+				break;
+		}
+	});
 
 	sliderEl.addEventListener('transitionend', () => {
 		checkClones();
 		sliderState.isAnimating = false;
 	});
+
+	const resizeObserver = new ResizeObserver(() => {
+		const clones = sliderEl.querySelectorAll('[data-clone]');
+		clones.forEach(clone => clone.remove());
+
+		const realIndex = sliderState.currentIndex - sliderState.cloneCount;
+		createClones();
+		setStartPosition();
+		sliderState.currentIndex += realIndex;
+		updatePosition();
+	});
+	resizeObserver.observe(viewportEl);
 }
