@@ -183,7 +183,7 @@
 		font-size: clamp(25px, 2rem, 26px);
 	}
 
-	.modal_offer_right {
+	.form_offer_right {
 		flex-basis: 750px;
 		height: clamp(430px, 35rem, 455px);
 	}

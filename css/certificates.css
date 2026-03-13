@@ -1,5 +1,6 @@
 .slider_certificates {
 	top: calc(50% + clamp(10px, 3vw, 40px));
+	z-index: 10;
 }
 
 .slick-arrow.next {
@@ -9,7 +10,7 @@
 .viewport_slider_certificates {
 	overflow: hidden;
 	margin: 0 auto;
-	max-width: 1197px;
+	width: 95%;
 }
 
 .certificates_slider {
@@ -22,6 +23,7 @@
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+	max-width: 1197px;
 }
 
 .slider_no_transition {

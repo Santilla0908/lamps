@@ -4,67 +4,74 @@
 	const sliderEl = document.querySelector('.advantages_slider');
 	const originalItemEls = [ ...document.querySelectorAll('.advantage_item') ];
 
-	let currentIndex = 0;
+	const sliderState = {
+		currentIndex: 0,
+		itemWidth: 0,
+		visibleItems: 0,
+		cloneCount: 0,
+		isScrolling: false
+	}
 
-	const getSliderState = () => {
+	const updateSliderState = () => {
 		const itemWidth = sliderEl.children[0].offsetWidth;
 		const visibleItems = Math.round(sliderEl.offsetWidth / itemWidth);
-		return {
-			itemWidth,
-			visibleItems,
-			cloneCount: visibleItems
-		};
+
+		sliderState.itemWidth = itemWidth;
+		sliderState.visibleItems = visibleItems;
+		sliderState.cloneCount = visibleItems;
 	}
 
 	const createClones = () => {
-		const { cloneCount } = getSliderState();
+
 		const originalLength = originalItemEls.length;
 
-		for (let i = originalLength - 1; i >= originalLength - cloneCount; i--) {
+		for (let i = originalLength - 1; i >= originalLength - sliderState.cloneCount; i--) {
 			const clone = originalItemEls[i].cloneNode(true);
 			sliderEl.prepend(clone);
 		}
-		for (let i = 0; i < cloneCount; i++) {
+		for (let i = 0; i < sliderState.cloneCount; i++) {
 			const clone = originalItemEls[i].cloneNode(true);
 			sliderEl.append(clone);
 		}
 	}
 
 	const setStartPosition = () => {
-		const { itemWidth, cloneCount } = getSliderState();
-		currentIndex = cloneCount;
-		sliderEl.scrollLeft = itemWidth * currentIndex;
+		sliderState.currentIndex = sliderState.cloneCount;
+		sliderEl.scrollLeft = sliderState.itemWidth * sliderState.currentIndex;
 	}
 
 	const checkClones = () => {
-		const { itemWidth, cloneCount } = getSliderState();
 		const originalLength = originalItemEls.length;
 
-		if (currentIndex >= originalLength + cloneCount) {
-			currentIndex -= originalLength;
-			sliderEl.scrollLeft = currentIndex * itemWidth;
+		if (sliderState.currentIndex >= originalLength + sliderState.cloneCount) {
+			sliderState.currentIndex -= originalLength;
+			sliderEl.scrollLeft = sliderState.currentIndex * sliderState.itemWidth;
 		}
 
-		if (currentIndex < cloneCount) {
-			currentIndex += originalLength;
-			sliderEl.scrollLeft = currentIndex * itemWidth;
+		if (sliderState.currentIndex < sliderState.cloneCount) {
+			sliderState.currentIndex += originalLength;
+			sliderEl.scrollLeft = sliderState.currentIndex * sliderState.itemWidth;
 		}
 	}
 
 	const prevSlide = () => {
-		const { itemWidth } = getSliderState();
-		currentIndex -= 1;
+		if (sliderState.isScrolling) return;
+		sliderState.currentIndex -= 1;
+		sliderState.isScrolling = true;
+
 		sliderEl.scrollTo({
-			left: currentIndex * itemWidth,
+			left: sliderState.currentIndex * sliderState.itemWidth,
 			behavior: "smooth",
 		});
 	}
 
 	const nextSlide = () => {
-		const { itemWidth } = getSliderState();
-		currentIndex += 1;
+		if (sliderState.isScrolling) return;
+		sliderState.currentIndex += 1;
+		sliderState.isScrolling = true;
+
 		sliderEl.scrollTo({
-			left: currentIndex * itemWidth,
+			left: sliderState.currentIndex * sliderState.itemWidth,
 			behavior: "smooth",
 		});
 	}
@@ -72,6 +79,7 @@
 	prevEl.addEventListener('click', prevSlide);
 	nextEl.addEventListener('click', nextSlide);
 
+	updateSliderState();
 	createClones();
 	setStartPosition();
 
@@ -95,8 +103,7 @@
 		if (!isDragging) return;
 		const moveX = e.clientX - startX;
 		sliderEl.scrollLeft = startScrollLeft - moveX;
-		const { itemWidth } = getSliderState();
-		currentIndex = sliderEl.scrollLeft / itemWidth;
+		sliderState.currentIndex = sliderEl.scrollLeft / sliderState.itemWidth;
 	});
 
 	sliderEl.addEventListener('mouseup', () => {
@@ -104,12 +111,11 @@
 		isDragging = false;
 		sliderEl.classList.remove('drag');
 
-		const { itemWidth } = getSliderState();
-		currentIndex = Math.round(sliderEl.scrollLeft / itemWidth);
+		sliderState.currentIndex = Math.round(sliderEl.scrollLeft / sliderState.itemWidth);
 		checkClones();
 
 		sliderEl.scrollTo({
-			left: currentIndex * itemWidth,
+			left: sliderState.currentIndex * sliderState.itemWidth,
 			behavior: "smooth"
 		});
 	});
@@ -118,11 +124,10 @@
 		isDragging = false;
 		sliderEl.classList.remove('drag');
 
-		const { itemWidth } = getSliderState();
-		currentIndex = Math.round(sliderEl.scrollLeft / itemWidth);
+		sliderState.currentIndex = Math.round(sliderEl.scrollLeft / sliderState.itemWidth);
 
 		sliderEl.scrollTo({
-			left: currentIndex * itemWidth,
+			left: sliderState.currentIndex * sliderState.itemWidth,
 			behavior: "smooth"
 		});
 	});
@@ -141,16 +146,18 @@
 	});
 
 	const observer = new ResizeObserver(() => {
-		const { itemWidth } = getSliderState();
+		updateSliderState();
 		sliderEl.scrollTo({
-			left: currentIndex * itemWidth,
+			left: sliderState.currentIndex * sliderState.itemWidth,
 			behavior: 'auto'
 		});
 	});
+
 	sliderEl.addEventListener('scrollend', () => {
-		const { itemWidth } = getSliderState();
-		currentIndex = Math.round(sliderEl.scrollLeft / itemWidth);
+		sliderState.currentIndex = Math.round(sliderEl.scrollLeft / sliderState.itemWidth);
 		checkClones();
+		sliderState.isScrolling = false;
 	});
+
 	observer.observe(sliderEl);
 }
