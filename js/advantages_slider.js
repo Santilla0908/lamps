@@ -153,11 +153,11 @@
 		});
 	});
 
-	sliderEl.addEventListener('scrollend', () => {
+	/*sliderEl.addEventListener('scrollend', () => {
 		sliderState.currentIndex = Math.round(sliderEl.scrollLeft / sliderState.itemWidth);
 		checkClones();
 		sliderState.isScrolling = false;
-	});
+	});*/
 
 	observer.observe(sliderEl);
 }

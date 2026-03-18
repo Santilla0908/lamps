@@ -5,12 +5,10 @@
 	const sliderEl = document.querySelector('.certificates_slider');
 	const originalItemEls = [ ...document.querySelectorAll('.certificates_item') ];
 
-	const sliderState = {
-		currentIndex: 0,
-		itemWidth: 0,
-		cloneCount: 0,
-		isAnimating: false
-	}
+	let currentIndex = 0;
+	let itemWidth = 0;
+	let cloneCount = 0;
+	let isAnimating = false;
 
 	const getSliderState = () => {
 		const width = originalItemEls[0].offsetWidth;
@@ -26,17 +24,17 @@
 	}
 
 	const createClones = () => {
-		const { visibleItems, originalLength, itemWidth } = getSliderState();
-		sliderState.cloneCount = visibleItems;
-		sliderState.itemWidth = itemWidth;
+		const state = getSliderState();
+		cloneCount = state.visibleItems;
+		itemWidth = state.itemWidth;
 
-		for (let i = originalLength - 1; i >= originalLength - sliderState.cloneCount; i--) {
+		for (let i = state.originalLength - 1; i >= state.originalLength - state.cloneCount; i--) {
 			const clone = originalItemEls[i].cloneNode(true);
 			clone.dataset.clone = "true";
 			sliderEl.prepend(clone);
 		}
 
-		for (let i = 0; i < sliderState.cloneCount; i++) {
+		for (let i = 0; i < state.cloneCount; i++) {
 			const clone = originalItemEls[i].cloneNode(true);
 			clone.dataset.clone = "true";
 			sliderEl.append(clone);
@@ -44,20 +42,20 @@
 	}
 
 	const updatePosition = () => {
-		sliderEl.style.transform = `translateX(-${sliderState.currentIndex * sliderState.itemWidth}px)`;
+		sliderEl.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
 	}
 
 	const setStartPosition = () => {
-		sliderState.currentIndex = sliderState.cloneCount;
+		currentIndex = cloneCount;
 		updatePosition();
 	}
 
 	const checkClones = () => {
 		const { originalLength } = getSliderState();
 
-		if (sliderState.currentIndex >= originalLength + sliderState.cloneCount) {
+		if (currentIndex >= originalLength + cloneCount) {
 			sliderEl.classList.add('slider_no_transition');
-			sliderState.currentIndex -= originalLength;
+			currentIndex -= originalLength;
 			updatePosition();
 			requestAnimationFrame(() => {
 				requestAnimationFrame(() => {
@@ -66,9 +64,9 @@
 			});
 		}
 
-		if (sliderState.currentIndex < sliderState.cloneCount) {
+		if (currentIndex < cloneCount) {
 			sliderEl.classList.add('slider_no_transition');
-			sliderState.currentIndex += originalLength;
+			currentIndex += originalLength;
 			updatePosition();
 			requestAnimationFrame(() => {
 				requestAnimationFrame(() => {
@@ -79,15 +77,15 @@
 	}
 
 	const prevSlide = () => {
-		if (sliderState.isAnimating) return;
-		sliderState.isAnimating = true;
-		sliderState.currentIndex -= 1;
+		if (isAnimating) return;
+		isAnimating = true;
+		currentIndex -= 1;
 		updatePosition();
 	}
 	const nextSlide = () => {
-		if (sliderState.isAnimating) return;
-		sliderState.isAnimating = true;
-		sliderState.currentIndex += 1;
+		if (isAnimating) return;
+		isAnimating = true;
+		currentIndex += 1;
 		updatePosition();
 	}
 
@@ -97,50 +95,52 @@
 	createClones();
 	setStartPosition();
 
-	const dragState = {
-		isDragging: false,
-		startMouseX: 0,
-		startTranslateX: 0
-	}
-
 	sliderEl.addEventListener('click', () => {
 		sliderEl.focus();
 	});
 
+	let startMouseX = 0;
+	let startTranslateX = 0;
+
+	const mouseMoveHandler = e => {
+		const mouseMoveDistance = e.pageX - startMouseX;
+		const currentTranslate = startTranslateX + mouseMoveDistance;
+		sliderEl.style.transform = `translateX(${startTranslateX + mouseMoveDistance}px)`;
+
+		const tempIndex = Math.round(-currentTranslate / itemWidth);
+		const { originalLength } = getSliderState();
+
+		if (tempIndex >= originalLength + cloneCount) {
+			startTranslateX += originalLength * itemWidth;
+		}
+		if (tempIndex < cloneCount) {
+			startTranslateX -= originalLength * itemWidth
+		}
+	}
+
 	sliderEl.addEventListener('mousedown', e => {
-		if (sliderState.isAnimating) return;
-
-		dragState.isDragging = true;
-		dragState.startMouseX = e.clientX;
-		dragState.startTranslateX = -(sliderState.currentIndex * sliderState.itemWidth);
+		if (isAnimating) return;
+		e.preventDefault();
+		startMouseX = e.pageX;
+		startTranslateX = -(currentIndex * itemWidth);
 		sliderEl.classList.add('slider_no_transition');
+
+		window.addEventListener('mousemove', mouseMoveHandler);
+		window.addEventListener('mouseup', mouseUpHandler);
+		window.addEventListener('mouseleave', mouseUpHandler);
 	});
 
-	sliderEl.addEventListener('mousemove', e => {
-		if (!dragState.isDragging) return;
-		const mouseMoveDistance = e.clientX - dragState.startMouseX;
-		sliderEl.style.transform = `translateX(${dragState.startTranslateX + mouseMoveDistance}px)`;
-	});
-
-	sliderEl.addEventListener('mouseup', e => {
-		if (!dragState.isDragging) return;
-		dragState.isDragging = false;
+	const mouseUpHandler = e => {
+		const mouseMoveDistance = e.pageX - startMouseX;
+		const currentTranslate = startTranslateX + mouseMoveDistance;
+		currentIndex = Math.round(-currentTranslate / itemWidth);
 		sliderEl.classList.remove('slider_no_transition');
-		const mouseMoveDistance = e.clientX - dragState.startMouseX;
-		const currentTranslate = dragState.startTranslateX + mouseMoveDistance;
-		sliderState.currentIndex = Math.round(-currentTranslate / sliderState.itemWidth);
 		updatePosition();
-	});
 
-	sliderEl.addEventListener('mouseleave', e => {
-		if (!dragState.isDragging) return;
-		dragState.isDragging = false;
-		sliderEl.classList.remove('slider_no_transition');
-		const mouseMoveDistance = e.clientX - dragState.startMouseX;
-		const currentTranslate = dragState.startTranslateX + mouseMoveDistance;
-		sliderState.currentIndex = Math.round(-currentTranslate / sliderState.itemWidth);
-		updatePosition();
-	});
+		window.removeEventListener('mousemove', mouseMoveHandler);
+		window.removeEventListener('mouseup', mouseUpHandler);
+		window.removeEventListener('mouseleave', mouseUpHandler);
+	}
 
 	sliderEl.addEventListener('keydown', e => {
 		switch (e.key) {
@@ -157,18 +157,18 @@
 
 	sliderEl.addEventListener('transitionend', () => {
 		checkClones();
-		sliderState.isAnimating = false;
+		isAnimating = false;
 	});
 
 	const resizeObserver = new ResizeObserver(() => {
 		const clones = sliderEl.querySelectorAll('[data-clone]');
 		clones.forEach(clone => clone.remove());
-
-		const realIndex = sliderState.currentIndex - sliderState.cloneCount;
+		const realIndex = currentIndex - cloneCount;
 		createClones();
 		setStartPosition();
-		sliderState.currentIndex += realIndex;
+		currentIndex += realIndex;
 		updatePosition();
 	});
 	resizeObserver.observe(viewportEl);
+
 }
