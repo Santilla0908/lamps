@@ -12,6 +12,29 @@
 	color: #ccc;
 }
 
+.modal_slider {
+	overflow: hidden;
+	width: 100%;
+	height: 100%;
+}
+
+.modal_slider_track {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	height: 100%;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.modal_slider_item {
+	display: flex;
+	flex: 0 0 100%;
+	justify-content: center;
+}
+
 .ov_counter {
 	display: flex;
 	align-items: center;
