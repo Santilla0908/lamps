@@ -114,8 +114,20 @@
 			startTranslateX += originalLength * itemWidth;
 		}
 		if (tempIndex < cloneCount) {
-			startTranslateX -= originalLength * itemWidth
+			startTranslateX -= originalLength * itemWidth;
 		}
+	}
+
+	const mouseUpHandler = e => {
+		const mouseMoveDistance = e.pageX - startMouseX;
+		const currentTranslate = startTranslateX + mouseMoveDistance;
+		currentIndex = Math.round(-currentTranslate / itemWidth);
+		sliderEl.classList.remove('slider_no_transition');
+		updatePosition();
+
+		window.removeEventListener('mousemove', mouseMoveHandler);
+		window.removeEventListener('mouseup', mouseUpHandler);
+		window.removeEventListener('mouseleave', mouseUpHandler);
 	}
 
 	sliderEl.addEventListener('mousedown', e => {
@@ -129,18 +141,6 @@
 		window.addEventListener('mouseup', mouseUpHandler);
 		window.addEventListener('mouseleave', mouseUpHandler);
 	});
-
-	const mouseUpHandler = e => {
-		const mouseMoveDistance = e.pageX - startMouseX;
-		const currentTranslate = startTranslateX + mouseMoveDistance;
-		currentIndex = Math.round(-currentTranslate / itemWidth);
-		sliderEl.classList.remove('slider_no_transition');
-		updatePosition();
-
-		window.removeEventListener('mousemove', mouseMoveHandler);
-		window.removeEventListener('mouseup', mouseUpHandler);
-		window.removeEventListener('mouseleave', mouseUpHandler);
-	}
 
 	sliderEl.addEventListener('keydown', e => {
 		switch (e.key) {

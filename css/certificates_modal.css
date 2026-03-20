@@ -12,6 +12,10 @@
 	color: #ccc;
 }
 
+.modal_certificates.active {
+	display: block;
+}
+
 .modal_slider {
 	overflow: hidden;
 	width: 100%;
@@ -27,6 +31,7 @@
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+	transition: transform 0.3s ease;
 }
 
 .modal_slider_item {
@@ -77,6 +82,7 @@
 .arrow_left {
 	left: 0;
 	top: 50%;
+	z-index: 20;
 }
 
 .arrow_right {
