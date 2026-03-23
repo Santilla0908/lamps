@@ -9,8 +9,10 @@
 	const nextEl = document.querySelector('.arrow_right');
 	const currentCounter = document.querySelector('.current');
 	const totalCounter = document.querySelector('.total');
+
 	totalCounter.innerText = modalItemEls.length;
 	let currentSlideIndex = 0;
+	let isDragging = false;
 
 	const getSliderState = () => {
 		const widthOfItem = modalItemEls[0].offsetWidth;
@@ -24,21 +26,29 @@
 		nextEl.disabled = currentSlideIndex === maxIndex;
 	}
 
-	const scrollToSlide = index => {
+	const scrollToSlide = ((index, withAnimation = true) => {
+		if (!withAnimation) {
+			sliderEl.classList.add('slider_no_transition');
+		}
 		const { widthOfItem } = getSliderState();
 		sliderEl.style.transform = `translateX(-${index * widthOfItem}px)`;
+
+		requestAnimationFrame(() => {
+			sliderEl.classList.remove('slider_no_transition');
+		});
+
 		currentCounter.innerText = index + 1;
 		currentSlideIndex = index;
 		updateButtons();
-	}
+	});
 
 	certificatesItemEls.forEach((item, index) => {
 		item.addEventListener('click', () => {
-			sliderEl.style.transition = 'none'
+			sliderEl.classList.add('slider_no_transition');
 			modalEl.classList.add('active');
 			scrollToSlide(index);
 			requestAnimationFrame(() => {
-				sliderEl.style.transition = '';
+				sliderEl.classList.remove('slider_no_transition');
 			});
 		});
 	});
@@ -47,16 +57,30 @@
 		modalEl.classList.remove('active');
 	});
 
+	const interactiveSelectors = [
+		'.zoom_btn',
+		'.close_btn',
+		'.arrow_left',
+		'.arrow_right',
+		'.modal_slider_item'
+	];
+
+	modalEl.addEventListener('click', e => {
+		const isInteractive = interactiveSelectors.some(selector => e.target.closest(selector));
+		if (!isInteractive && isDragging) {
+			modalEl.classList.remove('active');
+		}
+	});
+
 	const prevSlide = () => {
-		const { maxIndex } = getSliderState();
 		if (currentSlideIndex <= 0) return;
-		scrollToSlide(currentSlideIndex - 1);
+		scrollToSlide(currentSlideIndex - 1, false);
 	}
 
 	const nextSlide = () => {
 		const { maxIndex } = getSliderState();
 		if (currentSlideIndex >= maxIndex) return;
-		scrollToSlide(currentSlideIndex + 1);
+		scrollToSlide(currentSlideIndex + 1, false);
 	}
 
 	prevEl.addEventListener('click', prevSlide);
@@ -67,6 +91,8 @@
 
 	const mouseMoveHandler = e => {
 		const mouseMoveDistance = e.pageX - startMouseX;
+
+		if (Math.abs(mouseMoveDistance) > 5) isDragging = true;
 
 		let currentTranslate = startTranslateX + mouseMoveDistance;
 		const { widthOfItem, maxIndex } = getSliderState();
@@ -90,16 +116,31 @@
 		window.removeEventListener('mousemove', mouseMoveHandler);
 		window.removeEventListener('mouseup', mouseUpHandler);
 		window.addEventListener('mouseleave', mouseUpHandler);
+		setTimeout(() => isDragging = false, 0);
 	}
 
 	sliderEl.addEventListener('mousedown', e => {
 		e.preventDefault();
-
 		startMouseX = e.pageX;
 		startTranslateX = -(currentSlideIndex * getSliderState().widthOfItem);
-
+		isDragging = false;
 		window.addEventListener('mousemove', mouseMoveHandler);
 		window.addEventListener('mouseup', mouseUpHandler);
 		window.removeEventListener('mouseleave', mouseUpHandler);
+	});
+
+	window.addEventListener('keydown', e => {
+		switch (e.key) {
+			case 'ArrowRight':
+				e.preventDefault();
+				nextSlide();
+				break;
+			case 'ArrowLeft':
+				e.preventDefault();
+				prevSlide();
+				break;
+			case 'Escape':
+				modalEl.classList.remove('active');
+		}
 	});
 }

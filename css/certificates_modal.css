@@ -34,10 +34,25 @@
 	transition: transform 0.3s ease;
 }
 
+.slider_no_transition {
+	transition: none;
+}
+
 .modal_slider_item {
 	display: flex;
 	flex: 0 0 100%;
 	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+
+.modal_img {
+	max-height: 95%;
+	width: clamp(250px, 70vw, 566px);
+	height: auto;
+	object-fit: contain;
+	cursor: zoom-in;
+	transition: transform 0.1s ease;
 }
 
 .ov_counter {
@@ -67,6 +82,7 @@
 	background: transparent;
 	width: 44px;
 	height: 44px;
+	z-index: 20;
 }
 
 .zoom_btn {
@@ -82,7 +98,6 @@
 .arrow_left {
 	left: 0;
 	top: 50%;
-	z-index: 20;
 }
 
 .arrow_right {
@@ -96,13 +111,6 @@
 	stroke: var(--second-primary-color);
 	fill: none;
 	stroke-width: 2;
-}
-
-.modal_img {
-	width: clamp(200px, 80vw, 358px);
-	aspect-ratio: 358 / 507;
-	height: auto;
-	transition: transform 0.3s ease;
 }
 
 
