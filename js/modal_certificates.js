@@ -57,17 +57,18 @@
 		modalEl.classList.remove('active');
 	});
 
-	const interactiveSelectors = [
-		'.zoom_btn',
-		'.close_btn',
-		'.arrow_left',
-		'.arrow_right',
-		'.modal_slider_item'
-	];
-
 	modalEl.addEventListener('click', e => {
-		const isInteractive = interactiveSelectors.some(selector => e.target.closest(selector));
-		if (!isInteractive && isDragging) {
+		const currentImg = modalItemEls[currentSlideIndex].querySelector('.modal_img');
+		const imgRect = currentImg.getBoundingClientRect();
+
+		const pointerX = e.clientX;
+		const pointerY = e.clientY;
+
+		const isInteractive = e.target.closest('.zoom_btn, .close_btn, .arrow_left, .arrow_right');
+
+		const isOutsideImage = pointerX < imgRect.left || pointerX > imgRect.right || pointerY < imgRect.top || pointerY > imgRect.bottom;
+
+		if (!isInteractive && isOutsideImage && !isDragging) {
 			modalEl.classList.remove('active');
 		}
 	});
@@ -88,42 +89,75 @@
 
 	let startMouseX = 0;
 	let startTranslateX = 0;
+	let startMouseY = 0;
+	let currentTranslateY = 0;
+	const thresholdY = 150;
+	let dragDirection = null;
 
 	const mouseMoveHandler = e => {
-		const mouseMoveDistance = e.pageX - startMouseX;
+		const mouseMoveDistanceX = e.pageX - startMouseX;
+		const mouseMoveDistanceY = e.pageY - startMouseY;
 
-		if (Math.abs(mouseMoveDistance) > 5) isDragging = true;
+		if (!dragDirection) {
+			if (Math.abs(mouseMoveDistanceX) > 5 || Math.abs(mouseMoveDistanceY) > 5) {
+				dragDirection = Math.abs(mouseMoveDistanceX) > Math.abs(mouseMoveDistanceY) ? 'x' : 'y';
+				isDragging = true;
+			}
+		}
 
-		let currentTranslate = startTranslateX + mouseMoveDistance;
-		const { widthOfItem, maxIndex } = getSliderState();
-		const maxTranslate = 0;
-		const minTranslate = -maxIndex * widthOfItem;
+		let currentTranslateX = startTranslateX;
 
-		if (currentTranslate > maxTranslate) currentTranslate = maxTranslate;
-		if (currentTranslate < minTranslate) currentTranslate = minTranslate;
+		if (dragDirection === 'x') {
+			currentTranslateX = startTranslateX + mouseMoveDistanceX;
 
-		sliderEl.style.transform = `translateX(${currentTranslate}px)`;
+			const { widthOfItem, maxIndex } = getSliderState();
+
+			const maxTranslate = 0;
+			const minTranslate = -maxIndex * widthOfItem;
+
+			if (currentTranslateX > maxTranslate) currentTranslateX = maxTranslate;
+			if (currentTranslateX < minTranslate) currentTranslateX = minTranslate;
+			currentTranslateY = 0;
+		}
+
+		if (dragDirection === 'y') {
+			currentTranslateY = mouseMoveDistanceY;
+		}
+
+		sliderEl.style.transform = `translateX(${currentTranslateX}px) translateY(${currentTranslateY}px)`;
 	}
 
 	const mouseUpHandler = e => {
-		const mouseMoveDistance = e.pageX - startMouseX;
-		const currentTranslate = startTranslateX + mouseMoveDistance;
+		const mouseMoveDistanceX = e.pageX - startMouseX;
+		const mouseMoveDistanceY = e.pageY - startMouseY;
+
 		const { widthOfItem, maxIndex } = getSliderState();
-		let newIndex =  Math.round(-currentTranslate / widthOfItem);
+
+		const currentTranslateX = startTranslateX + mouseMoveDistanceX;
+
+		let newIndex =  Math.round(-currentTranslateX / widthOfItem);
 		if (newIndex < 0) newIndex = 0;
 		if (newIndex > maxIndex) newIndex = maxIndex;
-		scrollToSlide(newIndex);
+
+		if (dragDirection === 'y' && Math.abs(mouseMoveDistanceY) > thresholdY) {
+			modalEl.classList.remove('active');
+		} else {
+			scrollToSlide(newIndex);
+		}
+
 		window.removeEventListener('mousemove', mouseMoveHandler);
 		window.removeEventListener('mouseup', mouseUpHandler);
 		window.addEventListener('mouseleave', mouseUpHandler);
-		setTimeout(() => isDragging = false, 0);
 	}
 
 	sliderEl.addEventListener('mousedown', e => {
 		e.preventDefault();
 		startMouseX = e.pageX;
+		startMouseY = e.pageY;
+
 		startTranslateX = -(currentSlideIndex * getSliderState().widthOfItem);
 		isDragging = false;
+		dragDirection = null;
 		window.addEventListener('mousemove', mouseMoveHandler);
 		window.addEventListener('mouseup', mouseUpHandler);
 		window.removeEventListener('mouseleave', mouseUpHandler);
