@@ -48,11 +48,22 @@
 
 .modal_img {
 	max-height: 95%;
-	width: clamp(250px, 70vw, 566px);
+	width: clamp(250px, 80vw, 566px);
 	height: auto;
 	object-fit: contain;
 	cursor: zoom-in;
-	transition: transform 0.1s ease;
+	transition: transform 0.3s ease;
+	transform-origin: center;
+}
+
+.modal_img.zoomed {
+	transform: scale(1.1);
+	max-height: none;
+	cursor: grab;
+}
+
+.modal_img.no-transition {
+	transition: none;
 }
 
 .ov_counter {

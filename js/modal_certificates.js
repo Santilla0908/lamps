@@ -9,10 +9,12 @@
 	const nextEl = document.querySelector('.arrow_right');
 	const currentCounter = document.querySelector('.current');
 	const totalCounter = document.querySelector('.total');
+	const zoomEl = document.querySelector('.zoom_btn');
 
 	totalCounter.innerText = modalItemEls.length;
 	let currentSlideIndex = 0;
 	let isDragging = false;
+	let isZoomed = false;
 
 	const getSliderState = () => {
 		const widthOfItem = modalItemEls[0].offsetWidth;
@@ -68,7 +70,7 @@
 
 		const isOutsideImage = pointerX < imgRect.left || pointerX > imgRect.right || pointerY < imgRect.top || pointerY > imgRect.bottom;
 
-		if (!isInteractive && isOutsideImage && !isDragging) {
+		if (!isInteractive && isOutsideImage && !isDragging && !isZoomed) {
 			modalEl.classList.remove('active');
 		}
 	});
@@ -94,7 +96,47 @@
 	const thresholdY = 150;
 	let dragDirection = null;
 
+	let zoomTranslateY = 0;
+	let startZoomY = 0;
+	let startMouseYZoom = 0;
+	let activeImg = null;
+
+	const toggleZoom = () => {
+		activeImg = modalItemEls[currentSlideIndex].querySelector('.modal_img');
+		isZoomed = !isZoomed;
+		if (isZoomed) {
+			activeImg.classList.add('zoomed');
+		} else {
+			activeImg.classList.remove('no-transition');
+			requestAnimationFrame(() => {
+				activeImg.style.transform = `translateY(0px)`
+				activeImg.classList.remove('zoomed');
+				zoomTranslateY = 0;
+			});
+		}
+	}
+
+	modalItemEls.forEach(item => {
+		const img = item.querySelector('.modal_img');
+		img.addEventListener('click', e => {
+			if (isDragging) return;
+			toggleZoom();
+		});
+	});
+
+	zoomEl.addEventListener('click', toggleZoom);
+
 	const mouseMoveHandler = e => {
+		if (isZoomed) {
+			const mouseMoveDistance = e.pageY - startMouseYZoom;
+			if (Math.abs(mouseMoveDistance) > 5) {
+				isDragging = true;
+			}
+			zoomTranslateY = startZoomY +  mouseMoveDistance;
+			activeImg.style.transform = `translateY(${zoomTranslateY}px)`;
+			return;
+		}
+
 		const mouseMoveDistanceX = e.pageX - startMouseX;
 		const mouseMoveDistanceY = e.pageY - startMouseY;
 
@@ -128,6 +170,15 @@
 	}
 
 	const mouseUpHandler = e => {
+		e.preventDefault();
+		if (isZoomed) {
+			requestAnimationFrame(() => {
+				activeImg.classList.remove('no-transition');
+			});
+			window.removeEventListener('mousemove', mouseMoveHandler);
+			window.removeEventListener('mouseup', mouseUpHandler);
+			return;
+		}
 		const mouseMoveDistanceX = e.pageX - startMouseX;
 		const mouseMoveDistanceY = e.pageY - startMouseY;
 
@@ -152,10 +203,18 @@
 
 	sliderEl.addEventListener('mousedown', e => {
 		e.preventDefault();
-		startMouseX = e.pageX;
-		startMouseY = e.pageY;
 
-		startTranslateX = -(currentSlideIndex * getSliderState().widthOfItem);
+		if (isZoomed) {
+			startMouseYZoom = e.pageY;
+			startZoomY = zoomTranslateY;
+			activeImg = modalItemEls[currentSlideIndex].querySelector('.modal_img');
+			activeImg.classList.add('no-transition');
+		} else {
+			startMouseX = e.pageX;
+			startMouseY = e.pageY;
+			startTranslateX = -(currentSlideIndex * getSliderState().widthOfItem);
+		}
+
 		isDragging = false;
 		dragDirection = null;
 		window.addEventListener('mousemove', mouseMoveHandler);
@@ -177,4 +236,6 @@
 				modalEl.classList.remove('active');
 		}
 	});
+
+	
 }
