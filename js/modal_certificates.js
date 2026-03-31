@@ -15,11 +15,21 @@
 	let currentSlideIndex = 0;
 	let isDragging = false;
 	let isZoomed = false;
+	let cachedWidth = 0;
+
+	let activeImg = null;
+	const getActiveImg = () => {
+		return modalItemEls[currentSlideIndex]?.querySelector('.modal_img')
+	}
 
 	const getSliderState = () => {
-		const widthOfItem = modalItemEls[0].offsetWidth;
-		const maxIndex = modalItemEls.length - 1;
-		return { widthOfItem, maxIndex };
+		if (!cachedWidth) {
+			cachedWidth = modalItemEls[0]?.offsetWidth || 0;
+		}
+		return {
+			widthOfItem: cachedWidth,
+			maxIndex: modalItemEls.length - 1
+		}
 	}
 
 	const updateButtons = () => {
@@ -28,21 +38,14 @@
 		nextEl.disabled = currentSlideIndex === maxIndex;
 	}
 
-	const scrollToSlide = ((index, withAnimation = true) => {
-		if (!withAnimation) {
-			sliderEl.classList.add('slider_no_transition');
-		}
+	const scrollToSlide = index => {
 		const { widthOfItem } = getSliderState();
 		sliderEl.style.transform = `translateX(-${index * widthOfItem}px)`;
-
-		requestAnimationFrame(() => {
-			sliderEl.classList.remove('slider_no_transition');
-		});
 
 		currentCounter.innerText = index + 1;
 		currentSlideIndex = index;
 		updateButtons();
-	});
+	}
 
 	certificatesItemEls.forEach((item, index) => {
 		item.addEventListener('click', () => {
@@ -60,8 +63,8 @@
 	});
 
 	modalEl.addEventListener('click', e => {
-		const currentImg = modalItemEls[currentSlideIndex].querySelector('.modal_img');
-		const imgRect = currentImg.getBoundingClientRect();
+		activeImg = getActiveImg();
+		const imgRect = activeImg.getBoundingClientRect();
 
 		const pointerX = e.clientX;
 		const pointerY = e.clientY;
@@ -77,43 +80,43 @@
 
 	const prevSlide = () => {
 		if (currentSlideIndex <= 0) return;
-		scrollToSlide(currentSlideIndex - 1, false);
+		scrollToSlide(currentSlideIndex - 1);
 	}
 
 	const nextSlide = () => {
 		const { maxIndex } = getSliderState();
 		if (currentSlideIndex >= maxIndex) return;
-		scrollToSlide(currentSlideIndex + 1, false);
+		scrollToSlide(currentSlideIndex + 1);
 	}
 
 	prevEl.addEventListener('click', prevSlide);
 	nextEl.addEventListener('click', nextSlide);
 
-	let startMouseX = 0;
-	let startTranslateX = 0;
-	let startMouseY = 0;
 	let currentTranslateY = 0;
-	const thresholdY = 150;
-	let dragDirection = null;
-
+	let currentTranslateX = 0;
 	let zoomTranslateY = 0;
+	let startMouseX = 0;
+	let startMouseY = 0;
 	let startZoomY = 0;
 	let startMouseYZoom = 0;
-	let activeImg = null;
+	let startTranslateX = 0;
+	const thresholdY = 150;
+	let dragDirection = null;
+	const zoomScale = 1.1;
+
+	const updateImageScale = () => {
+		activeImg = getActiveImg();
+		if (!activeImg) return;
+		const scale = isZoomed ? zoomScale : 1;
+		activeImg.style.transform = `scale(${scale}) translateY(${zoomTranslateY}px)`;
+		activeImg.classList.toggle('zoomed', isZoomed);
+	}
 
 	const toggleZoom = () => {
-		activeImg = modalItemEls[currentSlideIndex].querySelector('.modal_img');
+		activeImg = getActiveImg();
 		isZoomed = !isZoomed;
-		if (isZoomed) {
-			activeImg.classList.add('zoomed');
-		} else {
-			activeImg.classList.remove('no-transition');
-			requestAnimationFrame(() => {
-				activeImg.style.transform = `translateY(0px)`
-				activeImg.classList.remove('zoomed');
-				zoomTranslateY = 0;
-			});
-		}
+		if (!isZoomed) zoomTranslateY = 0;
+		updateImageScale();
 	}
 
 	modalItemEls.forEach(item => {
@@ -133,7 +136,7 @@
 				isDragging = true;
 			}
 			zoomTranslateY = startZoomY +  mouseMoveDistance;
-			activeImg.style.transform = `translateY(${zoomTranslateY}px)`;
+			updateImageScale();
 			return;
 		}
 
@@ -147,11 +150,10 @@
 			}
 		}
 
-		let currentTranslateX = startTranslateX;
+		currentTranslateX = startTranslateX;
 
 		if (dragDirection === 'x') {
 			currentTranslateX = startTranslateX + mouseMoveDistanceX;
-
 			const { widthOfItem, maxIndex } = getSliderState();
 
 			const maxTranslate = 0;
@@ -184,9 +186,9 @@
 
 		const { widthOfItem, maxIndex } = getSliderState();
 
-		const currentTranslateX = startTranslateX + mouseMoveDistanceX;
+		const finalTranslateX = startTranslateX + mouseMoveDistanceX;
 
-		let newIndex =  Math.round(-currentTranslateX / widthOfItem);
+		let newIndex =  Math.round(-finalTranslateX / widthOfItem);
 		if (newIndex < 0) newIndex = 0;
 		if (newIndex > maxIndex) newIndex = maxIndex;
 
@@ -198,16 +200,17 @@
 
 		window.removeEventListener('mousemove', mouseMoveHandler);
 		window.removeEventListener('mouseup', mouseUpHandler);
-		window.addEventListener('mouseleave', mouseUpHandler);
+		window.removeEventListener('mouseleave', mouseUpHandler);
 	}
 
 	sliderEl.addEventListener('mousedown', e => {
 		e.preventDefault();
 
 		if (isZoomed) {
+			activeImg = getActiveImg();
 			startMouseYZoom = e.pageY;
 			startZoomY = zoomTranslateY;
-			activeImg = modalItemEls[currentSlideIndex].querySelector('.modal_img');
+
 			activeImg.classList.add('no-transition');
 		} else {
 			startMouseX = e.pageX;
@@ -219,7 +222,7 @@
 		dragDirection = null;
 		window.addEventListener('mousemove', mouseMoveHandler);
 		window.addEventListener('mouseup', mouseUpHandler);
-		window.removeEventListener('mouseleave', mouseUpHandler);
+		window.addEventListener('mouseleave', mouseUpHandler);
 	});
 
 	window.addEventListener('keydown', e => {
@@ -237,5 +240,19 @@
 		}
 	});
 
-	
+	modalEl.addEventListener('wheel', e => {
+		if (!modalEl.classList.contains('active')) return;
+		e.preventDefault();
+		if (e.deltaY > 0) {
+			nextSlide();
+		} else if (e.deltaY < 0) {
+			prevSlide();
+		}
+	}, { passive: false });
+
+	const resizeObserver = new ResizeObserver(() => {
+		cachedWidth = 0;
+		scrollToSlide(currentSlideIndex);
+	});
+	resizeObserver.observe(viewportEl);
 }

@@ -57,7 +57,6 @@
 }
 
 .modal_img.zoomed {
-	transform: scale(1.1);
 	max-height: none;
 	cursor: grab;
 }
