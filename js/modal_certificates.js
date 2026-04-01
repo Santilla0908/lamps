@@ -16,6 +16,7 @@
 	let isDragging = false;
 	let isZoomed = false;
 	let cachedWidth = 0;
+	let currentTranslateX = 0;
 
 	let activeImg = null;
 	const getActiveImg = () => {
@@ -38,6 +39,15 @@
 		nextEl.disabled = currentSlideIndex === maxIndex;
 	}
 
+	const disableTransitionTemporarily = () => {
+		sliderEl.classList.add('slider_no_transition');
+		requestAnimationFrame(() => {
+			requestAnimationFrame(() => {
+				sliderEl.classList.remove('slider_no_transition');
+			});
+		});
+	}
+
 	const scrollToSlide = index => {
 		const { widthOfItem } = getSliderState();
 		sliderEl.style.transform = `translateX(-${index * widthOfItem}px)`;
@@ -49,12 +59,9 @@
 
 	certificatesItemEls.forEach((item, index) => {
 		item.addEventListener('click', () => {
-			sliderEl.classList.add('slider_no_transition');
 			modalEl.classList.add('active');
+			disableTransitionTemporarily();
 			scrollToSlide(index);
-			requestAnimationFrame(() => {
-				sliderEl.classList.remove('slider_no_transition');
-			});
 		});
 	});
 
@@ -80,12 +87,14 @@
 
 	const prevSlide = () => {
 		if (currentSlideIndex <= 0) return;
+		disableTransitionTemporarily();
 		scrollToSlide(currentSlideIndex - 1);
 	}
 
 	const nextSlide = () => {
 		const { maxIndex } = getSliderState();
 		if (currentSlideIndex >= maxIndex) return;
+		disableTransitionTemporarily();
 		scrollToSlide(currentSlideIndex + 1);
 	}
 
@@ -93,7 +102,6 @@
 	nextEl.addEventListener('click', nextSlide);
 
 	let currentTranslateY = 0;
-	let currentTranslateX = 0;
 	let zoomTranslateY = 0;
 	let startMouseX = 0;
 	let startMouseY = 0;
@@ -226,6 +234,8 @@
 	});
 
 	window.addEventListener('keydown', e => {
+		//if (!modalEl.classList.contains('active') || isZoomed) return;
+		//e.stopPropagation();
 		switch (e.key) {
 			case 'ArrowRight':
 				e.preventDefault();
@@ -241,13 +251,10 @@
 	});
 
 	modalEl.addEventListener('wheel', e => {
-		if (!modalEl.classList.contains('active')) return;
+		if (!modalEl.classList.contains('active') || isZoomed) return;
 		e.preventDefault();
-		if (e.deltaY > 0) {
-			nextSlide();
-		} else if (e.deltaY < 0) {
-			prevSlide();
-		}
+		if (e.deltaY > 0) nextSlide();
+		else prevSlide();
 	}, { passive: false });
 
 	const resizeObserver = new ResizeObserver(() => {

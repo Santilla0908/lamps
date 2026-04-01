@@ -4,6 +4,7 @@
 	const viewportEl = document.querySelector('.viewport_slider_certificates');
 	const sliderEl = document.querySelector('.certificates_slider');
 	const originalItemEls = [ ...document.querySelectorAll('.certificates_item') ];
+	const modalEl = document.querySelector('.modal_certificates');
 
 	let currentIndex = 0;
 	let itemWidth = 0;
@@ -143,6 +144,7 @@
 	});
 
 	sliderEl.addEventListener('keydown', e => {
+		if (modalEl && modalEl.classList.contains('active')) return;
 		switch (e.key) {
 			case 'ArrowRight':
 				e.preventDefault();
