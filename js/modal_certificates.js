@@ -1,5 +1,5 @@
 {
-	const certificatesItemEls = [ ...document.querySelectorAll('.certificates_item:not([data-clone])') ];
+	const certificateImgEls = [ ...document.querySelectorAll('.certificates_item_img') ];
 	const modalEl = document.querySelector('.modal_certificates');
 	const viewportEl = document.querySelector('.modal_slider');
 	const sliderEl = document.querySelector('.modal_slider_track');
@@ -9,6 +9,7 @@
 	const nextEl = document.querySelector('.arrow_right');
 	const currentCounter = document.querySelector('.current');
 	const totalCounter = document.querySelector('.total');
+	const ovCounterEl = document.querySelector('.ov_counter');
 	const zoomEl = document.querySelector('.zoom_btn');
 
 	totalCounter.innerText = modalItemEls.length;
@@ -18,7 +19,48 @@
 	let cachedWidth = 0;
 	let currentTranslateX = 0;
 
+	const uiElements = [
+		closeModalEl,
+		zoomEl,
+		prevEl,
+		nextEl,
+		ovCounterEl
+	];
+
+	let uiTimeout = null;
 	let activeImg = null;
+
+	const hideUI = () => {
+		if (isZoomed) return;
+		uiElements.forEach(el => el.classList.add('hidden_ui'));
+	}
+
+	const showUI = () => {
+		if (!modalEl.classList.contains('active')) return;
+		uiElements.forEach(el => el.classList.remove('hidden_ui'));
+		clearTimeout(uiTimeout);
+		uiTimeout = setTimeout(hideUI, 2000);
+	}
+
+	const handleUserActivity = () => {
+		if (!modalEl.classList.contains('active')) return;
+		showUI();
+	}
+
+	const addActivityListeners = () => {
+		window.addEventListener('mousemove', handleUserActivity);
+		window.addEventListener('mousedown', handleUserActivity);
+		window.addEventListener('keydown', handleUserActivity);
+		modalEl.addEventListener('wheel', handleUserActivity, { passive: true });
+	};
+
+	const removeActivityListeners = () => {
+		window.removeEventListener('mousemove', handleUserActivity);
+		window.removeEventListener('mousedown', handleUserActivity);
+		window.removeEventListener('keydown', handleUserActivity);
+		modalEl.removeEventListener('wheel', handleUserActivity);
+	};
+
 	const getActiveImg = () => {
 		return modalItemEls[currentSlideIndex]?.querySelector('.modal_img')
 	}
@@ -39,6 +81,17 @@
 		nextEl.disabled = currentSlideIndex === maxIndex;
 	}
 
+	const resetZoom = () => {
+		isZoomed = false;
+		zoomTranslateY = 0;
+
+		const img = getActiveImg();
+		if (img) {
+			img.style.transform = '';
+			img.classList.remove('zoomed');
+		}
+	}
+
 	const disableTransitionTemporarily = () => {
 		sliderEl.classList.add('slider_no_transition');
 		requestAnimationFrame(() => {
@@ -49,24 +102,33 @@
 	}
 
 	const scrollToSlide = index => {
+		resetZoom();
 		const { widthOfItem } = getSliderState();
-		sliderEl.style.transform = `translateX(-${index * widthOfItem}px)`;
+
+		currentSlideIndex = index;
+		currentTranslateX = -(index * widthOfItem);
+
+		sliderEl.style.transform = `translateX(${currentTranslateX}px) translateY(0)`;
 
 		currentCounter.innerText = index + 1;
-		currentSlideIndex = index;
 		updateButtons();
 	}
 
-	certificatesItemEls.forEach((item, index) => {
-		item.addEventListener('click', () => {
+	certificateImgEls.forEach((img, index) => {
+		img.addEventListener('click', () => {
 			modalEl.classList.add('active');
+			addActivityListeners();
+			//document.body.classList.add('scroll-block');
 			disableTransitionTemporarily();
 			scrollToSlide(index);
+			showUI();
 		});
 	});
 
 	closeModalEl.addEventListener('click', () => {
 		modalEl.classList.remove('active');
+		clearTimeout(uiTimeout);
+		removeActivityListeners();
 	});
 
 	modalEl.addEventListener('click', e => {
@@ -87,6 +149,7 @@
 
 	const prevSlide = () => {
 		if (currentSlideIndex <= 0) return;
+		//if (isZoomed) return;
 		disableTransitionTemporarily();
 		scrollToSlide(currentSlideIndex - 1);
 	}
@@ -94,6 +157,7 @@
 	const nextSlide = () => {
 		const { maxIndex } = getSliderState();
 		if (currentSlideIndex >= maxIndex) return;
+		//if (isZoomed) return;
 		disableTransitionTemporarily();
 		scrollToSlide(currentSlideIndex + 1);
 	}
@@ -138,6 +202,7 @@
 	zoomEl.addEventListener('click', toggleZoom);
 
 	const mouseMoveHandler = e => {
+		showUI();
 		if (isZoomed) {
 			const mouseMoveDistance = e.pageY - startMouseYZoom;
 			if (Math.abs(mouseMoveDistance) > 5) {
@@ -158,17 +223,18 @@
 			}
 		}
 
-		currentTranslateX = startTranslateX;
+		let newTranslateX = startTranslateX;
 
 		if (dragDirection === 'x') {
-			currentTranslateX = startTranslateX + mouseMoveDistanceX;
+			newTranslateX = startTranslateX + mouseMoveDistanceX;
 			const { widthOfItem, maxIndex } = getSliderState();
 
 			const maxTranslate = 0;
 			const minTranslate = -maxIndex * widthOfItem;
 
-			if (currentTranslateX > maxTranslate) currentTranslateX = maxTranslate;
-			if (currentTranslateX < minTranslate) currentTranslateX = minTranslate;
+			if (newTranslateX > maxTranslate) newTranslateX = maxTranslate;
+			if (newTranslateX < minTranslate) newTranslateX = minTranslate;
+			currentTranslateX = newTranslateX;
 			currentTranslateY = 0;
 		}
 
@@ -189,18 +255,14 @@
 			window.removeEventListener('mouseup', mouseUpHandler);
 			return;
 		}
-		const mouseMoveDistanceX = e.pageX - startMouseX;
-		const mouseMoveDistanceY = e.pageY - startMouseY;
 
 		const { widthOfItem, maxIndex } = getSliderState();
 
-		const finalTranslateX = startTranslateX + mouseMoveDistanceX;
-
-		let newIndex =  Math.round(-finalTranslateX / widthOfItem);
+		let newIndex =  Math.round(-currentTranslateX / widthOfItem);
 		if (newIndex < 0) newIndex = 0;
 		if (newIndex > maxIndex) newIndex = maxIndex;
 
-		if (dragDirection === 'y' && Math.abs(mouseMoveDistanceY) > thresholdY) {
+		if (dragDirection === 'y' && Math.abs(e.pageY - startMouseY) > thresholdY) {
 			modalEl.classList.remove('active');
 		} else {
 			scrollToSlide(newIndex);
@@ -223,7 +285,7 @@
 		} else {
 			startMouseX = e.pageX;
 			startMouseY = e.pageY;
-			startTranslateX = -(currentSlideIndex * getSliderState().widthOfItem);
+			startTranslateX = currentTranslateX;
 		}
 
 		isDragging = false;
@@ -234,8 +296,6 @@
 	});
 
 	window.addEventListener('keydown', e => {
-		//if (!modalEl.classList.contains('active') || isZoomed) return;
-		//e.stopPropagation();
 		switch (e.key) {
 			case 'ArrowRight':
 				e.preventDefault();
@@ -256,6 +316,8 @@
 		if (e.deltaY > 0) nextSlide();
 		else prevSlide();
 	}, { passive: false });
+
+
 
 	const resizeObserver = new ResizeObserver(() => {
 		cachedWidth = 0;
