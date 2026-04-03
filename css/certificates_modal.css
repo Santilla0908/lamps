@@ -117,6 +117,10 @@
 	top: 50%;
 }
 
+.disabled {
+	opacity: 0.3;
+}
+
 .hidden_ui {
 	opacity: 0;
 	pointer-events: none;

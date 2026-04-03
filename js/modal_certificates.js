@@ -7,12 +7,12 @@
 	const closeModalEl = document.querySelector('.close_btn');
 	const prevEl = document.querySelector('.arrow_left');
 	const nextEl = document.querySelector('.arrow_right');
-	const currentCounter = document.querySelector('.current');
-	const totalCounter = document.querySelector('.total');
+	const currentCounterEl = document.querySelector('.current');
+	const totalCounterEl = document.querySelector('.total');
 	const ovCounterEl = document.querySelector('.ov_counter');
 	const zoomEl = document.querySelector('.zoom_btn');
 
-	totalCounter.innerText = modalItemEls.length;
+	totalCounterEl.innerText = modalItemEls.length;
 	let currentSlideIndex = 0;
 	let isDragging = false;
 	let isZoomed = false;
@@ -77,8 +77,8 @@
 
 	const updateButtons = () => {
 		const { maxIndex } = getSliderState();
-		prevEl.disabled = currentSlideIndex === 0;
-		nextEl.disabled = currentSlideIndex === maxIndex;
+		prevEl.classList.toggle('disabled', currentSlideIndex === 0);
+		nextEl.classList.toggle('disabled', currentSlideIndex === maxIndex);
 	}
 
 	const resetZoom = () => {
@@ -110,15 +110,15 @@
 
 		sliderEl.style.transform = `translateX(${currentTranslateX}px) translateY(0)`;
 
-		currentCounter.innerText = index + 1;
+		currentCounterEl.innerText = index + 1;
 		updateButtons();
 	}
 
 	certificateImgEls.forEach((img, index) => {
 		img.addEventListener('click', () => {
 			modalEl.classList.add('active');
+			document.body.classList.add('scroll-block');
 			addActivityListeners();
-			//document.body.classList.add('scroll-block');
 			disableTransitionTemporarily();
 			scrollToSlide(index);
 			showUI();
@@ -127,6 +127,7 @@
 
 	closeModalEl.addEventListener('click', () => {
 		modalEl.classList.remove('active');
+		document.body.classList.remove('scroll-block');
 		clearTimeout(uiTimeout);
 		removeActivityListeners();
 	});
@@ -149,7 +150,6 @@
 
 	const prevSlide = () => {
 		if (currentSlideIndex <= 0) return;
-		//if (isZoomed) return;
 		disableTransitionTemporarily();
 		scrollToSlide(currentSlideIndex - 1);
 	}
@@ -157,7 +157,6 @@
 	const nextSlide = () => {
 		const { maxIndex } = getSliderState();
 		if (currentSlideIndex >= maxIndex) return;
-		//if (isZoomed) return;
 		disableTransitionTemporarily();
 		scrollToSlide(currentSlideIndex + 1);
 	}
@@ -310,14 +309,19 @@
 		}
 	});
 
+	let isWheelLocked = false;
+
 	modalEl.addEventListener('wheel', e => {
 		if (!modalEl.classList.contains('active') || isZoomed) return;
 		e.preventDefault();
+		if (isWheelLocked) return;
+		isWheelLocked = true;
 		if (e.deltaY > 0) nextSlide();
 		else prevSlide();
+		setTimeout(() => {
+			isWheelLocked = false;
+		}, 250);
 	}, { passive: false });
-
-
 
 	const resizeObserver = new ResizeObserver(() => {
 		cachedWidth = 0;
