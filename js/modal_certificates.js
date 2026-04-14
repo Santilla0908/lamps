@@ -13,30 +13,21 @@
 	const zoomEl = document.querySelector('.zoom_btn');
 
 	totalCounterEl.innerText = modalItemEls.length;
+
 	let currentSlideIndex = 0;
 	let isDragging = false;
 	let isZoomed = false;
 	let cachedWidth = 0;
 	let currentTranslateX = 0;
-
-	const uiElements = [
-		closeModalEl,
-		zoomEl,
-		prevEl,
-		nextEl,
-		ovCounterEl
-	];
-
+	const uiElements = [ closeModalEl, zoomEl, prevEl, nextEl, ovCounterEl ];
 	let uiTimeout = null;
 	let activeImg = null;
 
 	const hideUI = () => {
-		if (isZoomed) return;
 		uiElements.forEach(el => el.classList.add('hidden_ui'));
 	}
 
 	const showUI = () => {
-		if (!modalEl.classList.contains('active')) return;
 		uiElements.forEach(el => el.classList.remove('hidden_ui'));
 		clearTimeout(uiTimeout);
 		uiTimeout = setTimeout(hideUI, 2000);
@@ -51,18 +42,18 @@
 		window.addEventListener('mousemove', handleUserActivity);
 		window.addEventListener('mousedown', handleUserActivity);
 		window.addEventListener('keydown', handleUserActivity);
-		modalEl.addEventListener('wheel', handleUserActivity, { passive: true });
+		window.addEventListener('wheel', handleUserActivity, { passive: true });
 	};
 
 	const removeActivityListeners = () => {
 		window.removeEventListener('mousemove', handleUserActivity);
 		window.removeEventListener('mousedown', handleUserActivity);
 		window.removeEventListener('keydown', handleUserActivity);
-		modalEl.removeEventListener('wheel', handleUserActivity);
+		window.removeEventListener('wheel', handleUserActivity);
 	};
 
 	const getActiveImg = () => {
-		return modalItemEls[currentSlideIndex]?.querySelector('.modal_img')
+		return modalItemEls[currentSlideIndex]?.querySelector('.modal_img');
 	}
 
 	const getSliderState = () => {
@@ -86,10 +77,8 @@
 		zoomTranslateY = 0;
 
 		const img = getActiveImg();
-		if (img) {
-			img.style.transform = '';
-			img.classList.remove('zoomed');
-		}
+		img.style.transform = '';
+		img.classList.remove('zoomed');
 	}
 
 	const disableTransitionTemporarily = () => {

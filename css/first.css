@@ -277,12 +277,26 @@
 	right: 15px;
 }
 
+.viewport_advantages_slider {
+	overflow: hidden;
+	margin: 0 auto;
+	width: 95%;
+}
+
 .advantages_slider {
+	display: flex;
+	cursor: default;
+	pointer-events: auto;
+	position: relative;
+	transition: transform 0.4s ease;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	max-width: 1197px;
 	color: var(--second-primary-color);
 	text-align: left;
 	padding: 15px 0;
-	width: 95%;
-	margin: 0 auto;
 }
 
 .advantages_slider.drag {
