@@ -88,8 +88,16 @@
 		prevEl.addEventListener('click', prevSlide);
 		nextEl.addEventListener('click', nextSlide);
 
+		sliderEl.classList.add('slider_no_transition');
+
 		createClones();
 		setStartPosition();
+
+		requestAnimationFrame(() => {
+			requestAnimationFrame(() => {
+				sliderEl.classList.remove('slider_no_transition');
+			});
+		});
 
 		sliderEl.addEventListener('click', () => {
 			sliderEl.focus();

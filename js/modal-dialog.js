@@ -4,6 +4,7 @@
 	const closeModalEl = document.querySelector('.modal_close');
 	const submitBtnEl = document.querySelectorAll('.submit_btn');
 	const toastEl = document.querySelector('.toast');
+	const formEls = [ ...document.querySelectorAll('.js_form') ];
 
 	openModalEls.forEach(button => {
 		button.addEventListener('click', () => {
@@ -36,14 +37,6 @@
 		}, duration);
 	}
 
-	submitBtnEl.forEach(button => {
-		button.addEventListener('click', () => {
-			const dialog = button.closest('.dialog');
-			if (dialog) return modalEl.close('success');
-			showToast();
-		});
-	});
-
 	modalEl.addEventListener('click', e => {
 		const isOverlayClick = e.target === e.currentTarget;
 		if (isOverlayClick) modalEl.close();
@@ -52,5 +45,12 @@
 	modalEl.addEventListener('close', () => {
 		document.body.classList.remove('scroll-block');
 		if (modalEl.returnValue === 'success') return showToast();
+	});
+
+	formEls.forEach(form => {
+		const nameInput = form.querySelector('input[name="name"]');
+		const phoneInput = form.querySelector('input[name="phone"]');
+		const agreeCheckbox = form.querySelector('input[name="agree"]');
+		const submitBtn = form.querySelector('.submit_btn');
 	});
 }
