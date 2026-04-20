@@ -1,5 +1,5 @@
 {
-	const certificateImgEls = [ ...document.querySelectorAll('.certificates_item_img') ];
+	const certificatesSliderEl = document.querySelector('.certificates_slider');
 	const modalEl = document.querySelector('.modal_certificates');
 	const viewportEl = document.querySelector('.modal_slider');
 	const sliderEl = document.querySelector('.modal_slider_track');
@@ -103,23 +103,34 @@
 		updateButtons();
 	}
 
-	certificateImgEls.forEach((img, index) => {
-		img.addEventListener('click', () => {
-			modalEl.classList.add('active');
-			document.body.classList.add('scroll-block');
-			addActivityListeners();
-			disableTransitionTemporarily();
-			scrollToSlide(index);
-			showUI();
-		});
+	const openModal = index => {
+		modalEl.classList.add('active');
+		document.body.classList.add('scroll-block');
+		addActivityListeners();
+		disableTransitionTemporarily();
+		scrollToSlide(index);
+		showUI();
+	};
+
+	certificatesSliderEl.addEventListener('click', e => {
+		const img = e.target.closest('.certificates_item_img');
+		if (!img) return;
+
+		const item = img.closest('.certificates_item');
+		const index = Number(item.dataset.index);
+
+		openModal(index);
 	});
 
-	closeModalEl.addEventListener('click', () => {
+	const closeModal = () => {
 		modalEl.classList.remove('active');
 		document.body.classList.remove('scroll-block');
 		clearTimeout(uiTimeout);
 		removeActivityListeners();
-	});
+		resetZoom();
+	}
+
+	closeModalEl.addEventListener('click', closeModal);
 
 	modalEl.addEventListener('click', e => {
 		activeImg = getActiveImg();
@@ -133,7 +144,7 @@
 		const isOutsideImage = pointerX < imgRect.left || pointerX > imgRect.right || pointerY < imgRect.top || pointerY > imgRect.bottom;
 
 		if (!isInteractive && isOutsideImage && !isDragging && !isZoomed) {
-			modalEl.classList.remove('active');
+			closeModal();
 		}
 	});
 
@@ -241,6 +252,7 @@
 			});
 			window.removeEventListener('mousemove', mouseMoveHandler);
 			window.removeEventListener('mouseup', mouseUpHandler);
+			window.removeEventListener('mouseleave', mouseUpHandler);
 			return;
 		}
 
@@ -251,7 +263,7 @@
 		if (newIndex > maxIndex) newIndex = maxIndex;
 
 		if (dragDirection === 'y' && Math.abs(e.pageY - startMouseY) > thresholdY) {
-			modalEl.classList.remove('active');
+			closeModal();
 		} else {
 			scrollToSlide(newIndex);
 		}
@@ -294,7 +306,7 @@
 				prevSlide();
 				break;
 			case 'Escape':
-				modalEl.classList.remove('active');
+				closeModal();
 		}
 	});
 
@@ -305,8 +317,11 @@
 		e.preventDefault();
 		if (isWheelLocked) return;
 		isWheelLocked = true;
-		if (e.deltaY > 0) nextSlide();
-		else prevSlide();
+		if (e.deltaY > 0) {
+			nextSlide();
+		} else {
+			prevSlide();
+		}
 		setTimeout(() => {
 			isWheelLocked = false;
 		}, 250);

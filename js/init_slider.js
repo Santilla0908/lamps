@@ -1,6 +1,10 @@
 {
-	function initSlider( {prevEl, nextEl, viewportEl, sliderEl, itemSelector, disableKeyboardCondition} ) {
-		const originalItemEls = [ ...sliderEl.querySelectorAll(itemSelector) ];
+	function initSlider( { prevEl, nextEl, viewportEl, sliderEl, itemEls, disableKeyboardCondition } ) {
+		const originalItemEls = [...itemEls];
+		originalItemEls.forEach((item, index) => {
+			item.dataset.index = index.toString();
+		});
+
 		let currentIndex = 0;
 		let itemWidth = 0;
 		let cloneCount = 0;
@@ -27,12 +31,14 @@
 			for (let i = state.originalLength - 1; i >= state.originalLength - state.cloneCount; i--) {
 				const clone = originalItemEls[i].cloneNode(true);
 				clone.dataset.clone = "true";
+				clone.dataset.index = originalItemEls[i].dataset.index;
 				sliderEl.prepend(clone);
 			}
 
 			for (let i = 0; i < state.cloneCount; i++) {
 				const clone = originalItemEls[i].cloneNode(true);
 				clone.dataset.clone = "true";
+				clone.dataset.index = originalItemEls[i].dataset.index;
 				sliderEl.append(clone);
 			}
 		}
@@ -182,7 +188,7 @@
 		nextEl: document.querySelector('.advantages_slick_next'),
 		viewportEl: document.querySelector('.viewport_advantages_slider'),
 		sliderEl: document.querySelector('.advantages_slider'),
-		itemSelector: '.advantage_item',
+		itemEls: document.querySelectorAll('.advantage_item')
 	});
 
 	const modalEl = document.querySelector('.modal_certificates');
@@ -192,8 +198,8 @@
 		nextEl: document.querySelector('.slider_certificates_next'),
 		viewportEl: document.querySelector('.viewport_slider_certificates'),
 		sliderEl: document.querySelector('.certificates_slider'),
-		itemSelector: '.certificates_item',
-		disableKeyboardCondition: () =>  modalEl.classList.contains('active')
+		itemEls: document.querySelectorAll('.certificates_item'),
+		disableKeyboardCondition: () => modalEl.classList.contains('active')
 	});
 }
 
