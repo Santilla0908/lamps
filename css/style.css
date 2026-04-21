@@ -133,6 +133,10 @@ h1, h2, h3, h4, h5, h6 {
 	cursor: pointer;
 }
 
+.modal_item_input.error {
+	border: 1px solid red;
+}
+
 .modal_item_input::placeholder {
 	color: var(--second-primary-color);
 	opacity: 0.9;

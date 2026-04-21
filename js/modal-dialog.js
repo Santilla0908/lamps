@@ -2,7 +2,6 @@
 	const modalEl = document.querySelector('.dialog');
 	const openModalEls = document.querySelectorAll('.open_modal');
 	const closeModalEl = document.querySelector('.modal_close');
-	const submitBtnEl = document.querySelectorAll('.submit_btn');
 	const toastEl = document.querySelector('.toast');
 	const formEls = [ ...document.querySelectorAll('.js_form') ];
 
@@ -42,15 +41,87 @@
 		if (isOverlayClick) modalEl.close();
 	});
 
-	modalEl.addEventListener('close', () => {
-		document.body.classList.remove('scroll-block');
-		if (modalEl.returnValue === 'success') return showToast();
+	formEls.forEach(form => {
+		const nameInputEL = form.querySelector('input[name="name"]');
+		const phoneInputEl = form.querySelector('input[name="phone"]');
+		const agreeCheckboxEl = form.querySelector('input[name="agree"]');
+		const submitBtnEl = form.querySelector('.submit_btn');
+
+		nameInputEL.addEventListener('input', () => {
+			nameInputEL.value = nameInputEL.value.replace(/[^a-zA-Zа-яА-ЯёЁ\s]/g, '');
+		});
+
+		phoneInputEl.addEventListener('input', () => {
+			phoneInputEl.value = phoneInputEl.value.replace(/[^\d+]/g, '');
+			if (phoneInputEl.value.includes('+')) {
+				phoneInputEl.value = '+' + phoneInputEl.value.replace(/\+/g, '').replace(/^\+/, '');
+			}
+		});
+
+		const validate = () => {
+			const isNameValid = nameInputEL.value.trim().length > 1;
+			const isPhoneValid = /^\+?\d{10,15}$/.test(phoneInputEl.value);
+			const isAgreeChecked = agreeCheckboxEl.checked;
+			return { isNameValid, isPhoneValid, isAgreeChecked };
+		}
+
+		let isSubmitted = false;
+
+		const updateUI = () => {
+			const { isNameValid, isPhoneValid, isAgreeChecked } = validate();
+
+			nameInputEL.classList.toggle('error', isSubmitted && !isNameValid);
+			phoneInputEl.classList.toggle('error', isSubmitted && !isPhoneValid);
+			agreeCheckboxEl.classList.toggle('error', isSubmitted && !isAgreeChecked);
+		}
+
+		[nameInputEL, phoneInputEl, agreeCheckboxEl].forEach(el => {
+			el.addEventListener('input', () => {
+				if (isSubmitted) updateUI();
+			});
+			el.addEventListener('change', () => {
+				if (isSubmitted) updateUI();
+			});
+		});
+
+		updateUI();
+
+		submitBtnEl.addEventListener('click', e => {
+			e.preventDefault();
+			isSubmitted = true;
+			const { isNameValid, isPhoneValid, isAgreeChecked } = validate();
+
+			if (!(isNameValid && isPhoneValid && isAgreeChecked)) {
+				updateUI();
+				return;
+			}
+
+			const dialog = form.closest('.dialog');
+
+			if (dialog) {
+				isSubmitted = false;
+				nameInputEL.value = '';
+				phoneInputEl.value = '';
+				agreeCheckboxEl.checked = true;
+				updateUI();
+				dialog.close('success');
+			} else {
+				showToast();
+			}
+		});
+
+		form.addEventListener('keydown', e => {
+			if (e.key === 'Enter') {
+				submitBtnEl.click();
+			}
+		});
 	});
 
-	formEls.forEach(form => {
-		const nameInput = form.querySelector('input[name="name"]');
-		const phoneInput = form.querySelector('input[name="phone"]');
-		const agreeCheckbox = form.querySelector('input[name="agree"]');
-		const submitBtn = form.querySelector('.submit_btn');
+	modalEl.addEventListener('close', () => {
+		document.body.classList.remove('scroll-block');
+		if (modalEl.returnValue === 'success') {
+			showToast();
+			modalEl.returnValue = '';
+		}
 	});
 }
