@@ -3,7 +3,6 @@
 	const openModalEls = document.querySelectorAll('.open_modal');
 	const closeModalEl = document.querySelector('.modal_close');
 	const toastEl = document.querySelector('.toast');
-	const formEls = [ ...document.querySelectorAll('.js_form') ];
 
 	openModalEls.forEach(button => {
 		button.addEventListener('click', () => {
@@ -41,11 +40,26 @@
 		if (isOverlayClick) modalEl.close();
 	});
 
-	formEls.forEach(form => {
+	function initForm(form) {
 		const nameInputEL = form.querySelector('input[name="name"]');
 		const phoneInputEl = form.querySelector('input[name="phone"]');
 		const agreeCheckboxEl = form.querySelector('input[name="agree"]');
 		const submitBtnEl = form.querySelector('.submit_btn');
+
+		const resetForm = () => {
+			const inputs = form.querySelectorAll('input');
+
+			inputs.forEach(input => {
+				if (input.type === 'checkbox' || input.type === 'radio') {
+					input.checked = input.defaultChecked;
+				} else {
+					input.value = input.defaultValue;
+				}
+			});
+
+			isSubmitted = false;
+			updateUI();
+		};
 
 		nameInputEL.addEventListener('input', () => {
 			nameInputEL.value = nameInputEL.value.replace(/[^a-zA-Zа-яА-ЯёЁ\s]/g, '');
@@ -95,15 +109,11 @@
 				updateUI();
 				return;
 			}
-
 			const dialog = form.closest('.dialog');
 
+			resetForm();
+
 			if (dialog) {
-				isSubmitted = false;
-				nameInputEL.value = '';
-				phoneInputEl.value = '';
-				agreeCheckboxEl.checked = true;
-				updateUI();
 				dialog.close('success');
 			} else {
 				showToast();
@@ -112,10 +122,13 @@
 
 		form.addEventListener('keydown', e => {
 			if (e.key === 'Enter') {
+				e.preventDefault();
 				submitBtnEl.click();
 			}
 		});
-	});
+	}
+
+	document.querySelectorAll('.js_form').forEach(initForm);
 
 	modalEl.addEventListener('close', () => {
 		document.body.classList.remove('scroll-block');
