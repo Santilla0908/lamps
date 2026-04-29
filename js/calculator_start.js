@@ -1,92 +1,116 @@
-document.addEventListener('DOMContentLoaded', function() {
+{
+	const startButtonEl = document.querySelector('.calculator_btn');
+	const switchEl = document.querySelector('.calculator_switch_checkbox');
+	const ordinaryValueEl = document.querySelector('.calculator_value_ordinary');
+	const osramValueEl = document.querySelector('.calculator_value_osram');
+	const ordinaryVisualEl = document.querySelector('.calculator_visual_ordinary');
+	const osramVisualEl = document.querySelector('.calculator_visual_osram');
+	const timelinePartEls = [ ...document.querySelectorAll('.calculator_timeline_part') ];
+	const totalResultBlockEl = document.querySelector('.calculator_total');
+	const totalResultValueEl = document.querySelector('.calculator_total_text_value');
+	const unitLabelEls = [ ...document.querySelectorAll('.calculator_units') ];
 
-	const startBtn = document.querySelector('.calculator_btn');
-	const ordinaryValue = document.querySelector('.calculator_value_ordinary');
-	const osramValue = document.querySelector('.calculator_value_osram');
-	const ordinaryVisual = document.querySelector('.calculator_visual_ordinary');
-	const osramVisual = document.querySelector('.calculator_visual_osram');
-	const timelineParts = document.querySelectorAll('.calculator_timeline_part:not(:first-child)');
-	const totalBlock = document.querySelector('.calculator_total');
-	const switchCheckbox = document.querySelector('.calculator_switch_checkbox');
-	const unitsElements = document.querySelectorAll('.calculator_units');
+	const dataByMode = {
+		rubles: {
+			ordinaryMaxValue: 63250,
+			osramMaxValue: 8774,
+			totalSavingsValue: 54476,
+			unitLabel: '₽',
+			osramMaxWidthPercent: 14
+		},
+		watts: {
+			ordinaryMaxValue: 30000,
+			osramMaxValue: 3800,
+			totalSavingsValue: 26200,
+			unitLabel: 'Вт',
+			osramMaxWidthPercent: 14
+		}
+	}
 
-	const maxOrdinaryRub = 63250;
-	const maxOsramRub = 8774;
+	let currentMode = 'rubles';
 
-	const maxOrdinaryWatt = 30000;
-	const maxOsramWatt = 3800;
-	const duration = 3000;
+	const calculateEaseInOutProgress = (linearProgress) => {
+		return linearProgress < 0.5
+			? 2 * linearProgress * linearProgress
+			: 1 - Math.pow(-2 * linearProgress + 2, 2) / 2;
+	}
 
-	let isWattsMode = false;
+	const formatNumberWithSpaces = number => {
+		return number.toLocaleString();
+	}
 
-	function animateValues() {
-		let startTime = null;
-		totalBlock.style.display = 'none';
+	const updateDisplay = () => {
+		const { unitLabel, totalSavingsValue } = dataByMode[currentMode];
+		unitLabelEls.forEach(unitLabelElement => {
+			unitLabelElement.textContent = unitLabel;
+		});
 
+		totalResultValueEl.textContent = `${formatNumberWithSpaces(totalSavingsValue)} ${unitLabel}`;
+	}
 
-		const maxOrdinary = isWattsMode ? maxOrdinaryWatt : maxOrdinaryRub;
-		const maxOsram = isWattsMode ? maxOsramWatt : maxOsramRub;
+	const resetState = () => {
+		ordinaryValueEl.textContent = '0';
+		osramValueEl.textContent = '0';
+		ordinaryVisualEl.style.width = '0%';
+		osramVisualEl.style.width = '0%';
 
-		function step(timestamp) {
-			if (!startTime) startTime = timestamp;
-			const progress = Math.min((timestamp - startTime) / duration, 1);
+		timelinePartEls.forEach(timeline => {
+			timeline.classList.remove('part_active');
+		});
 
-			const currentOrdinary = Math.floor(progress * maxOrdinary);
-			const currentOsram = Math.floor(progress * maxOsram);
-			ordinaryValue.textContent = currentOrdinary.toLocaleString();
-			osramValue.textContent = currentOsram.toLocaleString();
+		totalResultBlockEl.style.display = 'none';
+	}
 
-			ordinaryVisual.style.width = `${progress * 100}%`;
-			ordinaryVisual.style.overflow = 'hidden';
-			osramVisual.style.width = `${progress * 14}%`;
-			osramVisual.style.overflow = 'hidden';
+	const showTotalResultBlock = () => {
+		totalResultBlockEl.style.display = 'block';
+		requestAnimationFrame(() => {
+			totalResultBlockEl.style.transform = 'scale(1)';
+		});
+	}
 
-			const activePart = Math.floor(progress * (timelineParts.length - 1));
-			timelineParts.forEach((part, index) => {
-				if (index <= activePart) {
-					part.classList.add('part_active');
+	const startAnimation = () => {
+		const animationDuration = 3000;
+		const animationStartTime = performance.now();
+
+		const { ordinaryMaxValue, osramMaxValue, osramMaxWidthPercent } = dataByMode[currentMode];
+
+		const updateAnimationFrame = currentTime => {
+			const elapsedTime = currentTime - animationStartTime;
+			const linearProgress = Math.min(elapsedTime / animationDuration, 1);
+			const easedProgress = calculateEaseInOutProgress(linearProgress);
+
+			ordinaryValueEl.textContent = formatNumberWithSpaces(Math.floor(easedProgress * ordinaryMaxValue));
+			osramValueEl.textContent = formatNumberWithSpaces(Math.floor(easedProgress * osramMaxValue));
+			ordinaryVisualEl.style.width = `${easedProgress * 100}%`;
+			osramVisualEl.style.width = `${easedProgress * osramMaxWidthPercent}%`
+
+			const activeTimelineIndex = Math.floor(easedProgress * timelinePartEls.length);
+
+			timelinePartEls.forEach((timeline, index) => {
+				if (index <= activeTimelineIndex) {
+					timeline.classList.add('part_active');
 				}
 			});
 
-			if (progress < 1) {
-				requestAnimationFrame(step);
+			if (linearProgress < 1) {
+				requestAnimationFrame(updateAnimationFrame);
 			} else {
-				ordinaryVisual.style.overflow = 'visible';
-				osramVisual.style.overflow = 'visible';
-
-				totalBlock.style.display = 'block';
-				totalBlock.style.transform = 'scale(0)';
-				totalBlock.style.transition = 'transform 0.5s ease-out';
-				setTimeout(() => {
-					totalBlock.style.transform = 'scale(1)';
-				}, 50);
+				showTotalResultBlock();
 			}
 		}
-
-		requestAnimationFrame(step);
-	}
-	function resetCalculator() {
-		ordinaryValue.textContent = '0';
-		osramValue.textContent = '0';
-		ordinaryVisual.style.width = '0';
-		osramVisual.style.width = '0';
-		timelineParts.forEach(part => part.classList.remove('part_active'));
-		totalBlock.style.display = 'none';
+		requestAnimationFrame(updateAnimationFrame);
 	}
 
-	startBtn.addEventListener('click', function() {
-		resetCalculator();
-
-		animateValues();
+	startButtonEl.addEventListener('click', () => {
+		resetState();
+		startAnimation();
 	});
 
-	switchCheckbox.addEventListener('change', function() {
-		isWattsMode = this.checked;
-
-		unitsElements.forEach(el => el.textContent = isWattsMode ? 'Вт' : '₽');
-		document.querySelector('.calculator_total_text_value').textContent =
-			isWattsMode ? '26200 Вт' : '54476 ₽';
-
-		resetCalculator();
+	switchEl.addEventListener('change', e => {
+		currentMode = e.target.checked ? 'watts' : 'rubles';
+		updateDisplay();
+		resetState();
 	});
-});
+
+	updateDisplay();
+}
