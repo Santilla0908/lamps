@@ -29,12 +29,6 @@
 
 	let currentMode = 'rubles';
 
-	const calculateEaseInOutProgress = (linearProgress) => {
-		return linearProgress < 0.5
-			? 2 * linearProgress * linearProgress
-			: 1 - Math.pow(-2 * linearProgress + 2, 2) / 2;
-	}
-
 	const formatNumberWithSpaces = number => {
 		return number.toLocaleString();
 	}
@@ -58,33 +52,33 @@
 			timeline.classList.remove('part_active');
 		});
 
-		totalResultBlockEl.style.display = 'none';
+		totalResultBlockEl.classList.remove('is-visible');
 	}
 
 	const showTotalResultBlock = () => {
-		totalResultBlockEl.style.display = 'block';
 		requestAnimationFrame(() => {
-			totalResultBlockEl.style.transform = 'scale(1)';
+			totalResultBlockEl.classList.add('is-visible');
 		});
 	}
 
 	const startAnimation = () => {
-		const animationDuration = 3000;
+		const animationDuration = 5000;
 		const animationStartTime = performance.now();
+		ordinaryVisualEl.classList.add('is-animating');
+		osramVisualEl.classList.add('is-animating');
 
 		const { ordinaryMaxValue, osramMaxValue, osramMaxWidthPercent } = dataByMode[currentMode];
 
 		const updateAnimationFrame = currentTime => {
 			const elapsedTime = currentTime - animationStartTime;
 			const linearProgress = Math.min(elapsedTime / animationDuration, 1);
-			const easedProgress = calculateEaseInOutProgress(linearProgress);
 
-			ordinaryValueEl.textContent = formatNumberWithSpaces(Math.floor(easedProgress * ordinaryMaxValue));
-			osramValueEl.textContent = formatNumberWithSpaces(Math.floor(easedProgress * osramMaxValue));
-			ordinaryVisualEl.style.width = `${easedProgress * 100}%`;
-			osramVisualEl.style.width = `${easedProgress * osramMaxWidthPercent}%`
+			ordinaryValueEl.textContent = formatNumberWithSpaces(Math.floor(linearProgress * ordinaryMaxValue));
+			osramValueEl.textContent = formatNumberWithSpaces(Math.floor(linearProgress * osramMaxValue));
+			ordinaryVisualEl.style.width = `${linearProgress * 100}%`;
+			osramVisualEl.style.width = `${linearProgress * osramMaxWidthPercent}%`;
 
-			const activeTimelineIndex = Math.floor(easedProgress * timelinePartEls.length);
+			const activeTimelineIndex = Math.floor(linearProgress * timelinePartEls.length);
 
 			timelinePartEls.forEach((timeline, index) => {
 				if (index <= activeTimelineIndex) {
@@ -95,6 +89,8 @@
 			if (linearProgress < 1) {
 				requestAnimationFrame(updateAnimationFrame);
 			} else {
+				ordinaryVisualEl.classList.remove('is-animating');
+				osramVisualEl.classList.remove('is-animating');
 				showTotalResultBlock();
 			}
 		}

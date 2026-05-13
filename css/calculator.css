@@ -120,6 +120,7 @@
 	width: 10px;
 	height: 10px;
 	background-color: #aaa;
+	transition: height 0.3s ease, transform 0.3s ease;
 }
 
 .calculator_visual::before {
@@ -128,6 +129,11 @@
 
 .calculator_visual::after {
 	right: 0;
+}
+
+.calculator_visual.is-animating::before,
+.calculator_visual.is-animating::after {
+	height: 1px;
 }
 
 .calculator_start {
@@ -246,7 +252,16 @@
 .calculator_total {
 	text-align: center;
 	font-family: 'Proxima Nova Bold', sans-serif;
-	display: none;
+	opacity: 0;
+	visibility: hidden;
+	transform: scale(0.9);
+	transition: opacity 0.5s ease, transform 0.5s ease, visibility 0.5s ease;
+}
+
+.calculator_total.is-visible {
+	opacity: 1;
+	visibility: visible;
+	transform: scale(1);
 }
 
 .calculator_total_text {
