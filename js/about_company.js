@@ -1,100 +1,125 @@
-document.addEventListener('DOMContentLoaded', function() {
-	const lamp4 = document.querySelector('.about_company_bg_lamp4');
-	const lamp5 = document.querySelector('.about_company_bg_lamp5');
+{
+	const aboutSectionEl = document.querySelector('.about_company');
+	const statisticsSectionEl = document.querySelector('.statistics');
+	const certificatesSectionEl = document.querySelector('.certificates');
 
-	const lamp4Start = { top: 1500, left: -100 };
-	const lamp5Start = { top: 1500, right: -100 };
+	const buttonEl = aboutSectionEl.querySelector('.btn');
 
-	// Лампочка 5 заканчивает на statistics
-	const lamp5End = { top: -100, right: 250 };
+	const lampAnimations = [
 
-	// Лампочка 4 заканчивает на certificates
-	const lamp4End = { top: -200, left: 300 };
+		{
+			element: document.querySelector('.about_company_bg_lamp4'),
+			startPosition: {
+				top: 1500,
+				left: -100
+			},
+			endPosition: {
+				top: -200,
+				left: 300
+			},
+			getAnimationEnd: () => {
+				return (certificatesSectionEl.offsetTop + certificatesSectionEl.offsetHeight * 2);
+			}
+		},
 
-	const aboutSection = document.getElementById('about_company');
-	const statisticsSection = document.getElementById('statistics');
-	const certificatesSection = document.getElementById('certificates');
-	const btn = aboutSection.querySelector('.btn');
+		{
+			element: document.querySelector('.about_company_bg_lamp5'),
+			startPosition: {
+				top: 1500,
+				right: -100
+			},
+			endPosition: {
+				top: -100,
+				right: 250
+			},
+			getAnimationEnd: () => {
+				return (statisticsSectionEl.offsetTop + statisticsSectionEl.offsetHeight * 1.5);
+			},
+		}
+	];
 
-	let aboutTop, statisticsTop, certificatesTop;
-	let aboutHeight, statisticsHeight, certificatesHeight;
-	let btnOffset;
+	let animationEnabled = false;
+	let animationFrameId = null;
 
-	function updatePositions() {
-		aboutTop = aboutSection.offsetTop;
-		statisticsTop = statisticsSection.offsetTop;
-		certificatesTop = certificatesSection.offsetTop;
-
-		aboutHeight = aboutSection.offsetHeight;
-		statisticsHeight = statisticsSection.offsetHeight;
-		certificatesHeight = certificatesSection.offsetHeight;
-
-		btnOffset = btn.offsetTop;
+	const easeInOutCubic = linearProgress => {
+		return linearProgress < 0.5
+			? 4 * linearProgress * linearProgress * linearProgress
+			: 1 - Math.pow(-2 * linearProgress + 2, 3) / 2;
 	}
 
-	updatePositions();
+	const setLampPosition = (lamp, progress) => {
+		const easedProgress = easeInOutCubic(progress);
 
-	function handleScroll() {
+		Object.keys(lamp.startPosition).forEach(property => {
+			const startValue = lamp.startPosition[property];
+			const endValue = lamp.endPosition[property];
+
+			const currentValue = startValue + (endValue - startValue) * easedProgress;
+			lamp.element.style[property] = `${currentValue}px`;
+		});
+	}
+
+	const updateLampPositions = () => {
+		if (!animationEnabled) return;
+
 		const scrollY = window.scrollY;
 		const windowHeight = window.innerHeight;
 
-		// Начало анимации - когда кнопка вверху экрана
-		const startAnimation = aboutTop + btnOffset - windowHeight + 50;
+		const animationStart = aboutSectionEl.offsetTop + buttonEl.offsetTop - windowHeight + 50;
 
-		// Конец анимации для lamp5 - середина statistics
-		const endLamp5 = statisticsTop + statisticsHeight * 1.5;
+		lampAnimations.forEach(lamp => {
+			if (scrollY <= animationStart) {
+				setLampPosition(lamp, 0);
+				return;
+			}
 
-		// Конец анимации для lamp4 - середина certificates
-		const endLamp4 = certificatesTop + certificatesHeight * 2;
+			const animationEnd = lamp.getAnimationEnd();
 
-		// Если еще не начали анимацию
-		if (scrollY < startAnimation) {
-			lamp4.style.top = lamp4Start.top + 'px';
-			lamp4.style.left = lamp4Start.left + 'px';
-			lamp5.style.top = lamp5Start.top + 'px';
-			lamp5.style.right = lamp5Start.right + 'px';
-			return;
+			const rawProgress = (scrollY - animationStart) / (animationEnd - animationStart);
+			const clampedProgress = Math.min(Math.max(rawProgress, 0), 1);
+			setLampPosition(lamp, clampedProgress);
+		});
+
+		animationFrameId = null;
+	}
+
+	const requestLampUpdate = () => {
+		if (animationFrameId) return;
+		requestAnimationFrame(updateLampPositions);
+	}
+
+	const initializeLampStyles = () => {
+		lampAnimations.forEach(lamp => {
+			lamp.element.style.position = 'absolute';
+
+			Object.entries(lamp.startPosition).forEach(
+				([property, value]) => {
+					lamp.element.style[property] = `${value}px`;
+				}
+			);
+		});
+	}
+
+	const intersectionObserver = new IntersectionObserver(
+		entries => {
+			const entry = entries[0];
+			animationEnabled = entry.isIntersecting;
+			if (animationEnabled) {
+				requestLampUpdate();
+			}
 		}
+	);
 
-
-		const progress5 = Math.min(1, (scrollY - startAnimation) / (endLamp5 - startAnimation));
-		const progress4 = Math.min(1, (scrollY - startAnimation) / (endLamp4 - startAnimation));
-
-
-		const easedProgress5 = easeInOutCubic(progress5);
-		const easedProgress4 = easeInOutCubic(progress4);
-
-
-		lamp4.style.top  = lamp4Start.top + (lamp4End.top - lamp4Start.top) * easedProgress4 + 'px';
-		lamp4.style.left = lamp4Start.left + (lamp4End.left - lamp4Start.left) * easedProgress4 + 'px';
-
-
-		lamp5.style.top   = lamp5Start.top + (lamp5End.top - lamp5Start.top) * easedProgress5 + 'px';
-		lamp5.style.right = lamp5Start.right + (lamp5End.right - lamp5Start.right) * easedProgress5 + 'px';
-	}
-
-	function easeInOutCubic(t) {
-		return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-	}
-
-	window.addEventListener('scroll', handleScroll);
-	window.addEventListener('resize', function() {
-		updatePositions();
-		handleScroll();
+	const resizeObserver = new ResizeObserver(() => {
+		requestLampUpdate();
 	});
 
-	function initLampPositions() {
-		lamp4.style.position = 'absolute';
-		lamp4.style.top = lamp4Start.top + 'px';
-		lamp4.style.left = lamp4Start.left + 'px';
-		lamp4.style.transition = 'top 0.1s ease-out, left 0.1s ease-out';
+	initializeLampStyles();
+	intersectionObserver.observe(aboutSectionEl);
+	resizeObserver.observe(aboutSectionEl);
+	resizeObserver.observe(statisticsSectionEl);
+	resizeObserver.observe(certificatesSectionEl);
+	window.addEventListener('scroll', requestLampUpdate);
 
-		lamp5.style.position = 'absolute';
-		lamp5.style.top = lamp5Start.top + 'px';
-		lamp5.style.right = lamp5Start.right + 'px';
-		lamp5.style.transition = 'top 0.1s ease-out, right 0.1s ease-out';
-	}
-
-	initLampPositions();
-	handleScroll();
-});
+	requestLampUpdate();
+}

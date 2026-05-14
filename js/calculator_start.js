@@ -36,15 +36,15 @@
 	const updateDisplay = () => {
 		const { unitLabel, totalSavingsValue } = dataByMode[currentMode];
 		unitLabelEls.forEach(unitLabelElement => {
-			unitLabelElement.textContent = unitLabel;
+			unitLabelElement.innerText = unitLabel;
 		});
 
-		totalResultValueEl.textContent = `${formatNumberWithSpaces(totalSavingsValue)} ${unitLabel}`;
+		totalResultValueEl.innerText = `${formatNumberWithSpaces(totalSavingsValue)} ${unitLabel}`;
 	}
 
 	const resetState = () => {
-		ordinaryValueEl.textContent = '0';
-		osramValueEl.textContent = '0';
+		ordinaryValueEl.innerText = '0';
+		osramValueEl.innerText = '0';
 		ordinaryVisualEl.style.width = '0%';
 		osramVisualEl.style.width = '0%';
 
@@ -73,8 +73,8 @@
 			const elapsedTime = currentTime - animationStartTime;
 			const linearProgress = Math.min(elapsedTime / animationDuration, 1);
 
-			ordinaryValueEl.textContent = formatNumberWithSpaces(Math.floor(linearProgress * ordinaryMaxValue));
-			osramValueEl.textContent = formatNumberWithSpaces(Math.floor(linearProgress * osramMaxValue));
+			ordinaryValueEl.innerText = formatNumberWithSpaces(Math.floor(linearProgress * ordinaryMaxValue));
+			osramValueEl.innerText = formatNumberWithSpaces(Math.floor(linearProgress * osramMaxValue));
 			ordinaryVisualEl.style.width = `${linearProgress * 100}%`;
 			osramVisualEl.style.width = `${linearProgress * osramMaxWidthPercent}%`;
 
