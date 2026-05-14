@@ -38,7 +38,6 @@
 		}
 	];
 
-	let animationEnabled = false;
 	let animationFrameId = null;
 
 	const easeInOutCubic = linearProgress => {
@@ -60,8 +59,6 @@
 	}
 
 	const updateLampPositions = () => {
-		if (!animationEnabled) return;
-
 		const scrollY = window.scrollY;
 		const windowHeight = window.innerHeight;
 
@@ -84,8 +81,8 @@
 	}
 
 	const requestLampUpdate = () => {
-		if (animationFrameId) return;
-		requestAnimationFrame(updateLampPositions);
+		if (animationFrameId !== null) return;
+		animationFrameId = requestAnimationFrame(updateLampPositions);
 	}
 
 	const initializeLampStyles = () => {
@@ -100,22 +97,12 @@
 		});
 	}
 
-	const intersectionObserver = new IntersectionObserver(
-		entries => {
-			const entry = entries[0];
-			animationEnabled = entry.isIntersecting;
-			if (animationEnabled) {
-				requestLampUpdate();
-			}
-		}
-	);
-
 	const resizeObserver = new ResizeObserver(() => {
 		requestLampUpdate();
 	});
 
 	initializeLampStyles();
-	intersectionObserver.observe(aboutSectionEl);
+
 	resizeObserver.observe(aboutSectionEl);
 	resizeObserver.observe(statisticsSectionEl);
 	resizeObserver.observe(certificatesSectionEl);
