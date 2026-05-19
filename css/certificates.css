@@ -40,7 +40,7 @@
 
 .certificates_item_img {
 	position: relative;
-	width: 277px;
+	width: clamp(230px, 40vw, 277px);
 	border: 10px solid #f4f4f4;
 	background-position: center;
 	background-size: cover;
