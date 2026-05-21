@@ -1,7 +1,7 @@
-const mapElement = document.querySelector('.map');
+const mapEl = document.querySelector('.map');
 
 const initMap = () => {
-	const map = new ymaps.Map(mapElement, {
+	const map = new ymaps.Map(mapEl, {
 		center: [55.840093, 37.516350],
 		zoom: 17,
 	});
@@ -13,7 +13,7 @@ const initMap = () => {
 		isMapActive = true;
 		map.behaviors.enable('scrollZoom');
 	});
-	mapElement.addEventListener('mouseleave', () => {
+	mapEl.addEventListener('mouseleave', () => {
 		isMapActive = false;
 		map.behaviors.disable('scrollZoom');
 	});
